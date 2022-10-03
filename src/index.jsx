@@ -38,6 +38,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  width:100%;
+  max-width:450px;
+  margin:0 auto;
 }
 ol, ul {
 	list-style: none;
