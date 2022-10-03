@@ -93,7 +93,7 @@ function RegisterPage(){
           id="user-pw" 
           placeholder="비밀번호를 입력하세요."
           />
-           <SignLabel for='user-pw-confirm'>
+          <SignLabel for='user-pw-confirm'>
           비밀번호 확인
         </SignLabel>
         <SignInput 

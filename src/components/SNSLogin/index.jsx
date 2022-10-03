@@ -87,7 +87,7 @@ function SNSLoginPage(){
 
   return(
     <SNSLoginContainer>
-      <IrH1>로그인</IrH1>
+      <IrH1>SNS 로그인 페이지</IrH1>
       <LogoContainer>
         <LogoImg src={logo} alt="순대 모둠 로고" />
       </LogoContainer>
