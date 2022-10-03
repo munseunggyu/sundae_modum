@@ -43,7 +43,7 @@ export const SignSubmitBtn = styled.input`
   padding:13px 0;
   font-size:18px;
   color:white;
-  background-color:#006CB2;
+  background-color:${props => props.theme.mainColor};
   margin-top:20px;
   border:0;
   cursor: pointer;

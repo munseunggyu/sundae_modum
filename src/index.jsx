@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import promiseMiddleware from 'redux-promise'
 import ReduxThunk from 'redux-thunk'
 import { createStore } from 'redux';
@@ -9,6 +9,7 @@ import rootReducer from './redux/reducers';
 import { applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
+import { theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -77,9 +78,12 @@ root.render(
       window.__REDUX_DEVTOOLS_EXTENSION__()
       )} >
     <BrowserRouter>
-    <GlobalStyle />
-      <App />
+      <ThemeProvider theme={theme} >
+      <GlobalStyle />
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
+    
     </Provider>
   </React.StrictMode>
 );

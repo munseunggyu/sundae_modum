@@ -9,7 +9,7 @@ const SNSLoginContainer= styled.article`
   width:100%;
 `;
 const LogoContainer = styled.div`
-  background-color:#006CB2;
+  background-color:${props => props.theme.mainColor};
   width:100%;
   height:50vh;
   display: flex;
