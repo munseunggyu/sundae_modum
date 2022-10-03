@@ -67,7 +67,7 @@ function RegisterPage(){
   return(
     <SignContainer>
       <SignH1>회원가입</SignH1>
-      <PrevPage onClick={()=>navigate(-1)}></PrevPage>
+      <PrevPage onClick={()=>navigate('/snslogin')}></PrevPage>
       <SignFormContainer >
         <SignLabel for='user-email'>
           이메일
@@ -101,8 +101,8 @@ function RegisterPage(){
           id="user-pw-confirm" 
           placeholder="비밀번호를 입력하세요."
           />
-          <SignSubmitBtn type="submit" />
-          <Link>이미 아이디가 있다면...</Link>
+          <SignSubmitBtn type="submit" value='회원가입' />
+          <Link to='/emaillogin'>이미 아이디가 있다면...</Link>
       </SignFormContainer>
     </SignContainer>
   )
