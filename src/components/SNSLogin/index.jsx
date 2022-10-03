@@ -111,7 +111,7 @@ function SNSLoginPage(){
         </LoginBtns>
         <EmailRegisterContainer>
           <Link>이메일 로그인</Link>
-          <Link>회원가입</Link>
+          <Link to='/register'>회원가입</Link>
         </EmailRegisterContainer>
       </LoginBtnContainer>
     </SNSLoginContainer>
