@@ -38,9 +38,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  width:100%;
+  /* width:100%;
   max-width:450px;
-  margin:0 auto;
+  margin:0 auto; */
 }
 ol, ul {
 	list-style: none;
@@ -59,6 +59,13 @@ table {
 }
 *{
  box-sizing:border-box;
+}
+button{
+  cursor:pointer;
+}
+a{
+  text-decoration:none;
+  color:black;
 }
 `;
 const createStoreMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore)
