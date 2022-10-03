@@ -8,7 +8,7 @@ function HomePage(){
   return(
     <>
       Home
-      <Link to='login' >login</Link>
+      <Link to='snslogin' >login</Link>
     </>
   )
 }

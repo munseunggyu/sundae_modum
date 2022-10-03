@@ -5,7 +5,7 @@ import kakaologo from '../../assets/kakaologo.png'
 import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
-const LoginpageContainer= styled.article`
+const SNSLoginContainer= styled.article`
   width:100%;
 `;
 const LogoContainer = styled.div`
@@ -83,10 +83,10 @@ const EmailRegisterContainer = styled.div`
   }
 `;
 
-function LoginPage(){
+function SNSLoginPage(){
 
   return(
-    <LoginpageContainer>
+    <SNSLoginContainer>
       <IrH1>로그인</IrH1>
       <LogoContainer>
         <LogoImg src={logo} alt="순대 모둠 로고" />
@@ -114,8 +114,8 @@ function LoginPage(){
           <Link>회원가입</Link>
         </EmailRegisterContainer>
       </LoginBtnContainer>
-    </LoginpageContainer>
+    </SNSLoginContainer>
   )
 }
 
-export default LoginPage
+export default SNSLoginPage
