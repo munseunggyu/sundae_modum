@@ -16,9 +16,7 @@ function HomePage(){
   return(
     <HomeContainer>
       <Header h1='순대 모둠' />
-    <Btn>
-      <Link to='snslogin' >login</Link>
-      </Btn>
+
       <Nav />
     </HomeContainer>
   )

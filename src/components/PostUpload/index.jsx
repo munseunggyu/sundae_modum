@@ -1,9 +1,9 @@
 import Nav from "../../common/Nav"
 
-function PostPage(){
+function PostUploadPage(){
   return(
     <Nav></Nav>
   )
 }
 
-export default PostPage
+export default PostUploadPage
