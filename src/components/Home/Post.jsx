@@ -11,9 +11,9 @@ const PostBtn = styled.button`
   align-items:center;
   padding-bottom:5px;
 `;
-const UserProfileContainer = styled.div`
+const PostContentContainer = styled.div`
   display: flex;
-  align-items:center;
+  align-items:flex-end;
 `;
 const UserProfileImg = styled.img`
   width:42px;
@@ -22,18 +22,21 @@ const UserProfileImg = styled.img`
   border-radius:50%;
   margin:10px 10px 10px 0;
 `;
-const PostContentContainer = styled.div`
-  display: flex;
-  justify-content:space-between;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:10px;
-`;
 const FoodImg = styled.img`
-  width:100px;
-  height:100px;
+  width:65px;
+  height:65px;
   border-radius:20px;
   overflow:hidden;
+`;
+const PostTextContainer = styled.div`
+  display: flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+  span{
+    font-weight:600;
+    font-size:15px;
+  }
 `;
 
 function Post(){
@@ -42,14 +45,15 @@ function Post(){
     <li>
       <PostBtn>
         <div>
-        <UserProfileContainer>
-          <UserProfileImg src={userProfile} alt="" />
-          <span>유저이름</span>
-        </UserProfileContainer>
         <PostContentContainer>
-            <strong>오늘 1시에 치킨 드실분</strong>
-            <time>10월4일(화) 13:00</time>
-            <strong>#치킨 #모집중 #4명</strong>
+          <UserProfileImg src={userProfile} alt="" />
+          <PostTextContainer>
+          <span>유저이름</span>
+          <strong>오늘 1시에 치킨 드실분</strong>
+          <time>
+              10월4일(화) 13:00
+          </time>
+          </PostTextContainer>
         </PostContentContainer>
         </div>
         <FoodImg src="https://images.unsplash.com/photo-1578874557108-9fc2cfb1121e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpa2VufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="음식사진" />
