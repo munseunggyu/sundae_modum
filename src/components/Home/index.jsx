@@ -25,7 +25,7 @@ function HomePage(){
   let test = [1,2,3,4,5,6,7,8,9,10]
   return(
     <HomeContainer>
-      <Header h1='순대 모둠' />
+      <Header h1='순대 모둠' search={true} />
       <HomeMain>
         <IrH2>게시글</IrH2>
         <PostUl>

@@ -1,8 +1,12 @@
+import Header from "../../common/Header"
 import Nav from "../../common/Nav"
 
 function PostUploadPage(){
   return(
-    <Nav></Nav>
+    <>
+    <Header prv={true} upload={true}/>
+    <Nav />
+    </>
   )
 }
 
