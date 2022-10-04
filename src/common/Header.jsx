@@ -1,10 +1,11 @@
 import styled from "styled-components"
-import search from '../assets/icon-search.png'
+import search from '../assets/icons/icon-search.png'
 import { IrH1 } from "./TextHide";
 import arrow from '../assets/arrow-left.png'
 const HeaderContainer= styled.article`
   width:100%;
   position:fixed;
+  height:48px;
   border-bottom:0.5px solid rgb(219, 219, 219);
 `;
 const HeaderWrappper = styled.div`
@@ -31,7 +32,7 @@ function Header({h1,prv,ir}){
       <HeaderWrappper>
         {h1 && <HeaderH1> {h1} </HeaderH1>}
         <IrH1>{ir && ir} </IrH1>
-        {prv && <img src={arrow} alt="" />}
+        {prv && <img src={arrow} alt="이전" />}
         <SearchBtn />
       </HeaderWrappper>
     </HeaderContainer>
