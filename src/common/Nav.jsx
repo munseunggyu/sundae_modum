@@ -68,7 +68,9 @@ function Nav(){
           <IconImg icon={edit}  />
           <IconSpan>게시물 작성</IconSpan>
         </Iconsli>
-        <Iconsli onClick={() => navigate('/profile')}>
+        <Iconsli 
+        onClick={() => navigate('/snslogin')}
+        >
           <IconImg icon={
             profileMatch
             ? userFill
