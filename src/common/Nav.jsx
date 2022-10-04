@@ -40,18 +40,19 @@ const IconSpan = styled.span`
 `;
 function Nav(){
   const navigate = useNavigate()
-  const homeMatch = useMatch('/sundae_modum')
+  const homeMatch = useMatch('/')
   const dmMatch = useMatch('/dm')
   const profileMatch = useMatch('/profile')
+  console.log(profileMatch)
   return(
     <NavContainer>
       <IconsUl>
-        <Iconsli onClick={() => navigate('/sundae_modum')} >
+        <Iconsli onClick={() => navigate('/')} >
           <IconImg icon={
-            homeMatch.pathname === '/sundae_modum' ?
-            homeFill
-              : home
-              }  />
+            homeMatch 
+            ? homeFill 
+            : home
+              } />
           <IconSpan>홈</IconSpan>
         </Iconsli>
         <Iconsli onClick={() => navigate('/dm')}>
@@ -59,8 +60,7 @@ function Nav(){
             dmMatch 
             ? messageFill
             : message
-          }  
-          />
+          } />
           <IconSpan>채팅</IconSpan>
         </Iconsli>
         
@@ -73,7 +73,7 @@ function Nav(){
             profileMatch
             ? userFill
             : user
-          }  />
+          } />
           <IconSpan>프로필</IconSpan>
         </Iconsli>
       </IconsUl>

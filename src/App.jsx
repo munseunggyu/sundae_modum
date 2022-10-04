@@ -10,7 +10,7 @@ import ProfilePage from "./components/Profile";
 function App() {
   return (
     <Routes>
-      <Route path="/*" element={<HomePage /> } />
+      <Route path="/" element={<HomePage /> } />
       <Route path="/post" element={<PostPage /> } />
       <Route path="/dm" element={<DMPage /> } />
       <Route path="/snslogin" element={<SNSLoginPage /> } />
