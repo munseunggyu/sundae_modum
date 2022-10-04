@@ -7,6 +7,7 @@ const HeaderContainer= styled.article`
   position:fixed;
   height:48px;
   border-bottom:0.5px solid rgb(219, 219, 219);
+  background-color:white;
 `;
 const HeaderWrappper = styled.div`
   max-width:450px;

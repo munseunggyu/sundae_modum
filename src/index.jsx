@@ -63,6 +63,7 @@ table {
 }
 button{
   cursor:pointer;
+  border:0;
 }
 a{
   text-decoration:none;

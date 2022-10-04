@@ -13,6 +13,7 @@ const NavContainer = styled.nav`
   bottom:0;
   height:56px;
   border-top:0.5px solid rgb(219, 219, 219);
+  background-color:white;
 `;
 const IconsUl = styled.ul`
   max-width:450px;
@@ -43,7 +44,6 @@ function Nav(){
   const homeMatch = useMatch('/')
   const dmMatch = useMatch('/dm')
   const profileMatch = useMatch('/profile')
-  console.log(profileMatch)
   return(
     <NavContainer>
       <IconsUl>
