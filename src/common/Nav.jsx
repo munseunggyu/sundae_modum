@@ -37,17 +37,16 @@ const IconImg = styled.button`
 `;
 const IconSpan = styled.span`
   font-size:10px;
-`
-
+`;
 function Nav(){
   const navigate = useNavigate()
-  const homeMatch = useMatch('/*')
+  const homeMatch = useMatch('/sundae_modum')
   const dmMatch = useMatch('/dm')
   const profileMatch = useMatch('/profile')
   return(
     <NavContainer>
       <IconsUl>
-        <Iconsli onClick={() => navigate('/*')} >
+        <Iconsli onClick={() => navigate('/sundae_modum')} >
           <IconImg icon={
             homeMatch.pathname === '/sundae_modum' ?
             homeFill
