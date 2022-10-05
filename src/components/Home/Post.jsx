@@ -44,12 +44,17 @@ const PostTextContainer = styled.div`
   flex-direction:column;
   align-items:flex-start;
   gap:2px;
-  span{
-    font-weight:600;
-    font-size:15px;
-  }
 `;
-
+const UserName = styled.span`
+  font-weight:600;
+    font-size:15px;
+`
+const PostTextBottomContainer = styled.div`
+  display: flex;
+  gap:3px;
+  span{
+  }
+`
 function Post(){
 
   return(
@@ -57,13 +62,17 @@ function Post(){
       <PostBtn>
         <div>
         <PostContentContainer>
-          <UserProfileImg src={userProfile} alt="" />
+          <UserProfileImg src={userProfile} alt="유저 프로필" />
           <PostTextContainer>
-          <span>유저이름</span>
-          <strong>오늘 1시에 치킨 드실분</strong>
+          <UserName>유저이름</UserName>
+          <strong>오늘 1시에 치킨</strong>
+          <PostTextBottomContainer>
           <time>
-              10월4일(화) 13:00
+            10/4 13:00
           </time>
+          <span>18</span> {/* 채팅 수 */}
+          <strong>3/4</strong> {/* 인원 수 */}
+          </PostTextBottomContainer>
           </PostTextContainer>
         </PostContentContainer>
         </div>

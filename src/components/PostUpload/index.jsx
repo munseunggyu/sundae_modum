@@ -20,6 +20,14 @@ const DeadlineContainer = styled.div`
   align-items:center;
   gap:10px;
 `;
+const TitInput = styled.input`
+  width:100%;
+  border:0;
+  border-bottom:1px solid gray;
+  outline:none;
+  margin-bottom:10px;
+  font-size:16px;
+`;
 const FileBtn = styled.button`
   position:fixed;
   bottom:70px;
@@ -94,6 +102,7 @@ function PostUploadPage(){
           onChange={(e) => setPostTime(e.target.value)}
           />
           </DeadlineContainer>
+          <TitInput type="text" placeholder="제목을 입력해 주세요." />
           <TextArea
           autoFocus={true}
           ref={textArearRef}
