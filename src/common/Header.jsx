@@ -10,15 +10,17 @@ const HeaderContainer= styled.article`
   height:48px;
   overflow:hidden;
   border-bottom:0.5px solid rgb(219, 219, 219);
+  background-color:white;
+  z-index: 10;
   `;
-const HeaderWrappper = styled.div`
+const HeaderWrappper = styled.header`
   max-width:450px;
+  background-color:white;
   margin:0 auto;
   display: flex;
   align-items:center;
   justify-content:space-between;
   padding:14px 12px;
-  background-color:white;
   font-weight:600;
 `;
 const HeaderH1 = styled.h1`
