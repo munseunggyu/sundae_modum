@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/sundae_modum/static/js/main.248131d1.js",
+    "main.js": "/sundae_modum/static/js/main.c1cc830d.js",
     "static/media/logo.png": "/sundae_modum/static/media/logo.74266ab99c218106dc18.png",
     "index.html": "/sundae_modum/index.html",
-    "main.248131d1.js.map": "/sundae_modum/static/js/main.248131d1.js.map"
+    "main.c1cc830d.js.map": "/sundae_modum/static/js/main.c1cc830d.js.map"
   },
   "entrypoints": [
-    "static/js/main.248131d1.js"
+    "static/js/main.c1cc830d.js"
   ]
 }
