@@ -57,8 +57,8 @@ const PrvBtn = styled.button`
   position: relative;
   bottom:4px;
 `;
-// h1='순대 모둠'
-function Header({h1,prv,ir,search,upload}){
+
+function Header({h1,prv,ir,search,upload,handleUpload}){
   const navigate = useNavigate()
   return(
     <HeaderContainer>
@@ -74,7 +74,7 @@ function Header({h1,prv,ir,search,upload}){
         }
         {search && <SearchBtn />}
         {upload && 
-        <UploadBtn>업로드</UploadBtn>
+        <UploadBtn onClick={handleUpload}>업로드</UploadBtn>
         }
       </HeaderWrappper>
     </HeaderContainer>

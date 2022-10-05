@@ -11,7 +11,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage /> } />
-      <Route path="/post" element={<PostUploadPage /> } />
+      <Route path="/postupload" element={<PostUploadPage /> } />
       <Route path="/dm" element={<DMPage /> } />
       <Route path="/snslogin" element={<SNSLoginPage /> } />
       <Route path="/register" element={<RegisterPage/> } />

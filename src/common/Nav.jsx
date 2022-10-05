@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import edit from '../assets/icons/icon-edit.png'
+import editFill from '../assets/icons/icon-edit-fill.png'
 import home from '../assets/icons/icon-home.png'
 import homeFill from '../assets/icons/icon-home-fill.png'
 import user from '../assets/icons/icon-user.png'
@@ -44,6 +45,7 @@ function Nav(){
   const homeMatch = useMatch('/')
   const dmMatch = useMatch('/dm')
   const profileMatch = useMatch('/profile')
+  const postUploadMatch = useMatch('/postupload')
   return(
     <NavContainer>
       <IconsUl>
@@ -64,8 +66,12 @@ function Nav(){
           <IconSpan>채팅</IconSpan>
         </Iconsli>
         
-        <Iconsli onClick={() => navigate('/post')}>
-          <IconImg icon={edit}  />
+        <Iconsli onClick={() => navigate('/postupload')}>
+          <IconImg icon={
+            postUploadMatch
+            ? editFill
+            : edit
+          }  />
           <IconSpan>게시물 작성</IconSpan>
         </Iconsli>
         <Iconsli 
