@@ -13,7 +13,6 @@ const HomeContainer = styled.div`
   position: relative;
 `;
 const PostUl = styled.ul`
-  padding:12px 0;
 `;
 
 function HomePage(){
