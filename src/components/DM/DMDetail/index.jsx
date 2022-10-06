@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom"
-import Header from "../../../common/Header"
 
 function DMDetailPage(){
   return(
     <>
-      <Header />
+      디테일 페이지 입니다.
     </>
   )
 }

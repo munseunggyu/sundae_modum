@@ -4,6 +4,7 @@ import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import userProfile from '../../../assets/user-profile.jpeg'
 import OtherUserChatting from "./OtherUserChatting";
+import arrow from '../../../assets/arrow-left.png'
 export const UserContainer = styled.div`
   display: flex;
   align-items:center;
@@ -49,7 +50,7 @@ const JoinBtn = styled.button`
   color:white;
   background-color:#9ec1d0;
   border-radius:11px;
-  margin:0 10px 10px 10px;
+  margin:0 10px 10px 0;
 `;
 const JoinSpan = styled.span`
   font-size:16px;
@@ -68,20 +69,28 @@ const ChattingInput = styled.input`
   outline:none;
   width:100%;
   font-size:16px;
-  padding:10px;
+  padding:10px 30px 10px 10px;
 `;
 const PostDetailContainer = styled.div`
   background-color:#f2f2f2;
-  padding-top:10px;
+  padding:10px 12px 0;
   margin-bottom:10px;
 `;
-
+const SubmitBtn = styled.button`
+  position: absolute;
+  right:10px;
+  background:url(${arrow});
+  transform:rotateY(180deg);
+  width:22px;
+  height:22px;
+  top:10px;
+`;
 function PostDetailPage(){
   const {id} = useParams()
   return(
     <>
     <Header prv={true}  vertical={true}/>
-    <MainContainer>
+    <MainContainer pr='0'>
       <PostDetailContainer>
       <UserContainer>
         <UserProfileImg src={userProfile} alt="유저 프로필" />
@@ -107,6 +116,7 @@ function PostDetailPage(){
     <ChattingFormContainer>
       <ChattingForm>
         <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
+        <SubmitBtn />
       </ChattingForm>
     </ChattingFormContainer>
     </MainContainer>
