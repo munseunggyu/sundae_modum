@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom"
+import Header from "../../../common/Header"
 
 function DMDetailPage(){
   return(
     <>
-      디테일 페이지 입니다.
+      <Header prv={true} userName='목짧은 기린' vertical={true}/>
     </>
   )
 }
