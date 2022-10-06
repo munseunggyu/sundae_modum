@@ -27,7 +27,7 @@ const DeadLine = styled.time`
 `;
 const ContentsTitle = styled.strong`
   display: block;
-  margin:20px 0;
+  margin:10px 0;
   font-weight:600;
   font-size:18px;
 `;
@@ -42,6 +42,17 @@ const ContentsImg = styled.img`
   padding-bottom:20px;
   display: block;
   margin:0 auto;  
+`;
+const JoinBtn = styled.button`
+  width:80px;
+  padding:10px 0;
+  color:white;
+  background-color:#9ec1d0;
+  border-radius:11px;
+  margin:0 10px 10px 10px;
+`;
+const JoinSpan = styled.span`
+  font-size:16px;
 `;
 const ChattingFormContainer = styled.div`
   display: flex;
@@ -87,6 +98,8 @@ function PostDetailPage(){
         편하신대로 DM이나 채팅 남겨주세요!
       </ContentsTxt>
       <ContentsImg src="https://images.unsplash.com/photo-1578874557108-9fc2cfb1121e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpa2VufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="" />
+      <JoinBtn>참여하기</JoinBtn>
+      <JoinSpan>3/4</JoinSpan>
       </PostDetailContainer>
       <ul>
         <OtherUserChatting />
