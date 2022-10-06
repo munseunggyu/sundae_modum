@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import Header from "../../common/Header"
-import { MainContainer } from "../../common/MainContainer"
-import Nav from "../../common/Nav"
-import DMRoomList from "./DMRoomList";
+import Header from "../../../common/Header"
+import { MainContainer } from "../../../common/MainContainer"
+import Nav from "../../../common/Nav"
+import DMRoom from "./DMRoom";
 
 const DMRoomUl = styled.ul`
   padding-top:12px;
 `;
 
-function DMPage(){
+function DMRoomList(){
   const test = [1,2,3,4,5,6,7,8,9,10]
   return(
     <>
@@ -16,7 +16,7 @@ function DMPage(){
     <MainContainer>
       <DMRoomUl>
         {
-          test.map(v => <DMRoomList value={v} key={v} />)
+          test.map(v => <DMRoom value={v} key={v} />)
         }
       </DMRoomUl>
     </MainContainer>
@@ -25,4 +25,4 @@ function DMPage(){
   )
 }
 
-export default DMPage
+export default DMRoomList

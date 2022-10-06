@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
-import userProfile from '../../assets/user-profile.jpeg'
+import userProfile from '../../../assets/user-profile.jpeg'
 
 
 const DMRoomli = styled.li`
@@ -43,7 +43,7 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoomList({value}){
+function DMRoom({value}){
   const navigate = useNavigate()
   return(
     <DMRoomli>
@@ -61,4 +61,4 @@ function DMRoomList({value}){
   )
 }
 
-export default DMRoomList
+export default DMRoom
