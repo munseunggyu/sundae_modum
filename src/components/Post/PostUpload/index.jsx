@@ -1,10 +1,10 @@
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
-import Header from "../../common/Header"
-import { MainContainer } from "../../common/MainContainer"
-import Nav from "../../common/Nav"
-import { IrH2 } from "../../common/TextHide"
-import fileImg  from '../../assets/img-file-button.png'
+import Header from "../../../common/Header"
+import { MainContainer } from "../../../common/MainContainer"
+import Nav from "../../../common/Nav"
+import { IrH2 } from "../../../common/TextHide"
+import fileImg  from '../../../assets/img-file-button.png'
 
 const TextArea = styled.textarea`
   width:100%;

@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import DMPage from "./components/DM/DMRoomList";
+import DMPage from "./components/DM/DMRoomLists";
 import HomePage from "./components/Home";
 import SNSLoginPage from "./components/SNSLogin";
 import RegisterPage from "./components/Register";
 import EmailLoginPage from "./components/EmailLogin";
 import ProfilePage from "./components/Profile";
-import PostUploadPage from "./components/PostUpload";
+import PostUploadPage from "./components/Post/PostUpload";
 import DMDetailPage from "./components/DM/DMDetail";
 
 function App() {

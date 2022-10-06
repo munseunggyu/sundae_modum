@@ -2,14 +2,14 @@ import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import Nav from "../../../common/Nav"
-import DMRoom from "./DMRoom";
+import DMRoom from "./DMRoomList";
 
 const DMRoomUl = styled.ul`
   padding-top:12px;
 `;
 
-function DMRoomList(){
-  const test = [1,2,3,4,5,6,7,8,9,10]
+function DMRoomLists(){
+  const test = [1,2,3,4,5]
   return(
     <>
     <Header prv={true} vertical={true}/>
@@ -25,4 +25,4 @@ function DMRoomList(){
   )
 }
 
-export default DMRoomList
+export default DMRoomLists

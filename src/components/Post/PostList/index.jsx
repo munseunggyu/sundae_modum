@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import userProfile from '../../assets/user-profile.jpeg'
-import logo from '../../assets/logo.png'
+import userProfile from '../../../assets/user-profile.jpeg'
+import logo from '../../../assets/logo.png'
 
 const Postli = styled.li`
   border-bottom:1px solid rgb(219,219,219);
@@ -55,7 +55,7 @@ const PostTextBottomContainer = styled.div`
   span{
   }
 `
-function Post(){
+function PostList(){
 
   return(
     <Postli>
@@ -82,4 +82,4 @@ function Post(){
   )
 }
 
-export default Post
+export default PostList

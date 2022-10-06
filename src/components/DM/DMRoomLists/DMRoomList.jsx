@@ -43,7 +43,7 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoom({value}){
+function DMRoomList({value}){
   const navigate = useNavigate()
   return(
     <DMRoomli>
@@ -61,4 +61,4 @@ function DMRoom({value}){
   )
 }
 
-export default DMRoom
+export default DMRoomList

@@ -7,7 +7,7 @@ import { MainContainer } from "../../common/MainContainer"
 import Nav from "../../common/Nav"
 import { IrH2 } from "../../common/TextHide"
 import { setUser } from "../../redux/actions/user_action"
-import Post from "./Post"
+import Post from "../Post/PostList"
 
 const HomeContainer = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ const PostUl = styled.ul`
 `;
 
 function HomePage(){
-  let test = [1,2,3,4,5,6,7,8,9,10]
+  let test = [1,2,3,4,5]
   return(
     <HomeContainer>
       <Header h1='순대 모둠' search={true} />
