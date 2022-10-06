@@ -1,8 +1,9 @@
 import styled from "styled-components"
-import search from '../assets/icons/icon-search.png'
+import searchIcon from '../assets/icons/icon-search.png' 
 import { IrH1 } from "./TextHide";
 import arrow from '../assets/arrow-left.png'
 import headerLogo from '../assets/header-logo.png'
+import verticalIcon from '../assets/icons/icon-more-vertical.png'
 import { useNavigate } from "react-router-dom";
 const HeaderContainer= styled.article`
   width:100%;
@@ -15,10 +16,9 @@ const HeaderContainer= styled.article`
   `;
 const HeaderWrappper = styled.header`
   max-width:450px;
-  background-color:white;
   margin:0 auto;
   display: flex;
-  align-items:center;
+  /* align-items:center; */
   justify-content:space-between;
   padding:14px 12px;
   font-weight:600;
@@ -37,30 +37,29 @@ const HeaderH1 = styled.h1`
     left:-50px; 
   }
 `;
-const SearchBtn = styled.button`
-  background:url(${search}) center no-repeat;
-  width:24px;
-  height:24px;
+const RightIconBtn = styled.button`
+  background:url(${props => props.icon}) center no-repeat;
+  width:22px;
+  height:22px;
 `;
 const UploadBtn = styled.button`
   background-color:${props => props.theme.mainColor};
-  padding:7px 0;
   width:90px;
+  padding:7px 0;
   color:white;
   border-radius:32px; 
-  position:relative;
-  bottom:4px; 
   font-size:14px;
+  position: relative;
+  bottom:4px;
 `;
 const PrvBtn = styled.button`
   background:url(${arrow});
   width:22px;
   height:22px;
-  position: relative;
-  bottom:4px;
+
 `;
 
-function Header({h1,prv,ir,search,upload,handleUpload}){
+function Header({h1,prv,ir,search,upload,handleUpload,vertical}){
   const navigate = useNavigate()
   return(
     <HeaderContainer>
@@ -74,7 +73,8 @@ function Header({h1,prv,ir,search,upload,handleUpload}){
           onClick={() => navigate(-1)}
           />)
         }
-        {search && <SearchBtn />}
+        {vertical && <RightIconBtn icon={verticalIcon} />}
+        {search && <RightIconBtn icon={searchIcon} />}
         {upload && 
         <UploadBtn onClick={handleUpload}>업로드</UploadBtn>
         }

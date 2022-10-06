@@ -6,7 +6,7 @@ const Postli = styled.li`
   border-bottom:1px solid rgb(219,219,219);
   margin-bottom:5px;
   &:first-child{
-    margin-top:5px;
+    /* margin-top:5px; */
   }
   &:last-child{
     border:0;

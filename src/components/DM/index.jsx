@@ -1,8 +1,16 @@
+import Header from "../../common/Header"
+import { MainContainer } from "../../common/MainContainer"
 import Nav from "../../common/Nav"
 
 function DMPage(){
   return(
-    <Nav></Nav>
+    <>
+    <Header prv={true} vertical={true}/>
+    <MainContainer>
+      
+    </MainContainer>
+    <Nav />
+    </>
   )
 }
 
