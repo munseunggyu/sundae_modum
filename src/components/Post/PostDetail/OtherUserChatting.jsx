@@ -6,7 +6,7 @@ import userProfile from '../../../assets/user-profile.jpeg'
 const OtherUserChatContainer = styled.li`
 width:100%;
 padding-bottom:10px;
-border-bottom:1px solid #C4C4C4;
+border-bottom:0.5px solid #C4C4C4;
 margin-bottom:10px;
 &:last-child{
   border-bottom:0;

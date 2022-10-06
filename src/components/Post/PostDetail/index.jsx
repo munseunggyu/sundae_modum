@@ -19,7 +19,12 @@ export const UserProfileImg = styled.img`
 export const UserName = styled.span`
   font-weight:500;
 `;
+const PostDetailContainer = styled.div`
+  padding:10px 12px 0;
+  margin-bottom:10px;
+  border-bottom: 1px solid #C4C4C4;
 
+`;
 const DeadLine = styled.time`
   display: block;
   margin-top:20px;
@@ -69,21 +74,19 @@ const ChattingInput = styled.input`
   outline:none;
   width:100%;
   font-size:16px;
-  padding:10px 30px 10px 10px;
+  padding:15px 30px 15px 15px;
+  border:0;
+  border-top:0.5px solid #DBDBDB;
 `;
-const PostDetailContainer = styled.div`
-  background-color:#f2f2f2;
-  padding:10px 12px 0;
-  margin-bottom:10px;
-`;
-const SubmitBtn = styled.button`
+
+const ChattingSubmitBtn = styled.button`
   position: absolute;
   right:10px;
   background:url(${arrow});
   transform:rotateY(180deg);
   width:22px;
   height:22px;
-  top:10px;
+  top:15px;
 `;
 function PostDetailPage(){
   const {id} = useParams()
@@ -111,12 +114,14 @@ function PostDetailPage(){
       <JoinSpan>3/4</JoinSpan>
       </PostDetailContainer>
       <ul>
-        <OtherUserChatting />
+      <OtherUserChatting />
+      <OtherUserChatting />
+      <OtherUserChatting />
       </ul>
     <ChattingFormContainer>
       <ChattingForm>
         <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
-        <SubmitBtn />
+        <ChattingSubmitBtn />
       </ChattingForm>
     </ChattingFormContainer>
     </MainContainer>
