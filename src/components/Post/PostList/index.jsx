@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import userProfile from '../../../assets/user-profile.jpeg'
 import logo from '../../../assets/logo.png'
+import { useNavigate } from "react-router-dom";
 
 const Postli = styled.li`
   border-bottom:1px solid rgb(219,219,219);
@@ -55,11 +56,11 @@ const PostTextBottomContainer = styled.div`
   span{
   }
 `
-function PostList(){
-
+function PostList({value}){
+  const navigate = useNavigate()
   return(
     <Postli>
-      <PostBtn>
+      <PostBtn onClick={() => navigate(`postdetail/${value}`)}>
         <div>
         <PostContentContainer>
           <UserProfileImg src={userProfile} alt="유저 프로필" />

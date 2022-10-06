@@ -24,7 +24,7 @@ function HomePage(){
         <IrH2>게시글</IrH2>
         <PostUl>
           {
-            test.map(v => <Post key={v} />)
+            test.map(v => <Post value={v} key={v} />)
           }
         </PostUl>
       </MainContainer>
