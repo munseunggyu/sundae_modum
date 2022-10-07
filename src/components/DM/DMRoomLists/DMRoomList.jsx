@@ -14,6 +14,7 @@ const DMBtn = styled.button`
   display: flex;
   gap:12px;
   width:100%;
+  align-items:flex-end;
 `;
 const UserImg = styled.img`
   border-radius:50%;
