@@ -18,7 +18,7 @@ const HeaderWrappper = styled.header`
   max-width:450px;
   margin:0 auto;
   display: flex;
-  /* align-items:center; */
+  align-items:center;
   justify-content:space-between;
   padding:14px 12px;
   font-weight:600;
@@ -44,13 +44,14 @@ const RightIconBtn = styled.button`
 `;
 const UploadBtn = styled.button`
   background-color:${props => props.theme.mainColor};
-  width:90px;
-  padding:7px 0;
+  width:80px;
+  /* padding:7px 0; */
+  height:22px;
   color:white;
   border-radius:32px; 
   font-size:14px;
-  position: relative;
-  bottom:4px;
+  /* position: relative;
+  bottom:4px; */
 `;
 const PrvBtn = styled.button`
   background:url(${arrow});

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
-import userProfile from '../../../assets/user-profile.jpeg'
+import userProfile from '../../../assets/user-profile.png'
 import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
 export const UserContainer = styled.div`

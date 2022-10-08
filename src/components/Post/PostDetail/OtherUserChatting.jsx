@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { UserContainer, UserName, UserProfileImg } from ".";
 import verticalIcon from '../../../assets/icons/icon-more-vertical.png'
-import userProfile from '../../../assets/user-profile.jpeg'
+import userProfile from '../../../assets/user-profile.png'
 
 const OtherUserChatContainer = styled.li`
 width:100%;

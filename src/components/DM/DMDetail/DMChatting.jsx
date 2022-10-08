@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import userImg from '../../../assets/user-profile.jpeg'
+import userImg from '../../../assets/user-profile.png'
 
 const DMChattingLi = styled.li`
   display: flex;

@@ -95,12 +95,12 @@ function PostUploadPage(){
         <IrH2>게시물 작성</IrH2>
         <form onSubmit={handlePostSubmit}>
           <DeadlineContainer>
-          기한: <input type="date"
+          <input type="date"
           onChange={(e) => setPostDate(e.target.value)}
           />
           <input type="time" 
           onChange={(e) => setPostTime(e.target.value)}
-          />
+          /> : 까지 모집
           </DeadlineContainer>
           <TitInput type="text" placeholder="제목을 입력해 주세요." />
           <TextArea

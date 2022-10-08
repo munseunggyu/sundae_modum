@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
-import userProfile from '../../../assets/user-profile.jpeg'
+import userProfile from '../../../assets/user-profile.png'
 
 
 const DMRoomli = styled.li`

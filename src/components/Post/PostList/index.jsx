@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import userProfile from '../../../assets/user-profile.jpeg'
+import userProfile from '../../../assets/user-profile.png'
 import logo from '../../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
 
