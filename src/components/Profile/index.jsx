@@ -4,6 +4,7 @@ import { MainContainer } from "../../common/MainContainer"
 import userImg from '../../assets/user-profile.png'
 import PostList from "../Post/PostList";
 import { useNavigate } from "react-router-dom";
+import Nav from "../../common/Nav";
 
 const ProfileContainer = styled.div`
   width:100%;
@@ -61,6 +62,7 @@ function ProfilePage(){
           <PostList />
         </MyPostUl>
       </MainContainer>
+      <Nav />
     </>
   )
 }
