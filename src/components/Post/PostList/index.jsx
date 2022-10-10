@@ -4,7 +4,7 @@ import logo from '../../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
 
 const Postli = styled.li`
-  border-bottom:1px solid rgb(219,219,219);
+  border-bottom:1px solid #dbdbdb;
   margin-bottom:5px;
   &:first-child{
     /* margin-top:5px; */
@@ -25,7 +25,6 @@ const PostBtn = styled.button`
 const PostContentContainer = styled.div`
   display: flex;
   align-items:flex-end;
-  
 `;
 const UserProfileImg = styled.img`
   width:42px;

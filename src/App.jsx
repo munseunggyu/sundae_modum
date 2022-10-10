@@ -8,6 +8,7 @@ import ProfilePage from "./components/Profile";
 import PostUploadPage from "./components/Post/PostUpload";
 import DMDetailPage from "./components/DM/DMDetail";
 import PostDetailPage from "./components/Post/PostDetail";
+import EditProfile from "./components/Profile/EditProfile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/register" element={<RegisterPage/> } />
       <Route path="/emaillogin" element={<EmailLoginPage /> } />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/editprofile" element={<EditProfile /> } />
     </Routes>
   );
 }
