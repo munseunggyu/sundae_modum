@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
@@ -61,46 +62,71 @@ export const PrevPage = styled.button`
     position: absolute;
   }
 `;
+const ErrorMessageP = styled.p`
+  font-size:10px;
+  font-weight:300;
+
+`;
 function RegisterPage(){
-  const {register} = useForm()
+  const {register,watch,formState:{errors},handleSubmit} = useForm()
+  const [errorMessage,setErrorMessage] = useState('')
+  const password = useRef()
+  password.current = watch('password')
   const navigate = useNavigate()
+  const Register = async (data) => {
+    console.log(data)
+  }
   return(
     <SignContainer>
       <SignH1>회원가입</SignH1>
       <PrevPage onClick={()=>navigate('/snslogin')}></PrevPage>
-      <SignFormContainer >
-        <SignLabel for='user-email'>
+      <SignFormContainer 
+      onSubmit={handleSubmit(Register)}
+      >
+        <SignLabel htmlFor='user-email'>
           이메일
         </SignLabel>
         <SignInput 
           type="email" 
+          name='email'
           id="user-email" 
           placeholder="이메일을 입력하세요."
+          {...register("email",{required:true,pattern:/^\S+@\S+$/i })}
           />
-          <SignLabel for='user-nickname'>
+          <SignLabel htmlFor='user-nickname'>
           닉네임
         </SignLabel>
         <SignInput 
-          type="password" 
+          type="text" 
+          name='nickName'
           id="user-nickname" 
-          placeholder="닉네임을 입력하세요."
+          placeholder="2~10자 이내 닉네임을 입력하세요. "
+          {...register("nickName", { required: true, minLength:2,maxLength: 10 })}
           />
-          <SignLabel for='user-pw'>
+          {errors.nickName && <ErrorMessageP>2~10자 이내로 입력해주세요.</ErrorMessageP>}
+
+          <SignLabel htmlFor='user-pw'>
           비밀번호
         </SignLabel>
         <SignInput 
           type="password" 
+          name='password'
           id="user-pw" 
           placeholder="비밀번호를 입력하세요."
+          {...register("password", { required: true,minLength:6 })}
           />
-          <SignLabel for='user-pw-confirm'>
+          {errors.password && <ErrorMessageP>최소 6자 이상 입력해주세요.</ErrorMessageP>}
+          <SignLabel htmlFor='user-pw-confirm'>
           비밀번호 확인
         </SignLabel>
         <SignInput 
           type="password" 
+          name='passwordConfirm'
           id="user-pw-confirm" 
           placeholder="비밀번호를 입력하세요."
+          {...register('passwordConfirm',{required:true,validate:(value) => value === password.current})}
           />
+          {errors.password_confirm && <ErrorMessageP>위 비밀번호와 일치하게 입력해주세요.</ErrorMessageP>}
           <SignSubmitBtn type="submit" value='회원가입' />
           <Link to='/emaillogin'>이미 아이디가 있다면...</Link>
       </SignFormContainer>
