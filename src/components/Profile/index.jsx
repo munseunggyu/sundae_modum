@@ -5,6 +5,8 @@ import userImg from '../../assets/user-profile.png'
 import PostList from "../Post/PostList";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../common/Nav";
+import { signOut } from 'firebase/auth';
+import { auth } from "../../firebase";
 
 const ProfileContainer = styled.div`
   width:100%;
@@ -56,6 +58,7 @@ function ProfilePage(){
           <UserProfileEditBtn
           onClick={() => navigate('/editprofile')}
           >프로필 수정하기</UserProfileEditBtn>
+          <button onClick={() => signOut(auth)}>로그아웃</button>
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
         <MyPostUl>

@@ -72,7 +72,6 @@ const ErrorMessageP = styled.p`
 function RegisterPage(){
   const navigate = useNavigate()
   const {register,watch,formState:{errors},handleSubmit} = useForm()
-  const [errorMessage,setErrorMessage] = useState('')
   const password = useRef()
   password.current = watch('password')
   
@@ -88,7 +87,7 @@ function RegisterPage(){
   return(
     <SignContainer>
       <SignH1>회원가입</SignH1>
-      <PrevPage onClick={()=>navigate('/sumdae_modum')}></PrevPage>
+      <PrevPage onClick={()=>navigate('/')}></PrevPage>
       <SignFormContainer 
       onSubmit={handleSubmit(Register)}
       >
