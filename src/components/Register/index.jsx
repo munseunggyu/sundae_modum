@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import arrowLeft from '../../assets/arrow-left.png'
@@ -66,7 +67,7 @@ export const PrevPage = styled.button`
     position: absolute;
   }
 `;
-const ErrorMessageP = styled.p`
+export const ErrorMessageP = styled.p`
   font-size:10px;
   font-weight:300;
 

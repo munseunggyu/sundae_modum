@@ -12,43 +12,45 @@ import EditProfile from "./components/Profile/EditProfile";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/actions/user_action";
 
 function App() {
-  const [loding,setLoding] = useState('')
+  const dispatch = useDispatch()
+  const userInfo = useSelector(state => state.user)
+  console.log(userInfo.isLoading)
   const navigate = useNavigate()
   useEffect(() => {
     onAuthStateChanged(auth,user => {
       if(user){
-        setLoding(true)
+        dispatch(setUser(user))
         navigate('/')
-        console.log(loding)
       }else{
         navigate('/')
-        setLoding(false)
-        console.log(loding)
       }
     })
   },[])
   return (
     <Routes>
       {
-        loding
+        userInfo.isLoading
         ?  (
-          <>
-          <Route path="/" element={<HomePage /> } />
-          <Route path="/postupload" element={<PostUploadPage /> } />
-          <Route path="/postdetail/:id" element={<PostDetailPage /> } />
-          <Route path="/dm" element={<DMPage /> } />
-          <Route path="/dm/:id" element={<DMDetailPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/editprofile" element={<EditProfile /> } />
-        </>
-        )
-        : (
           <>
             <Route path="/" element={<SNSLoginPage /> } />
             <Route path="/register" element={<RegisterPage/> } />
             <Route path="/emaillogin" element={<EmailLoginPage /> } />
+            <Route path="/" element={<HomePage /> } />
+        </>
+        )
+        : (
+          <>
+            <Route path="/" element={<HomePage /> } />
+            <Route path="/postupload" element={<PostUploadPage /> } />
+            <Route path="/postdetail/:id" element={<PostDetailPage /> } />
+            <Route path="/dm" element={<DMPage /> } />
+            <Route path="/dm/:id" element={<DMDetailPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/editprofile" element={<EditProfile /> } />
           </>
         )
       }
