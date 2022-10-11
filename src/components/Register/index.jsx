@@ -50,6 +50,7 @@ export const SignSubmitBtn = styled.input`
   margin-top:20px;
   border:0;
   cursor: pointer;
+  opacity: ${props => props.disabled ? '0.5' : '1'};
 `;
 export const PrevPage = styled.button`
   top:18px;
@@ -71,18 +72,25 @@ const ErrorMessageP = styled.p`
 `;
 function RegisterPage(){
   const navigate = useNavigate()
+  const [loding,setLoding] = useState(false) // 계정 생성 시 firebase에서 계정 생성될때 까지 submit버튼 비활성화
   const {register,watch,formState:{errors},handleSubmit} = useForm()
   const password = useRef()
   password.current = watch('password')
   
   const Register = async ({email,nickName,password}) => {
-    const createUser = await createUserWithEmailAndPassword(auth,email,password)  
-    await updateProfile(auth.currentUser,{
-      displayName: nickName,
-      photoURL:'',
-      uid: createUser.user.uid
-    })
-    console.log('완료')
+    try{
+      setLoding(true)
+      console.log('완료')
+      const createUser = await createUserWithEmailAndPassword(auth,email,password)  
+      await updateProfile(auth.currentUser,{
+        displayName: nickName,
+        photoURL:'',
+        uid: createUser.user.uid
+      })
+      setLoding(false)
+    }catch(error){
+      console.log(error)
+    }
   }
   return(
     <SignContainer>
@@ -135,7 +143,7 @@ function RegisterPage(){
           {...register('passwordConfirm',{required:true,validate:(value) => value === password.current})}
           />
           {errors.password_confirm && <ErrorMessageP>위 비밀번호와 일치하게 입력해주세요.</ErrorMessageP>}
-          <SignSubmitBtn type="submit" value='회원가입' />
+          <SignSubmitBtn type="submit" value='회원가입' disabled={loding} />
           <Link to='/emaillogin'>이미 아이디가 있다면...</Link>
       </SignFormContainer>
     </SignContainer>
