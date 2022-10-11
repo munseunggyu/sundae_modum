@@ -1,8 +1,10 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import arrowLeft from '../../assets/arrow-left.png'
+import { auth } from "../../firebase";
 export const SignContainer = styled.article`
   margin:78px auto 0;
   width:100%;
@@ -68,18 +70,25 @@ const ErrorMessageP = styled.p`
 
 `;
 function RegisterPage(){
+  const navigate = useNavigate()
   const {register,watch,formState:{errors},handleSubmit} = useForm()
   const [errorMessage,setErrorMessage] = useState('')
   const password = useRef()
   password.current = watch('password')
-  const navigate = useNavigate()
-  const Register = async (data) => {
-    console.log(data)
+  
+  const Register = async ({email,nickName,password}) => {
+    const createUser = await createUserWithEmailAndPassword(auth,email,password)  
+    await updateProfile(auth.currentUser,{
+      displayName: nickName,
+      photoURL:'',
+      uid: createUser.user.uid
+    })
+    console.log('완료')
   }
   return(
     <SignContainer>
       <SignH1>회원가입</SignH1>
-      <PrevPage onClick={()=>navigate('/snslogin')}></PrevPage>
+      <PrevPage onClick={()=>navigate('/sumdae_modum')}></PrevPage>
       <SignFormContainer 
       onSubmit={handleSubmit(Register)}
       >
