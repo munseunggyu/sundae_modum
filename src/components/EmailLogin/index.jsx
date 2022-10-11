@@ -8,7 +8,7 @@ function EmailLoginPage(){
     <SignH1>로그인</SignH1>
     <PrevPage onClick={()=>navigate('/snslogin')}></PrevPage>
     <SignFormContainer >
-      <SignLabel for='user-email'>
+      <SignLabel htmlFor='user-email'>
         이메일
       </SignLabel>
       <SignInput 
@@ -16,7 +16,7 @@ function EmailLoginPage(){
         id="user-email" 
         placeholder="이메일을 입력하세요."
         />
-        <SignLabel for='user-pw'>
+        <SignLabel htmlFor='user-pw'>
         비밀번호
       </SignLabel>
       <SignInput 
