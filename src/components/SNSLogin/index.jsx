@@ -5,6 +5,9 @@ import kakaologo from '../../assets/kakaologo.png'
 import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useState } from "react";
 const SNSLoginContainer= styled.article`
   width:100%;
 `;
@@ -84,7 +87,25 @@ const EmailRegisterContainer = styled.div`
 `;
 
 function SNSLoginPage(){
+  const [errorMessage,setErrorMessage] = useState('')
+  const googleProvider = new GoogleAuthProvider()
+  const facebookProvider = new FacebookAuthProvider()
+  const onSocialLogin = async (e) => {
+   try{
+    const {target:{name}} = e
+    if(name === 'google'){
+      console.log('구글임')
+      await signInWithRedirect(auth,googleProvider)
+    }else if(name === 'facebook'){
+      await signInWithRedirect(auth, facebookProvider);
+    }else{
+    }
+   }
+   catch(error){
+    console.log(error)
+  }
 
+  }
   return(
     <SNSLoginContainer>
       <IrH1>SNS 로그인 페이지</IrH1>
@@ -94,17 +115,31 @@ function SNSLoginPage(){
       <LoginBtnContainer>
         <LoginBtns>
           <li>
-            <SNSBtn color="#F1C94B" logoImg={kakaologo}>
+            <SNSBtn 
+            color="#F1C94B" 
+            logoImg={kakaologo}
+            name='kakao'
+            onClick={onSocialLogin}
+            >
               카카오 계정으로 로그인
             </SNSBtn>
             </li>
           <li>
-            <SNSBtn logoImg={googlelogo}>
+            <SNSBtn 
+            logoImg={googlelogo}
+            name = 'google'
+            onClick={onSocialLogin}
+            >
               구글 계정으로 로그인
             </SNSBtn>
             </li>
           <li>
-            <SNSBtn color="#2C9CDB" logoImg={facebooklogo}>
+            <SNSBtn 
+            color="#2C9CDB" 
+            logoImg={facebooklogo}
+            name='facebook'
+            onClick={onSocialLogin}
+            >
               페이스북 계정으로 로그인
             </SNSBtn>
             </li>
