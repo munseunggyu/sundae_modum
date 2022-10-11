@@ -1,10 +1,11 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import arrowLeft from '../../assets/arrow-left.png'
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 export const SignContainer = styled.article`
   margin:78px auto 0;
   width:100%;
@@ -82,11 +83,15 @@ function RegisterPage(){
       setLoding(true)
       console.log('완료')
       const createUser = await createUserWithEmailAndPassword(auth,email,password)  
-      await updateProfile(auth.currentUser,{
+      const userData = {
         displayName: nickName,
         photoURL:'',
-        uid: createUser.user.uid
-      })
+        uid: createUser.user.uid,
+        email
+      }
+      await updateProfile(auth.currentUser,userData)
+      const usersDB = doc(collection(db,'users'))
+      await setDoc(usersDB,userData)
       setLoding(false)
     }catch(error){
       console.log(error)
