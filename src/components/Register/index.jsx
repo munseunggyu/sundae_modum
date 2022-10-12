@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import arrowLeft from '../../assets/arrow-left.png'
 import { auth, db } from "../../firebase";
+import { oneCollectionSetDoc } from "../../utils";
 export const SignContainer = styled.article`
   margin:78px auto 0;
   width:100%;
@@ -91,8 +92,9 @@ function RegisterPage(){
         email
       }
       await updateProfile(auth.currentUser,userData)
-      const usersDB = doc(collection(db,'users'))
-      await setDoc(usersDB,userData)
+      oneCollectionSetDoc('users',userData)
+      // const usersDB = doc(collection(db,'users'))
+      // await setDoc(usersDB,userData)
       setLoding(false)
     }catch(error){
       console.log(error)

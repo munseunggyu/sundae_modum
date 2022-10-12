@@ -6,7 +6,7 @@ import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth} from "../../firebase";
 import { useState } from "react";
 const SNSLoginContainer= styled.article`
   width:100%;
@@ -94,7 +94,6 @@ function SNSLoginPage(){
    try{
     const {target:{name}} = e
     if(name === 'google'){
-      console.log('구글임')
       await signInWithRedirect(auth,googleProvider)
     }else if(name === 'facebook'){
       await signInWithRedirect(auth, facebookProvider);
