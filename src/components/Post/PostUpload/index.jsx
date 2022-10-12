@@ -20,6 +20,11 @@ const DeadlineContainer = styled.div`
   align-items:center;
   gap:10px;
 `;
+const CountInput = styled.input`
+  display: block;
+  margin:0 auto;
+  margin-bottom:20px;
+`;
 const TitInput = styled.input`
   width:100%;
   border:0;
@@ -61,8 +66,8 @@ function PostUploadPage(){
   const [postTxt,setPostTxt] = useState('')
   const [postDate,setPostDate] = useState('')
   const [postTime,setPostTime] = useState('')
-  const [file, setFile] = useState('')
   const textArearRef = useRef()
+  const [file, setFile] = useState('')
   const fileRef = useRef()
   const handlePostSubmit = (e) => {
     console.log(postTxt)
@@ -96,15 +101,16 @@ function PostUploadPage(){
         <form onSubmit={handlePostSubmit}>
           <DeadlineContainer>
           <input type="date"
+          required={true}
           onChange={(e) => setPostDate(e.target.value)}
           />
           <input type="time" 
           onChange={(e) => setPostTime(e.target.value)}
           /> : 까지 모집
           </DeadlineContainer>
+          <CountInput type="number" placeholder="인원수를 입력해주세요." />
           <TitInput type="text" placeholder="제목을 입력해 주세요." />
           <TextArea
-          autoFocus={true}
           ref={textArearRef}
           onInput={handleAutoHeight}
           onChange={(e) => {
