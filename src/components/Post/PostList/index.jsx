@@ -2,6 +2,7 @@ import styled from "styled-components";
 import userProfile from '../../../assets/user-profile.png'
 import logo from '../../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Postli = styled.li`
   border-bottom:1px solid #dbdbdb;
@@ -57,6 +58,8 @@ const PostTextBottomContainer = styled.div`
 `
 function PostList({value}){
   const navigate = useNavigate()
+  const userInfo = useSelector(state => state.user)
+
   return(
     <Postli>
       <PostBtn onClick={() => navigate(`postdetail/${value}`)}>
@@ -64,8 +67,8 @@ function PostList({value}){
         <PostContentContainer>
           <UserProfileImg src={userProfile} alt="유저 프로필" />
           <PostTextContainer>
-          <UserName>유저이름</UserName>
-          <strong>오늘 1시에 치킨</strong>
+          <UserName>{userInfo.currentUser.displayName || '유저이름'}</UserName>
+          <strong>{userInfo.currentUser.introduce || '오늘 1시에 치킨'}</strong>
           <PostTextBottomContainer>
           <time>
             10/4 13:00

@@ -89,10 +89,12 @@ function RegisterPage(){
         displayName: nickName,
         photoURL:'',
         uid: createUser.user.uid,
-        email
+        email,
+        introduce:''
       }
       await updateProfile(auth.currentUser,userData)
-      oneCollectionSetDoc('users',userData)
+      await setDoc(doc(db, "users", createUser.user.uid), userData);
+      // oneCollectionSetDoc('users',userData)
       // const usersDB = doc(collection(db,'users'))
       // await setDoc(usersDB,userData)
       setLoding(false)

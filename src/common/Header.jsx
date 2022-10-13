@@ -69,7 +69,7 @@ const UserName = styled.div`
   position: relative;
 `;
 
-function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName}){
+function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName,onSubmit}){
   const navigate = useNavigate()
   return(
     <HeaderContainer>
@@ -91,7 +91,7 @@ function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName}){
         {vertical && <RightIconBtn icon={verticalIcon} />}
         {search && <RightIconBtn icon={searchIcon} />}
         {upload && 
-        <UploadBtn onClick={handleUpload}>업로드</UploadBtn>
+        <UploadBtn onClick={onSubmit}>업로드</UploadBtn>
         }
       </HeaderWrappper>
     </HeaderContainer>
