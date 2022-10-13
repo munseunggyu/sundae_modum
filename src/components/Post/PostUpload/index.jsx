@@ -5,6 +5,8 @@ import { MainContainer } from "../../../common/MainContainer"
 import Nav from "../../../common/Nav"
 import { IrH2 } from "../../../common/TextHide"
 import fileImg  from '../../../assets/img-file-button.png'
+import { useDispatch } from "react-redux";
+import { setTest } from "../../../redux/actions/user_action";
 
 const TextArea = styled.textarea`
   width:100%;
@@ -65,6 +67,7 @@ function PostUploadPage(){
   // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
   const [postTxt,setPostTxt] = useState('')
   const [postDate,setPostDate] = useState('')
+  const dispatch = useDispatch()
   const [postTime,setPostTime] = useState('')
   const textArearRef = useRef()
   const [file, setFile] = useState('')
@@ -93,6 +96,12 @@ function PostUploadPage(){
     textArearRef.current.style.height = '70px'
     textArearRef.current.style.height = textArearRef.current.scrollHeight + 'px'
   }
+  const clicka = () => {
+    dispatch(setTest(postTxt))
+    console.log('clear')
+    setPostTxt('')
+  }
+  
   return(
     <>
     <Header prv={true} upload={true} handleUpload={handlePostSubmit}/>
@@ -118,6 +127,7 @@ function PostUploadPage(){
           value={postTxt}
           placeholder="게시글을 입력해주세요..."
           />
+          <button onClick={clicka}>hi</button>
         </form>
         {file && (
           <FileContainer>

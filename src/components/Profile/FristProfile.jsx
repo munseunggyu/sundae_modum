@@ -3,13 +3,11 @@ import { MainContainer } from "../../common/MainContainer"
 import userImg from '../../assets/user-profile.png'
 import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
-import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
-import { getStorage, uploadBytesResumable,ref, getDownloadURL } from 'firebase/storage';
-import { auth, db, storage } from "../../firebase";
+import {  useRef, useState } from "react";
+import { doc, setDoc } from "firebase/firestore"
+import {  db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "firebase/auth";
-import { setPhotoURL } from "../../redux/actions/user_action";
+
 const UserProfileImg = styled.img`
   width:110px;
   height:110px;
@@ -50,7 +48,7 @@ const EditInput = styled.input`
   outline:none;
 `;
 
-function EditProfile(){
+function FirstProfilePage(){
   const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
   const [nickName,setNickName] = useState('')
@@ -79,27 +77,21 @@ function EditProfile(){
     e.preventDefault()
 
     try{
-    updateProfile(auth.currentUser,{
-      displayName:nickName,
-    })
-    const userData = {
-      ...userInfo,
-      displayName:nickName,
-      introduce
-    }
-    const userProfile = doc(db, "users", userInfo.uid);
-
-    await updateDoc(userProfile, {
-      displayName:nickName,
-      introduce
-    });
-    setIntroduce('')
-    setNickName('')
+      const userData = {
+        displayName: nickName,
+        photoURL:'',
+        uid: userInfo.uid,
+        email:userInfo.email,
+        introduce
+      }
+      // 설정한 프로필로 friestore에 저장
+      await setDoc(doc(db, "users",userInfo.uid), userData);
+      setIntroduce('')
+      setNickName('')
     }catch(error){
       console.log(error)
     }
   }
-
 
   return(
     <>
@@ -114,7 +106,7 @@ function EditProfile(){
         <EditInput 
         type="text" 
         id='user-nickname' 
-        placeholder={userInfo.displayName}
+        placeholder='2~10자 이내여야 합니다.'
         minLength={2}
         maxLength={10}
         value={nickName}
@@ -124,7 +116,7 @@ function EditProfile(){
         <EditInput 
         type="text" 
         id="user-introduce" 
-        placeholder={ userInfo.introduce || "자신을 소개해주세요."}
+        placeholder={"자신을 소개해주세요."}
         value={introduce}
         onChange={(e) => setIntroduce(e.target.value)}
         />
@@ -139,4 +131,4 @@ function EditProfile(){
   )
 }
 
-export default EditProfile
+export default FirstProfilePage

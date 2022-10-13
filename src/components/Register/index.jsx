@@ -75,7 +75,8 @@ export const ErrorMessageP = styled.p`
 `;
 function RegisterPage(){
   const navigate = useNavigate()
-  const [loding,setLoding] = useState(false) // 계정 생성 시 firebase에서 계정 생성될때 까지 submit버튼 비활성화
+  // 계정 생성 시 firebase에서 계정 생성될때 까지 submit버튼 비활성화
+  const [loding,setLoding] = useState(false) 
   const {register,watch,formState:{errors},handleSubmit} = useForm()
   const password = useRef()
   password.current = watch('password')
@@ -85,15 +86,15 @@ function RegisterPage(){
       setLoding(true)
       console.log('완료')
       const createUser = await createUserWithEmailAndPassword(auth,email,password)  
-      const userData = {
-        displayName: nickName,
-        photoURL:'',
-        uid: createUser.user.uid,
-        email,
-        introduce:''
-      }
-      await updateProfile(auth.currentUser,userData)
-      await setDoc(doc(db, "users", createUser.user.uid), userData);
+      // const userData = {
+      //   displayName: nickName,
+      //   photoURL:'',
+      //   uid: createUser.user.uid,
+      //   email,
+      //   introduce:''
+      // }
+      // await updateProfile(auth.currentUser,userData)
+      // await setDoc(doc(db, "users", createUser.user.uid), userData);
       // oneCollectionSetDoc('users',userData)
       // const usersDB = doc(collection(db,'users'))
       // await setDoc(usersDB,userData)

@@ -5,9 +5,11 @@ import kakaologo from '../../assets/kakaologo.png'
 import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
-import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { FacebookAuthProvider, getRedirectResult, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 import { auth} from "../../firebase";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setTest } from "../../redux/actions/user_action";
 const SNSLoginContainer= styled.article`
   width:100%;
 `;
@@ -90,6 +92,9 @@ function SNSLoginPage(){
   const [errorMessage,setErrorMessage] = useState('')
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
+  const dispatch = useDispatch()
+  const hi = useSelector(state => state.test)
+  const [gl,setGl] = useState('')
   const onSocialLogin = async (e) => {
    try{
     const {target:{name}} = e
@@ -146,6 +151,10 @@ function SNSLoginPage(){
         <EmailRegisterContainer>
           <Link to='/emaillogin'>이메일 로그인</Link>
           <Link to='/register'>회원가입</Link>
+          <button onClick={() => {
+            signOut(auth)
+            console.log('로그아웃')
+          }}>로그아웃</button>
         </EmailRegisterContainer>
       </LoginBtnContainer>
     </SNSLoginContainer>

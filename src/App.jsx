@@ -13,43 +13,35 @@ import { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "./redux/actions/user_action";
-import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore"
-import { async } from "@firebase/util";
+import { firstSetUser, setUser } from "./redux/actions/user_action";
+import { onSnapshot,doc } from "firebase/firestore";
+import FirstProfilePage from "./components/Profile/FristProfile";
 
 function App() {
   const dispatch = useDispatch()
   const userInfo = useSelector(state => state.user)
   const navigate = useNavigate()
-  const [users,setUsers] = useState([])
-
-//   const getUsers = async (user) => {
-//   const userDB = query(collection(db,'users'),orderBy('email','desc'))
-//   if(!userDB) return
-//   onSnapshot(userDB,snapshot => {
-//     let newa = snapshot.docs.map(doc => doc.data())
-//     console.log(newa)
-//     setUsers(prev => {
-//       return newa.filter(data => data.uid === user.uid) 
-//     })
-//   }
-//   )
-// }
   useEffect(() => {
-    onAuthStateChanged(auth,(user) =>  {
+    // 로그인,회원가입,소셜로그인 시 firestore에 해당 유저가 있는지 확인
+    onAuthStateChanged(auth, async (user) =>  {
       if(user){
-        // getUsers(user).then(() => dispatch(setUser(...users)))
-        onSnapshot(doc(db, "users", user.uid), (doc) => {
+        onSnapshot(doc(db, "users", user.uid), async (doc) => {
+          // 만약 없다면 첫 프로필 설정 화면으로 이동
+          if (!doc.data()) {
+          dispatch(firstSetUser(user))
+          navigate('/editSNS')
+          return
+          }
+          // 있다면 바로 홈으로 이동
           dispatch(setUser(doc.data()))
+          navigate('/')
         })
-        // dispatch(setUser(user))
-        navigate('/')
       }else{
         navigate('/')
       }
     })
-  },[])
-  console.log(userInfo)
+  }
+  ,[])
   return (
     <Routes>
       {
@@ -59,7 +51,7 @@ function App() {
             <Route path="/" element={<SNSLoginPage /> } />
             <Route path="/register" element={<RegisterPage/> } />
             <Route path="/emaillogin" element={<EmailLoginPage /> } />
-            <Route path="/" element={<HomePage /> } />
+            <Route path="/editSNS" element={<FirstProfilePage /> } />
         </>
         )
         : userInfo.currentUser
@@ -75,7 +67,8 @@ function App() {
             <Route path="/editprofile" element={<EditProfile /> } />
           </>
         )
-        : <>...loding</>
+        :
+        <Route path="/" element={ <>...loding</>} />
       }
       
     </Routes>
