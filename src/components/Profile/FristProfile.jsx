@@ -7,6 +7,7 @@ import {  useRef, useState } from "react";
 import { doc, setDoc } from "firebase/firestore"
 import {  db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UserProfileImg = styled.img`
   width:110px;
@@ -51,6 +52,7 @@ const EditInput = styled.input`
 function FirstProfilePage(){
   const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [nickName,setNickName] = useState('')
   const [introduce,setIntroduce] = useState('')
   const [prevFile, setPrevFile] = useState(userImg)
@@ -86,8 +88,8 @@ function FirstProfilePage(){
       }
       // 설정한 프로필로 friestore에 저장
       await setDoc(doc(db, "users",userInfo.uid), userData);
-      setIntroduce('')
-      setNickName('')
+      
+      navigate('/')
     }catch(error){
       console.log(error)
     }

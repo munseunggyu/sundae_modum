@@ -34,7 +34,7 @@ function App() {
           }
           // 있다면 바로 홈으로 이동
           dispatch(setUser(doc.data()))
-          navigate('/')
+          // navigate('/')
         })
       }else{
         navigate('/')

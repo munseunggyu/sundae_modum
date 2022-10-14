@@ -14,7 +14,7 @@ export default function(state=initialUserState,action){
       return initialUserState
     case SET_PHOTO_URL:
       return {...state,
-        currentUser:{...state.currentUser,photoURL:action.payload},
+        currentUser:{...state.currentUser,...action.payload},
         isLoading:false
       }
     default:
