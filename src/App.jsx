@@ -64,7 +64,7 @@ function App() {
             <Route path="/dm" element={<DMPage /> } />
             <Route path="/dm/:id" element={<DMDetailPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/editprofile" element={<EditProfile /> } />
+            <Route path="/profile/editprofile" element={<EditProfile /> } />
           </>
         )
         :

@@ -10,6 +10,7 @@ import { auth, db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "firebase/auth";
 import { setPhotoURL } from "../../redux/actions/user_action";
+import { useNavigate } from "react-router-dom";
 const UserProfileImg = styled.img`
   width:110px;
   height:110px;
@@ -53,6 +54,7 @@ const EditInput = styled.input`
 function EditProfile(){
   const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [nickName,setNickName] = useState(userInfo.displayName)
   const [introduce,setIntroduce] = useState(userInfo.introduce)
   const [dbFile,setDbFile] = useState(userInfo.photoURL)
@@ -60,6 +62,7 @@ function EditProfile(){
   const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
   const [users,setUsers] = useState([])
+  
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = e => {
     const files = e.target.files;
@@ -80,26 +83,22 @@ function EditProfile(){
     try{
       // 만약 프로필 사진을 업데이트 하면 실행
       if(prevFile !== userInfo.photoURL){
-        let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile) // user_image/${userInfo.uid} 저장한 파일의 경로이다.
-        getDownloadURL(uploadTask.snapshot.ref).then( async downloadURL=> {
-          updateProfile(auth.currentUser,{
-            displayName:nickName,
-            photoURL:downloadURL,
+        let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile,metadata) // user_image/${userInfo.uid} 저장한 파일의 경로이다.
+        uploadTask.on('state_changed',
+        async () => {
+          await getDownloadURL(uploadTask.snapshot.ref).then( async downloadURL=> {
+            updateProfile(auth.currentUser,{
+              displayName:nickName,
+              photoURL:downloadURL,
+            })
+            const userProfile = doc(db, "users", userInfo.uid);
+            await updateDoc(userProfile, {
+              displayName:nickName,
+              photoURL:downloadURL,
+              introduce
+            });
           })
-          const userProfile = doc(db, "users", userInfo.uid);
-          
-          await updateDoc(userProfile, {
-            displayName:nickName,
-            photoURL:downloadURL,
-            introduce
-          });
-          setPrevFile(downloadURL)
-          // dispatch(setPhotoURL({
-          //   displayName:nickName,
-          //   photoURL:downloadURL,
-          //   introduce
-          // }))
-
+        navigate('/profile')
         })
       }
       else{
@@ -113,20 +112,12 @@ function EditProfile(){
           displayName:nickName,
           introduce
         });
-        // dispatch(setPhotoURL({
-        //   displayName:nickName,
-        //   introduce
-        // }))
+        navigate('/profile')
       }
-
     }catch(error){
       console.log(error)
     }
   }
-
-  console.log(userInfo.photoURL,'pho')
-  console.log(prevFile,'pr')
-  console.log(prevFile === userInfo.photoURL)
   return(
     <>
     <Header prv={true} upload={true} onSubmit={onSubmit} />

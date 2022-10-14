@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../../common/Nav";
 import { signOut } from 'firebase/auth';
 import { auth } from "../../firebase";
+import { useSelector } from "react-redux";
 
 const ProfileContainer = styled.div`
   width:100%;
@@ -47,18 +48,22 @@ const MyPostUl = styled.ul`
 `;
 function ProfilePage(){
   const navigate = useNavigate()
+  const userInfo = useSelector(state => state.user.currentUser)
+  console.log(userInfo)
   return(
     <>
       <Header prv={true} vertical={true} />
       <MainContainer>
         <ProfileContainer>
-          <UserProfileImg src={userImg} />
-          <UserName>닉네임</UserName>
-          <UserIntroduce>저는 치킨을 사랑합니다.</UserIntroduce>
+          <UserProfileImg src={ userInfo.photoURL || userImg} />
+          <UserName>{userInfo.displayName}</UserName>
+          <UserIntroduce>{userInfo.introduce} </UserIntroduce>
           <UserProfileEditBtn
-          onClick={() => navigate('/editprofile')}
+          onClick={() => navigate('editprofile')}
           >프로필 수정하기</UserProfileEditBtn>
-          <button onClick={() => signOut(auth)}>로그아웃</button>
+          <button onClick={() => {
+            signOut(auth)
+          }}>로그아웃</button>
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
         <MyPostUl>
