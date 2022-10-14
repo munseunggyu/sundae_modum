@@ -49,7 +49,7 @@ const MyPostUl = styled.ul`
 function ProfilePage(){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
-  console.log(userInfo)
+  console.log(userInfo.photoURL,'oh')
   return(
     <>
       <Header prv={true} vertical={true} />

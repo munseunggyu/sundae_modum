@@ -3,11 +3,12 @@ import { MainContainer } from "../../common/MainContainer"
 import userImg from '../../assets/user-profile.png'
 import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { doc, setDoc } from "firebase/firestore"
-import {  db } from "../../firebase";
+import {  db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const UserProfileImg = styled.img`
   width:110px;
@@ -55,7 +56,7 @@ function FirstProfilePage(){
   const navigate = useNavigate()
   const [nickName,setNickName] = useState('')
   const [introduce,setIntroduce] = useState('')
-  const [prevFile, setPrevFile] = useState(userImg)
+  const [prevFile, setPrevFile] = useState(userInfo.photoURL)
   const [dbFile,setDbFile] = useState({})
   const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
@@ -79,17 +80,36 @@ function FirstProfilePage(){
     e.preventDefault()
 
     try{
+      if(prevFile !== userInfo.photoURL){
+      let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile)
+      uploadTask.on('state_changed',
+      async () => {
+        await getDownloadURL(uploadTask.snapshot.ref).then( async downloadUrl => {
+          const userData = {
+            displayName: nickName,
+            photoURL:downloadUrl,
+            uid: userInfo.uid,
+            email:userInfo.email,
+            introduce
+          }
+          await setDoc(doc(db, "users",userInfo.uid), userData)
+        })
+        navigate('/')
+      })
+    }
+    else{
       const userData = {
         displayName: nickName,
-        photoURL:'',
+        photoURL:userInfo.photoURL,
         uid: userInfo.uid,
         email:userInfo.email,
         introduce
       }
+      console.log(userInfo.photoURL,'df')
+      await setDoc(doc(db, "users",userInfo.uid), userData)
       // 설정한 프로필로 friestore에 저장
-      await setDoc(doc(db, "users",userInfo.uid), userData);
-      
       navigate('/')
+    }
     }catch(error){
       console.log(error)
     }
@@ -101,7 +121,7 @@ function FirstProfilePage(){
     <MainContainer>
       <EditFormConatiner onSubmit={onSubmit}>
         <UserProfilImgContainer onClick={hadleFileRef}>
-        <UserProfileImg src={prevFile} alt='' />
+        <UserProfileImg src={prevFile || userImg} alt='' />
         <FileIcon  />
         </UserProfilImgContainer>
         <EditLabel htmlFor='user-nickname'>사용자 이름</EditLabel>

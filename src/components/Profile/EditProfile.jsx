@@ -62,7 +62,7 @@ function EditProfile(){
   const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
   const [users,setUsers] = useState([])
-  
+
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = e => {
     const files = e.target.files;
