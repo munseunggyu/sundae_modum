@@ -5,11 +5,11 @@ import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
-import { getStorage, uploadBytesResumable,ref, getDownloadURL } from 'firebase/storage';
+import { getStorage, uploadBytesResumable,ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "firebase/auth";
-import { setPhotoURL } from "../../redux/actions/user_action";
+import { setPhotoURL, setUser } from "../../redux/actions/user_action";
 import { useNavigate } from "react-router-dom";
 const UserProfileImg = styled.img`
   width:110px;
@@ -82,13 +82,12 @@ function EditProfile(){
     try{
       // 만약 프로필 사진을 업데이트 하면 실행
       if(prevFile !== userInfo.photoURL){
-        let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile,metadata) // user_image/${userInfo.uid} 저장한 파일의 경로이다.
-        uploadTask.on('state_changed',
-        async () => {
-          await getDownloadURL(uploadTask.snapshot.ref).then( async downloadURL=> {
+        const storageRef = ref(storage,`user_image/${userInfo.uid}`)
+        const uploadTask = uploadBytes(storageRef,dbFile,metadata).then( async () => {
+          await getDownloadURL(storageRef).then( async downloadURL => {
             updateProfile(auth.currentUser,{
               displayName:nickName,
-              photoURL:downloadURL,
+              photoURL:downloadURL
             })
             const userProfile = doc(db, "users", userInfo.uid);
             await updateDoc(userProfile, {
@@ -97,7 +96,6 @@ function EditProfile(){
               introduce
             });
           })
-        navigate('/profile')
         })
       }
       else{
@@ -111,11 +109,11 @@ function EditProfile(){
           displayName:nickName,
           introduce
         });
-        navigate('/profile')
       }
     }catch(error){
       console.log(error)
     }
+    navigate('/profile')
   }
   return(
     <>
