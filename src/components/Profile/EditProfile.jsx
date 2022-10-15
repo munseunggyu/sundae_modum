@@ -61,7 +61,6 @@ function EditProfile(){
   const [prevFile, setPrevFile] = useState(userInfo.photoURL)
   const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
-  const [users,setUsers] = useState([])
 
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = e => {

@@ -80,6 +80,7 @@ function FirstProfilePage(){
     e.preventDefault()
 
     try{
+      // 프로필 사진을 변경 했을때 실행
       if(prevFile !== userInfo.photoURL){
       let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile)
       uploadTask.on('state_changed',
@@ -97,6 +98,7 @@ function FirstProfilePage(){
         navigate('/')
       })
     }
+    // 프로필 사진을 변경 안 했을때
     else{
       const userData = {
         displayName: nickName,

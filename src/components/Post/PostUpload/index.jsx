@@ -5,8 +5,10 @@ import { MainContainer } from "../../../common/MainContainer"
 import Nav from "../../../common/Nav"
 import { IrH2 } from "../../../common/TextHide"
 import fileImg  from '../../../assets/img-file-button.png'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTest } from "../../../redux/actions/user_action";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const TextArea = styled.textarea`
   width:100%;
@@ -64,19 +66,18 @@ const FileCloseBtn = styled.button`
   color:white;
 `;
 function PostUploadPage(){
+  const dispatch = useDispatch()
+  const userInfo = useSelector(state => state.user.currentUser)
   // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
   const [postTxt,setPostTxt] = useState('')
   const [postDate,setPostDate] = useState('')
-  const dispatch = useDispatch()
   const [postTime,setPostTime] = useState('')
-  const textArearRef = useRef()
+  const [postTit,setPostTit] = useState('')
+  const [postCount,setPostCount] = useState(0)
   const [file, setFile] = useState('')
   const fileRef = useRef()
-  const handlePostSubmit = (e) => {
-    console.log(postTxt)
-    console.log(postDate,postTime)
-    setPostTxt('')
-  }
+  const textArearRef = useRef()
+
   const preview = e => {
     const files = e.target.files;
     const reader = new FileReader() // FileReader Api
@@ -96,38 +97,67 @@ function PostUploadPage(){
     textArearRef.current.style.height = '70px'
     textArearRef.current.style.height = textArearRef.current.scrollHeight + 'px'
   }
-  const clicka = () => {
-    dispatch(setTest(postTxt))
-    console.log('clear')
-    setPostTxt('')
+  const handlePostSubmit = async (e) => {
+    e.preventDefault()
+    console.log(postCount,postTit)
+    console.log(postTxt)
+    console.log(postDate,postTime)
+    const postData = {
+      writer:userInfo.uid,
+      postDate,
+      postTime,
+      postCount,
+      postTit,
+      postTxt
+    }
+    try{
+
+      const postRef = await addDoc(collection(db,'posts'),postData)
+    }catch(error){
+      console.log(error)
+    }
   }
-  
   return(
     <>
-    <Header prv={true} upload={true} handleUpload={handlePostSubmit}/>
+    <Header prv={true} upload={true} onSubmit={handlePostSubmit}/>
       <MainContainer>
         <IrH2>게시물 작성</IrH2>
         <form onSubmit={handlePostSubmit}>
           <DeadlineContainer>
           <input type="date"
           required={true}
+          value={postDate}
           onChange={(e) => setPostDate(e.target.value)}
           />
           <input type="time" 
+          required={true}
+          value={postTime}
           onChange={(e) => setPostTime(e.target.value)}
           /> : 까지 모집
           </DeadlineContainer>
-          <CountInput type="number" placeholder="인원수를 입력해주세요." />
-          <TitInput type="text" placeholder="제목을 입력해 주세요." />
+          <CountInput 
+          type="number"
+          required={true}
+          value={postCount}
+          onChange={(e) => {
+            setPostCount(e.target.value)}}
+          placeholder="인원수를 입력해주세요." />
+          <TitInput 
+          type="text"
+          required={true}
+          value={postTit}
+          onChange={(e) => {
+            setPostTit(e.target.value)}}
+          placeholder="제목을 입력해 주세요." />
           <TextArea
           ref={textArearRef}
           onInput={handleAutoHeight}
+          required={true}
+          value={postTxt}
           onChange={(e) => {
             setPostTxt(e.target.value)}}
-          value={postTxt}
           placeholder="게시글을 입력해주세요..."
           />
-          <button onClick={clicka}>hi</button>
         </form>
         {file && (
           <FileContainer>

@@ -5,6 +5,7 @@ import arrow from '../assets/arrow-left.png'
 import headerLogo from '../assets/header-logo.png'
 import verticalIcon from '../assets/icons/icon-more-vertical.png'
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const HeaderContainer= styled.article`
   width:100%;
   position:fixed;
@@ -72,6 +73,7 @@ const UserName = styled.div`
 function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName,onSubmit}){
   const navigate = useNavigate()
   return(
+    <>
     <HeaderContainer>
       <HeaderWrappper>
         {h1 && <HeaderH1> {h1} </HeaderH1>}
@@ -88,13 +90,17 @@ function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName,onSubmit
             </Div>
           )
         }
-        {vertical && <RightIconBtn icon={verticalIcon} />}
+        
+        {vertical && <RightIconBtn icon={verticalIcon} 
+        />}
         {search && <RightIconBtn icon={searchIcon} />}
         {upload && 
         <UploadBtn onClick={onSubmit}>업로드</UploadBtn>
         }
       </HeaderWrappper>
     </HeaderContainer>
+      
+    </>
   )
 }
 
