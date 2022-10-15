@@ -8,7 +8,7 @@ import { doc, setDoc } from "firebase/firestore"
 import {  db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
 const UserProfileImg = styled.img`
   width:110px;
@@ -82,21 +82,34 @@ function FirstProfilePage(){
     try{
       // 프로필 사진을 변경 했을때 실행
       if(prevFile !== userInfo.photoURL){
-      let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile)
-      uploadTask.on('state_changed',
-      async () => {
-        await getDownloadURL(uploadTask.snapshot.ref).then( async downloadUrl => {
-          const userData = {
-            displayName: nickName,
-            photoURL:downloadUrl,
-            uid: userInfo.uid,
-            email:userInfo.email,
-            introduce
-          }
+        const storageRef = ref(storage,`user_image/${userInfo.uid}`)
+        const uploadTask = uploadBytes(storageRef,dbFile,metadata).then( async () => {
+          await getDownloadURL(storageRef).then( async downloadURL => {
+            const userData = {
+              displayName: nickName,
+              photoURL:downloadURL,
+              uid: userInfo.uid,
+              email:userInfo.email,
+              introduce
+            }
           await setDoc(doc(db, "users",userInfo.uid), userData)
+          })
         })
-        navigate('/')
-      })
+      // let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile)
+      // uploadTask.on('state_changed',
+      // async () => {
+      //   await getDownloadURL(uploadTask.snapshot.ref).then( async downloadUrl => {
+      //     const userData = {
+      //       displayName: nickName,
+      //       photoURL:downloadUrl,
+      //       uid: userInfo.uid,
+      //       email:userInfo.email,
+      //       introduce
+      //     }
+      //     await setDoc(doc(db, "users",userInfo.uid), userData)
+      //   })
+      //   navigate('/')
+      // })
     }
     // 프로필 사진을 변경 안 했을때
     else{
@@ -110,11 +123,11 @@ function FirstProfilePage(){
       console.log(userInfo.photoURL,'df')
       await setDoc(doc(db, "users",userInfo.uid), userData)
       // 설정한 프로필로 friestore에 저장
-      navigate('/')
     }
     }catch(error){
       console.log(error)
     }
+    navigate('/')
   }
 
   return(
