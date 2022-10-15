@@ -75,7 +75,7 @@ a{
 const createStoreMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={createStoreMiddleware(rootReducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -88,6 +88,6 @@ root.render(
     </BrowserRouter>
     
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 

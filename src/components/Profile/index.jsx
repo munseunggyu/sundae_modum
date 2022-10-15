@@ -49,7 +49,6 @@ const MyPostUl = styled.ul`
 function ProfilePage(){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
-  console.log(userInfo.photoURL,'oh')
   return(
     <>
       <Header prv={true} vertical={true} />
@@ -66,9 +65,9 @@ function ProfilePage(){
           }}>로그아웃</button>
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
-        <MyPostUl>
+        {/* <MyPostUl>
           <PostList />
-        </MyPostUl>
+        </MyPostUl> */}
       </MainContainer>
       <Nav />
     </>

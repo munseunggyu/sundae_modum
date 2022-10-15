@@ -76,7 +76,7 @@ function PostUploadPage(){
   const [postDate,setPostDate] = useState('')
   const [postTime,setPostTime] = useState('')
   const [postTit,setPostTit] = useState('')
-  const [postCount,setPostCount] = useState(0)
+  const [recruit,setRecruit] = useState(0)
   const [prevFile, setPrevFile] = useState('')
   const [dbFile,setDbFile] = useState(null)
   const [metadata,setMetadata] = useState({})
@@ -107,10 +107,9 @@ function PostUploadPage(){
   }
   const handlePostSubmit = async (e) => {
     e.preventDefault()
-    console.log(postCount,postTit)
-    console.log(postTxt)
-    console.log(postDate,postTime)
-  
+
+    console.log(postDate.slice(5).replace('-','/'))
+    
     try{
       const postRef = doc(collection(db,'posts'))
       // 이미지 파일이 있으면 실행
@@ -122,12 +121,14 @@ function PostUploadPage(){
               writer:{
                 ...userInfo
               },
-              postDate,
+              postDate:postDate.slice(5).replace('-','/'),
               postTime,
-              postCount,
+              recruit, // 모집인원
               postTit,
               postTxt,
-              img:downloadURL,
+              postImg:downloadURL,
+              postkey:postRef.id,
+              participateCount:1, // 현재 참여인원
               CreateAt:serverTimestamp(),
             }
             await setDoc(postRef,postData)
@@ -138,12 +139,14 @@ function PostUploadPage(){
           writer:{
             ...userInfo
           },
-          postDate,
+          postDate:postDate.slice(5).replace('-','/'),
           postTime,
-          postCount,
+          recruit, // 모집인원
           postTit,
           postTxt,
-          img:null,
+          postkey:postRef.id,
+          postImg:null,
+          participateCount:1, // 현재 참여인원
           CreateAt:serverTimestamp(),
         }
         await setDoc(postRef,postData)
@@ -153,7 +156,6 @@ function PostUploadPage(){
       console.log(error)
     }
   }
-  console.log(dbFile)
   return(
     <>
     <Header prv={true} upload={true} onSubmit={handlePostSubmit}/>
@@ -175,9 +177,9 @@ function PostUploadPage(){
           <CountInput 
           type="number"
           required={true}
-          value={postCount}
+          value={recruit}
           onChange={(e) => {
-            setPostCount(e.target.value)}}
+            setRecruit(e.target.value)}}
           placeholder="인원수를 입력해주세요." />
           <TitInput 
           type="text"
