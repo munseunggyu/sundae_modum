@@ -7,8 +7,10 @@ import { IrH2 } from "../../../common/TextHide"
 import fileImg  from '../../../assets/img-file-button.png'
 import { useDispatch, useSelector } from "react-redux";
 import { setTest } from "../../../redux/actions/user_action";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db, storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 const TextArea = styled.textarea`
   width:100%;
@@ -66,6 +68,7 @@ const FileCloseBtn = styled.button`
   color:white;
 `;
 function PostUploadPage(){
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const userInfo = useSelector(state => state.user.currentUser)
   // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
@@ -74,7 +77,9 @@ function PostUploadPage(){
   const [postTime,setPostTime] = useState('')
   const [postTit,setPostTit] = useState('')
   const [postCount,setPostCount] = useState(0)
-  const [file, setFile] = useState('')
+  const [prevFile, setPrevFile] = useState('')
+  const [dbFile,setDbFile] = useState(null)
+  const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
   const textArearRef = useRef()
 
@@ -82,12 +87,15 @@ function PostUploadPage(){
     const files = e.target.files;
     const reader = new FileReader() // FileReader Api
     reader.onload = (finish) => {
-      setFile(finish.target.result)
+      setPrevFile(finish.target.result)
     }
     reader.readAsDataURL(files[0])
+    setDbFile(files[0])
+    setMetadata({contentType:files[0].type})
   }
   const handleFileClose = ()=>{
-    setFile('')
+    setPrevFile('')
+    setDbFile(null)
   }
   const hadleFileRef = () => {
     fileRef.current.click()
@@ -102,21 +110,50 @@ function PostUploadPage(){
     console.log(postCount,postTit)
     console.log(postTxt)
     console.log(postDate,postTime)
-    const postData = {
-      writer:userInfo.uid,
-      postDate,
-      postTime,
-      postCount,
-      postTit,
-      postTxt
-    }
+  
     try{
-
-      const postRef = await addDoc(collection(db,'posts'),postData)
+      const postRef = doc(collection(db,'posts'))
+      // 이미지 파일이 있으면 실행
+      if(dbFile){
+        const storageRef = ref(storage,`posts_images/${postRef.id}`)
+        const uploadTask = uploadBytes(storageRef, dbFile,metadata).then( async () => {
+          await getDownloadURL(storageRef ).then( async downloadURL => {
+            const postData = {
+              writer:{
+                ...userInfo
+              },
+              postDate,
+              postTime,
+              postCount,
+              postTit,
+              postTxt,
+              img:downloadURL,
+              CreateAt:serverTimestamp(),
+            }
+            await setDoc(postRef,postData)
+          })
+        })
+      }else{
+        const postData = {
+          writer:{
+            ...userInfo
+          },
+          postDate,
+          postTime,
+          postCount,
+          postTit,
+          postTxt,
+          img:null,
+          CreateAt:serverTimestamp(),
+        }
+        await setDoc(postRef,postData)
+      }
+      navigate('/')
     }catch(error){
       console.log(error)
     }
   }
+  console.log(dbFile)
   return(
     <>
     <Header prv={true} upload={true} onSubmit={handlePostSubmit}/>
@@ -159,12 +196,12 @@ function PostUploadPage(){
           placeholder="게시글을 입력해주세요..."
           />
         </form>
-        {file && (
+        {prevFile && (
           <FileContainer>
             <FileCloseBtn
             onClick={handleFileClose}
             >x</FileCloseBtn>
-            <FileImg src={file} alt="" />
+            <FileImg src={prevFile} alt="" />
           </FileContainer>
         )}
       </MainContainer>
