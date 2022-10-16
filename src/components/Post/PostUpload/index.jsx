@@ -120,12 +120,17 @@ function PostUploadPage(){
               },
               postDate:postDate.slice(5).replace('-','/'),
               postTime,
-              recruit, // 모집인원
               postTit,
+              party: {
+                recruit,
+                participants:[
+                  // {displayName:userInfo.displayName,uid:userInfo.uid}
+                ],
+                participateCount:0
+              },
               postTxt,
               postImg:downloadURL,
               postkey:postRef.id,
-              participateCount:1, // 현재 참여인원
               CreateAt:serverTimestamp(),
             }
             await setDoc(postRef,postData)
@@ -138,12 +143,17 @@ function PostUploadPage(){
           },
           postDate:postDate.slice(5).replace('-','/'),
           postTime,
-          recruit, // 모집인원
+          party: {
+            recruit,
+            participants:[
+              // {displayName:userInfo.displayName,uid:userInfo.uid}
+            ],
+            participateCount:0
+          },
           postTit,
           postTxt,
           postkey:postRef.id,
           postImg:null,
-          participateCount:1, // 현재 참여인원
           CreateAt:serverTimestamp(),
         }
         await setDoc(postRef,postData)

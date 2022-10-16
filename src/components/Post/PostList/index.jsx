@@ -60,13 +60,16 @@ const PostTextBottomContainer = styled.div`
   span{
   }
 `
-function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,postTime,postTit,postTxt,writer}){
+function PostList({party,participants,participateCount,recruit,postkey,postImg,postDate,postTime,postTit,postTxt,writer}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user)
   const dispatch = useDispatch()
   const postData = {
-    participateCount,
-    recruit,
+    party: {
+      recruit,
+      participateCount,
+      participants
+    },
     postkey,
     postImg,
     postDate,
@@ -81,6 +84,7 @@ function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,p
     await setDoc(doc(db, "current_post", "current_post"),postData);
     navigate(`postdetail/${postTit}`)
   }
+  console.log(party.participants)
   return(
     <Postli>
       <PostBtn onClick={handleClick}>
@@ -95,7 +99,7 @@ function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,p
             {postDate} {postTime}
           </time>
           {/* <span>18</span> 채팅 수 */}
-          <strong>{participateCount}/{recruit}</strong> {/* 인원 수 */}
+          <strong>{party.participateCount}/{party.recruit}</strong> {/* 인원 수 */}
           </PostTextBottomContainer>
           </PostTextContainer>
         </PostContentContainer>
