@@ -7,7 +7,7 @@ import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
 export const UserContainer = styled.div`
@@ -58,12 +58,15 @@ const JoinBtn = styled.button`
   width:80px;
   padding:10px 0;
   color:white;
-  background-color:#9ec1d0;
+  background-color:#6BB4D3; //#9ec1d0
   border-radius:11px;
   margin:0 10px 10px 0;
 `;
 const JoinSpan = styled.span`
   font-size:16px;
+`;
+const PartyName = styled.span`
+  margin-right:5px;
 `;
 const ChattingFormContainer = styled.div`
   display: flex;
@@ -97,14 +100,46 @@ function PostDetailPage(){
   const {id} = useParams()
   const dispatch = useDispatch()
   const currentPost = useSelector(state => state.post)
-  const getCurrentPost = async () => {
+  const userInfo = useSelector(state => state.user.currentUser)
+  const getCurrentPost =  () => {
+    // 사용자에게 정보를 빠르게 보여주기 위해 실시간 업데이트 수신 대기 함수 사용
     const currentPostRef = doc(db,'current_post','current_post')
-    const currentPostSnap = await getDoc(currentPostRef)
-    dispatch(setCurrentPost(currentPostSnap.data()))
+    const currentPostSnap =  onSnapshot(currentPostRef,doc => {
+      // console.log(doc.data())
+      dispatch(setCurrentPost(doc.data()))
+    })
+  }
+  // 참여하기 버튼 기능
+  const handlePartyBtn = async () => {
+    // 이미 참여하고있으면 return해 준다.
+    const included = currentPost.currentPost.party.participants.find(participant => participant.uid === userInfo.uid)
+    if(included) return
+    const newParty = {
+      ...currentPost.currentPost.party,
+      participants:[...currentPost.currentPost.party.participants,
+        {
+          displayName:userInfo.displayName,
+          uid:userInfo.uid
+        }
+      ],
+      participateCount: currentPost.currentPost.party.participants.length+1
+    }
+    // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
+    // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
+    const currentPostRef = doc(db,'current_post','current_post')
+    await updateDoc(currentPostRef,{
+      party:newParty
+    })
+    const postRef = doc(db, "posts",currentPost.currentPost.postkey);
+      await updateDoc(postRef,{
+        party:newParty
+      })
+    console.log('완료')
   }
   useEffect( () => {
     getCurrentPost()
   },[])
+  console.log(currentPost.currentPost.party.participants)
   return(
   <>
     {
@@ -132,8 +167,15 @@ function PostDetailPage(){
           currentPost.currentPost.postImg &&
         <ContentsImg src={currentPost.currentPost.postImg} alt="" />
         }
-        <JoinBtn>참여하기</JoinBtn>
-        <JoinSpan> {currentPost.currentPost.participateCount} / {currentPost.currentPost.recruit} </JoinSpan>
+        <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
+        <JoinSpan> {currentPost.currentPost.party.participateCount} / {currentPost.currentPost.party.recruit} </JoinSpan>
+        {
+          currentPost.currentPost.party.participants.map(name => 
+            <div>
+              <PartyName>{name.displayName}</PartyName>
+            </div>
+            )
+        }
         </PostDetailContainer>
         <ul>
         <OtherUserChatting />
