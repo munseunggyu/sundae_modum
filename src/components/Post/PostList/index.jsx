@@ -66,9 +66,9 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
   const dispatch = useDispatch()
   const postData = {
     party: {
-      recruit,
-      participateCount,
-      participants
+      recruit: party.recruit,
+      participateCount:party.participateCount,
+      participants:party.participants
     },
     postkey,
     postImg,
@@ -84,7 +84,6 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
     await setDoc(doc(db, "current_post", "current_post"),postData);
     navigate(`postdetail/${postTit}`)
   }
-  console.log(party.participants)
   return(
     <Postli>
       <PostBtn onClick={handleClick}>
