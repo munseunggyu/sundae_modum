@@ -5,6 +5,7 @@ import { MainContainer } from "../../../common/MainContainer"
 import userProfile from '../../../assets/user-profile.png'
 import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
+import { useSelector } from "react-redux";
 export const UserContainer = styled.div`
   display: flex;
   align-items:center;
@@ -90,28 +91,32 @@ const ChattingSubmitBtn = styled.button`
 `;
 function PostDetailPage(){
   const {id} = useParams()
+  const postData = useSelector(state => state.post.currentPost)
+  console.log(postData)
   return(
     <>
     <Header prv={true}  vertical={true}/>
     <MainContainer pr='0'>
       <PostDetailContainer>
       <UserContainer>
-        <UserProfileImg src={userProfile} alt="유저 프로필" />
-        <UserName>name</UserName>
+        <UserProfileImg src={userProfile && postData.writer.photoURL} alt="유저 프로필" />
+        <UserName>{postData.writer.displayName} </UserName>
       </UserContainer>
       <DeadLine>
-        10/04 13:00 까지 모집
+        {postData.postDate} {postData.postTime} 까지 모집
       </DeadLine>
       <ContentsTitle>
-        오늘 1시에 치킨 드실분?
+        {postData.postTit}
       </ContentsTitle>
       <ContentsTxt>
-        오늘 1시에 치킨 드실분 계신가요? 저는 OOO기숙사에 삽니다! 
-        편하신대로 DM이나 채팅 남겨주세요!
+        {postData.postTxt}
       </ContentsTxt>
-      <ContentsImg src="https://images.unsplash.com/photo-1578874557108-9fc2cfb1121e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpa2VufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="" />
+      {
+        postData.postImg &&
+      <ContentsImg src={postData.postImg} alt="" />
+      }
       <JoinBtn>참여하기</JoinBtn>
-      <JoinSpan>3/4</JoinSpan>
+      <JoinSpan> {postData.participateCount} / {postData.recruit} </JoinSpan>
       </PostDetailContainer>
       <ul>
       <OtherUserChatting />
