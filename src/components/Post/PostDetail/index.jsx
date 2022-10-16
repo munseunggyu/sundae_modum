@@ -5,7 +5,11 @@ import { MainContainer } from "../../../common/MainContainer"
 import userProfile from '../../../assets/user-profile.png'
 import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { setCurrentPost } from "../../../redux/actions/post_action";
 export const UserContainer = styled.div`
   display: flex;
   align-items:center;
@@ -91,46 +95,61 @@ const ChattingSubmitBtn = styled.button`
 `;
 function PostDetailPage(){
   const {id} = useParams()
-  const postData = useSelector(state => state.post.currentPost)
-  console.log(postData)
+  const dispatch = useDispatch()
+  const currentPost = useSelector(state => state.post)
+  const getCurrentPost = async () => {
+    const currentPostRef = doc(db,'current_post','current_post')
+    const currentPostSnap = await getDoc(currentPostRef)
+    dispatch(setCurrentPost(currentPostSnap.data()))
+  }
+  useEffect( () => {
+    getCurrentPost()
+  },[])
   return(
-    <>
-    <Header prv={true}  vertical={true}/>
-    <MainContainer pr='0'>
-      <PostDetailContainer>
-      <UserContainer>
-        <UserProfileImg src={userProfile && postData.writer.photoURL} alt="유저 프로필" />
-        <UserName>{postData.writer.displayName} </UserName>
-      </UserContainer>
-      <DeadLine>
-        {postData.postDate} {postData.postTime} 까지 모집
-      </DeadLine>
-      <ContentsTitle>
-        {postData.postTit}
-      </ContentsTitle>
-      <ContentsTxt>
-        {postData.postTxt}
-      </ContentsTxt>
-      {
-        postData.postImg &&
-      <ContentsImg src={postData.postImg} alt="" />
-      }
-      <JoinBtn>참여하기</JoinBtn>
-      <JoinSpan> {postData.participateCount} / {postData.recruit} </JoinSpan>
-      </PostDetailContainer>
-      <ul>
-      <OtherUserChatting />
-      <OtherUserChatting />
-      <OtherUserChatting />
-      </ul>
-    <ChattingFormContainer>
-      <ChattingForm>
-        <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
-        <ChattingSubmitBtn />
-      </ChattingForm>
-    </ChattingFormContainer>
-    </MainContainer>
-    </>
+  <>
+    {
+      currentPost.isLoding
+      ? (<>...Loding</>)
+      :
+      (<>
+      <Header prv={true}  vertical={true}/>
+      <MainContainer pr='0'>
+        <PostDetailContainer>
+        <UserContainer>
+          <UserProfileImg src={ currentPost.currentPost.writer.photoURL || userProfile} alt="유저 프로필" />
+          <UserName>{currentPost.currentPost.writer.displayName} </UserName>
+        </UserContainer>
+        <DeadLine>
+          {currentPost.currentPost.postDate} {currentPost.currentPost.postTime} 까지 모집
+        </DeadLine>
+        <ContentsTitle>
+          {currentPost.currentPost.postTit}
+        </ContentsTitle>
+        <ContentsTxt>
+          {currentPost.currentPost.postTxt}
+        </ContentsTxt>
+        {
+          currentPost.currentPost.postImg &&
+        <ContentsImg src={currentPost.currentPost.postImg} alt="" />
+        }
+        <JoinBtn>참여하기</JoinBtn>
+        <JoinSpan> {currentPost.currentPost.participateCount} / {currentPost.currentPost.recruit} </JoinSpan>
+        </PostDetailContainer>
+        <ul>
+        <OtherUserChatting />
+        <OtherUserChatting />
+        <OtherUserChatting />
+        </ul>
+      <ChattingFormContainer>
+        <ChattingForm>
+          <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
+          <ChattingSubmitBtn />
+        </ChattingForm>
+      </ChattingFormContainer>
+      </MainContainer> 
+      </>)
+    }
+  </>
   )
 }
 

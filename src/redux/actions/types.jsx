@@ -6,3 +6,4 @@ export const FIRST_SET_USER = "first_set_user"
 
 //
 export const SET_CURRENT_POST = "set_current_post"
+export const CLEAR_CURRENT_POST = "clear_current_post"

@@ -4,9 +4,9 @@ import logo from '../../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { setCurrentPost } from "../../../redux/actions/post_action";
+import { clearCurrentPost, setCurrentPost } from "../../../redux/actions/post_action";
 
 const Postli = styled.li`
   border-bottom:1px solid #dbdbdb;
@@ -64,11 +64,21 @@ function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,p
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user)
   const dispatch = useDispatch()
-  const handleClick = (e) => {
-    const postData = {
-      participateCount,recruit,postkey,postImg,postCount,postDate,postTime,postTit,postTxt,writer
-    }
-    dispatch(setCurrentPost(postData))
+  const postData = {
+    participateCount,
+    recruit,
+    postkey,
+    postImg,
+    postDate,
+    postTime,
+    postTit,
+    postTxt,
+    writer,
+    isLoding:true
+  }
+  const handleClick = async (e) => {
+    dispatch(clearCurrentPost())
+    await setDoc(doc(db, "current_post", "current_post"),postData);
     navigate(`postdetail/${postTit}`)
   }
   return(
@@ -76,7 +86,7 @@ function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,p
       <PostBtn onClick={handleClick}>
         <div>
         <PostContentContainer>
-          <UserProfileImg src={writer.photoURL} alt="유저 프로필" />
+          <UserProfileImg src={writer.photoURL || userProfile} alt="유저 프로필" />
           <PostTextContainer>
           <UserName>{writer.displayName}</UserName>
           <strong>{postTit}</strong>
