@@ -95,21 +95,6 @@ function FirstProfilePage(){
           await setDoc(doc(db, "users",userInfo.uid), userData)
           })
         })
-      // let uploadTask = uploadBytesResumable(ref(storage, `user_image/${userInfo.uid}`), dbFile)
-      // uploadTask.on('state_changed',
-      // async () => {
-      //   await getDownloadURL(uploadTask.snapshot.ref).then( async downloadUrl => {
-      //     const userData = {
-      //       displayName: nickName,
-      //       photoURL:downloadUrl,
-      //       uid: userInfo.uid,
-      //       email:userInfo.email,
-      //       introduce
-      //     }
-      //     await setDoc(doc(db, "users",userInfo.uid), userData)
-      //   })
-      //   navigate('/')
-      // })
     }
     // 프로필 사진을 변경 안 했을때
     else{

@@ -20,6 +20,10 @@ const PostUl = styled.ul`
 
 function HomePage(){
   const [postsData,setPostsData] = useState([])
+
+  const handleClick = (e) => {
+    console.log(e)
+  }
   useEffect(() => {
     // 최신 작성 순으로 정렬
     const postsRef = collection(db,'posts')
@@ -38,7 +42,10 @@ function HomePage(){
         <IrH2>게시글</IrH2>
         <PostUl>
           {
-            postsData.map((post,index) => <Post {...post} key={post.postkey} />)
+            postsData.map((post,index) => <Post 
+            {...post} 
+            key={post.postkey}
+            />)
           }
         </PostUl>
       </MainContainer>

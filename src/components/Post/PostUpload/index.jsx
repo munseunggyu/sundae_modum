@@ -73,8 +73,8 @@ function PostUploadPage(){
   const userInfo = useSelector(state => state.user.currentUser)
   // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
   const [postTxt,setPostTxt] = useState('')
-  const [postDate,setPostDate] = useState('')
-  const [postTime,setPostTime] = useState('')
+  const [postDate,setPostDate] = useState('') 
+  const [postTime,setPostTime] = useState('') 
   const [postTit,setPostTit] = useState('')
   const [recruit,setRecruit] = useState(0)
   const [prevFile, setPrevFile] = useState('')
@@ -107,9 +107,6 @@ function PostUploadPage(){
   }
   const handlePostSubmit = async (e) => {
     e.preventDefault()
-
-    console.log(postDate.slice(5).replace('-','/'))
-    
     try{
       const postRef = doc(collection(db,'posts'))
       // 이미지 파일이 있으면 실행
@@ -164,38 +161,40 @@ function PostUploadPage(){
         <form onSubmit={handlePostSubmit}>
           <DeadlineContainer>
           <input type="date"
-          required={true}
           value={postDate}
           onChange={(e) => setPostDate(e.target.value)}
+          required
           />
           <input type="time" 
-          required={true}
           value={postTime}
           onChange={(e) => setPostTime(e.target.value)}
+          required
           /> : 까지 모집
           </DeadlineContainer>
           <CountInput 
           type="number"
-          required={true}
           value={recruit}
           onChange={(e) => {
             setRecruit(e.target.value)}}
-          placeholder="인원수를 입력해주세요." />
+          placeholder="인원수를 입력해주세요." 
+          required
+          />
           <TitInput 
           type="text"
-          required={true}
           value={postTit}
           onChange={(e) => {
             setPostTit(e.target.value)}}
-          placeholder="제목을 입력해 주세요." />
+          placeholder="제목을 입력해 주세요." 
+          required
+            />
           <TextArea
           ref={textArearRef}
           onInput={handleAutoHeight}
-          required={true}
           value={postTxt}
           onChange={(e) => {
             setPostTxt(e.target.value)}}
           placeholder="게시글을 입력해주세요..."
+          required
           />
         </form>
         {prevFile && (

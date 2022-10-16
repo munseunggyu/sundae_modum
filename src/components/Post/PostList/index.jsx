@@ -2,10 +2,11 @@ import styled from "styled-components";
 import userProfile from '../../../assets/user-profile.png'
 import logo from '../../../assets/logo.png'
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { setCurrentPost } from "../../../redux/actions/post_action";
 
 const Postli = styled.li`
   border-bottom:1px solid #dbdbdb;
@@ -62,9 +63,17 @@ const PostTextBottomContainer = styled.div`
 function PostList({participateCount,recruit,postkey,postImg,postCount,postDate,postTime,postTit,postTxt,writer}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  const handleClick = (e) => {
+    const postData = {
+      participateCount,recruit,postkey,postImg,postCount,postDate,postTime,postTit,postTxt,writer
+    }
+    dispatch(setCurrentPost(postData))
+    navigate(`postdetail/${postTit}`)
+  }
   return(
     <Postli>
-      <PostBtn onClick={() => navigate(`postdetail/${postTit}`)}>
+      <PostBtn onClick={handleClick}>
         <div>
         <PostContentContainer>
           <UserProfileImg src={writer.photoURL} alt="유저 프로필" />

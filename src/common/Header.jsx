@@ -70,7 +70,7 @@ const UserName = styled.div`
   position: relative;
 `;
 
-function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName,onSubmit}){
+function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit}){
   const navigate = useNavigate()
   return(
     <>
@@ -99,7 +99,6 @@ function Header({h1,prv,ir,search,upload,handleUpload,vertical,userName,onSubmit
         }
       </HeaderWrappper>
     </HeaderContainer>
-      
     </>
   )
 }
