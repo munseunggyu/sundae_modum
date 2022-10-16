@@ -136,10 +136,31 @@ function PostDetailPage(){
       })
     console.log('완료')
   }
+
+  const handlePartyCanCelBtn = async () => {
+    const included = currentPost.currentPost.party.participants.find(participant => participant.uid === userInfo.uid)
+    if(!included) return
+    const cancel = currentPost.currentPost.party.participants.filter(v => v.uid !== userInfo.uid)
+    const newParty = {
+      ...currentPost.currentPost.party,
+      participants:[...cancel],
+      participateCount: currentPost.currentPost.party.participants.length-1
+    }
+    // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
+    // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
+    const currentPostRef = doc(db,'current_post','current_post')
+    await updateDoc(currentPostRef,{
+      party:newParty
+    })
+    const postRef = doc(db, "posts",currentPost.currentPost.postkey);
+      await updateDoc(postRef,{
+        party:newParty
+      })
+    console.log('완료')
+  }
   useEffect( () => {
     getCurrentPost()
   },[])
-  console.log(currentPost.currentPost.party.participants)
   return(
   <>
     {
@@ -168,11 +189,12 @@ function PostDetailPage(){
         <ContentsImg src={currentPost.currentPost.postImg} alt="" />
         }
         <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
+        <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
         <JoinSpan> {currentPost.currentPost.party.participateCount} / {currentPost.currentPost.party.recruit} </JoinSpan>
         {
-          currentPost.currentPost.party.participants.map(name => 
-            <div>
-              <PartyName>{name.displayName}</PartyName>
+          currentPost.currentPost.party.participants.map(participant => 
+            <div key={participant.uid}>
+              <PartyName>{participant.displayName}</PartyName>
             </div>
             )
         }
