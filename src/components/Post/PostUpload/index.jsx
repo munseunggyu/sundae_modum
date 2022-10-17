@@ -112,8 +112,10 @@ function PostUploadPage(){
       // 이미지 파일이 있으면 실행
       if(dbFile){
         const storageRef = ref(storage,`posts_images/${postRef.id}`)
-        const uploadTask = uploadBytes(storageRef, dbFile,metadata).then( async () => {
-          await getDownloadURL(storageRef ).then( async downloadURL => {
+        const uploadTask = uploadBytes(storageRef, dbFile,metadata)
+        .then(() => {
+          getDownloadURL(storageRef)
+          .then( async downloadURL => {
             const postData = {
               writer:{
                 ...userInfo
@@ -123,9 +125,7 @@ function PostUploadPage(){
               postTit,
               party: {
                 recruit,
-                participants:[
-                  // {displayName:userInfo.displayName,uid:userInfo.uid}
-                ],
+                participants:[],
                 participateCount:0
               },
               postTxt,
@@ -145,9 +145,7 @@ function PostUploadPage(){
           postTime,
           party: {
             recruit,
-            participants:[
-              // {displayName:userInfo.displayName,uid:userInfo.uid}
-            ],
+            participants:[],
             participateCount:0
           },
           postTit,

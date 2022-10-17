@@ -83,17 +83,17 @@ function FirstProfilePage(){
       // 프로필 사진을 변경 했을때 실행
       if(prevFile !== userInfo.photoURL){
         const storageRef = ref(storage,`user_image/${userInfo.uid}`)
-        const uploadTask = uploadBytes(storageRef,dbFile,metadata).then( async () => {
-          await getDownloadURL(storageRef).then( async downloadURL => {
-            const userData = {
-              displayName: nickName,
-              photoURL:downloadURL,
-              uid: userInfo.uid,
-              email:userInfo.email,
-              introduce
-            }
-          await setDoc(doc(db, "users",userInfo.uid), userData)
-          })
+        const uploadTask = uploadBytes(storageRef,dbFile,metadata)
+        getDownloadURL(storageRef)
+        .then(downloadURL => {
+          const userData = {
+            displayName: nickName,
+            photoURL:downloadURL,
+            uid: userInfo.uid,
+            email:userInfo.email,
+            introduce
+          }
+        setDoc(doc(db, "users",userInfo.uid), userData)
         })
     }
     // 프로필 사진을 변경 안 했을때
@@ -105,7 +105,6 @@ function FirstProfilePage(){
         email:userInfo.email,
         introduce
       }
-      console.log(userInfo.photoURL,'df')
       await setDoc(doc(db, "users",userInfo.uid), userData)
       // 설정한 프로필로 friestore에 저장
     }

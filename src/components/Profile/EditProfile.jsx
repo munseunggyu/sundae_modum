@@ -83,19 +83,18 @@ function EditProfile(){
       // 만약 프로필 사진을 업데이트 하면 실행
       if(prevFile !== userInfo.photoURL){
         const storageRef = ref(storage,`user_image/${userInfo.uid}`)
-        const uploadTask = uploadBytes(storageRef,dbFile,metadata).then( async () => {
-          await getDownloadURL(storageRef).then( async downloadURL => {
-            updateProfile(auth.currentUser,{
-              displayName:nickName,
-              photoURL:downloadURL
-            })
-            const userProfile = doc(db, "users", userInfo.uid);
-            await updateDoc(userProfile, {
-              displayName:nickName,
-              photoURL:downloadURL,
-              introduce
-            });
+        const uploadTask = uploadBytes(storageRef,dbFile,metadata)
+        getDownloadURL(storageRef).then(downloadURL => {
+          updateProfile(auth.currentUser,{
+            displayName:nickName,
+            photoURL:downloadURL
           })
+          const userProfile = doc(db, "users", userInfo.uid);
+          updateDoc(userProfile, {
+            displayName:nickName,
+            photoURL:downloadURL,
+            introduce
+          });
         })
       }
       else{
@@ -104,7 +103,6 @@ function EditProfile(){
           displayName:nickName,
         })
         const userProfile = doc(db, "users", userInfo.uid);
-        
         await updateDoc(userProfile, {
           displayName:nickName,
           introduce
