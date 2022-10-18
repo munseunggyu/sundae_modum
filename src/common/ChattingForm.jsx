@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -41,13 +41,15 @@ function Chatting(){
   // 게시글 댓글 작성 기능
     const handleChattingSend = async (e) => {
       e.preventDefault()
+
       const postChatting = collection(db, 'post_chatting');
       const newId = collection(postChatting, currentPost.postkey, 'post')
       await Promise.all([
           addDoc(newId, {
+              currentPostId: currentPost.postkey,
               CreateAt:serverTimestamp(),
               chatTxt,
-              wirter:{
+              writer:{
                 displayName:userInfo.displayName,
                 photoURL:userInfo.photoURL,
                 uid:userInfo.uid

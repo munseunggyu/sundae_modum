@@ -26,19 +26,29 @@ height:22px;
 margin-left:auto;
 `;
 
-function OtherUserChatting(){
+function OtherUserChatting({CreateAt,writer,chatTxt}){
+  const getDate = () => {
+    const date = CreateAt.toDate()
+    // const year = date.getFullYear()
+    const month = date.getMonth()+1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const min = date.getMinutes()
+    return `${month}/${day} ${hour}:${min}`
+  }
+  const time = getDate()
   return(
     <OtherUserChatContainer>
     <UserContainer>
-      <UserProfileImg src={userProfile} alt="유저 프로필" />
-      <UserName>name</UserName>
+      <UserProfileImg src={userProfile || writer.photoURL} alt="유저 프로필" />
+      <UserName>{writer.displayName}</UserName>
       <VerticalBtn />
     </UserContainer>
     <OtherTxt>
-      저 먹고 싶습니다!
+      {chatTxt}
     </OtherTxt>
     <OtherTime>
-      10/04 11:05
+      {time}
     </OtherTime>
   </OtherUserChatContainer>
   )
