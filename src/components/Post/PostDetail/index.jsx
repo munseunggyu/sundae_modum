@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
+import Chatting from "../../../common/ChattingForm";
 export const UserContainer = styled.div`
   display: flex;
   align-items:center;
@@ -68,34 +69,34 @@ const JoinSpan = styled.span`
 const PartyName = styled.span`
   margin-right:5px;
 `;
-const ChattingFormContainer = styled.div`
-  display: flex;
-  justify-content:center;
-`;
-const ChattingForm = styled.form`
-  position: fixed;
-  bottom:0;
-  max-width:450px;  
-  width:100%;
-`;
-const ChattingInput = styled.input`
-  outline:none;
-  width:100%;
-  font-size:16px;
-  padding:15px 30px 15px 15px;
-  border:0;
-  border-top:0.5px solid #DBDBDB;
-`;
+// const ChattingFormContainer = styled.div`
+//   display: flex;
+//   justify-content:center;
+// `;
+// const ChattingForm = styled.form`
+//   position: fixed;
+//   bottom:0;
+//   max-width:450px;  
+//   width:100%;
+// `;
+// const ChattingInput = styled.input`
+//   outline:none;
+//   width:100%;
+//   font-size:16px;
+//   padding:15px 30px 15px 15px;
+//   border:0;
+//   border-top:0.5px solid #DBDBDB;
+// `;
 
-const ChattingSubmitBtn = styled.button`
-  position: absolute;
-  right:10px;
-  background:url(${arrow});
-  transform:rotateY(180deg);
-  width:22px;
-  height:22px;
-  top:15px;
-`;
+// const ChattingSubmitBtn = styled.button`
+//   position: absolute;
+//   right:10px;
+//   background:url(${arrow});
+//   transform:rotateY(180deg);
+//   width:22px;
+//   height:22px;
+//   top:15px;
+// `;
 function PostDetailPage(){
   const {id} = useParams()
   const dispatch = useDispatch()
@@ -136,7 +137,7 @@ function PostDetailPage(){
       })
     console.log('완료')
   }
-
+  // 참여 취소하기 버튼 기능
   const handlePartyCanCelBtn = async () => {
     const included = currentPost.currentPost.party.participants.find(participant => participant.uid === userInfo.uid)
     if(!included) return
@@ -158,6 +159,23 @@ function PostDetailPage(){
       })
     console.log('완료')
   }
+
+  // 게시글 댓글 작성 기능
+  // const DMMessage = collection(db, 'DMMessage');
+  // const newId = collection(DMMessage, currentChatId.currentChatRoom.id, 'DM')
+  // await Promise.all([
+  //     addDoc(newId, {
+  //         content,
+  //         id:currentChatId.currentChatRoom.id,
+  //         CreateAt:serverTimestamp(),
+  //         CreateUer:{
+  //           name:userInfo.displayName,
+  //           photoURL:userInfo.photoURL
+  //       }
+  //       }),
+  
+  // ])
+
   useEffect( () => {
     getCurrentPost()
   },[])
@@ -204,12 +222,13 @@ function PostDetailPage(){
         <OtherUserChatting />
         <OtherUserChatting />
         </ul>
-      <ChattingFormContainer>
+        <Chatting />
+      {/* <ChattingFormContainer>
         <ChattingForm>
           <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
           <ChattingSubmitBtn />
         </ChattingForm>
-      </ChattingFormContainer>
+      </ChattingFormContainer> */}
       </MainContainer> 
       </>)
     }
