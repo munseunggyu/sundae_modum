@@ -5,7 +5,13 @@ import arrow from '../assets/arrow-left.png'
 import headerLogo from '../assets/header-logo.png'
 import verticalIcon from '../assets/icons/icon-more-vertical.png'
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { useSelector } from "react-redux";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
+
 const HeaderContainer= styled.article`
   width:100%;
   position:fixed;
@@ -72,6 +78,32 @@ const UserName = styled.div`
 
 function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit}){
   const navigate = useNavigate()
+  const userInfo = useSelector(state => state.user.currentUser)
+  const currentPost = useSelector(state => state.post.currentPost)
+
+  const delPost = async () => {
+    await deleteDoc(doc(db, "posts", currentPost.postkey))
+    navigate('/')
+  }
+  const verticalSubmit = (e) => {
+    e.preventDefault()
+    if(userInfo.uid === currentPost.writer.uid){
+    confirmAlert({
+      title: '게시글을 삭제하시겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            delPost()
+          }
+        },
+        {
+          label: '취소'
+        }
+      ]
+    })}
+  }
+
   return(
     <>
     <HeaderContainer>
@@ -91,12 +123,15 @@ function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit}){
           )
         }
         
-        {vertical && <RightIconBtn icon={verticalIcon} 
+        {vertical && <RightIconBtn
+        icon={verticalIcon} 
+        onClick={verticalSubmit}
         />}
         {search && <RightIconBtn icon={searchIcon} />}
         {upload && 
         <UploadBtn onClick={onSubmit}>업로드</UploadBtn>
         }
+
       </HeaderWrappper>
     </HeaderContainer>
     </>

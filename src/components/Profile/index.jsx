@@ -6,8 +6,10 @@ import PostList from "../Post/PostList";
 import { useNavigate } from "react-router-dom";
 import Nav from "../../common/Nav";
 import { signOut } from 'firebase/auth';
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { collection, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 
 const ProfileContainer = styled.div`
   width:100%;
@@ -49,6 +51,20 @@ const MyPostUl = styled.ul`
 function ProfilePage(){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
+  const [myPost,setMyPost] = useState([])
+  const getMyPost = async () => {
+    const postsRef = collection(db,'posts')
+    const q = query(postsRef,where('uid','==',userInfo.uid),orderBy('CreateAt','desc')) 
+    const posts = onSnapshot(q,snapshot => {
+      const newArr = snapshot.docs.map(doc => {
+        return doc.data() 
+      })
+      setMyPost(newArr)
+    })
+  }
+  useEffect(() => {
+    getMyPost()
+  },[])
   return(
     <>
       <Header prv={true} vertical={true} />
@@ -65,9 +81,11 @@ function ProfilePage(){
           }}>로그아웃</button>
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
-        {/* <MyPostUl>
-          <PostList />
-        </MyPostUl> */}
+        <MyPostUl>
+          {
+            myPost.map(post => <PostList key={post.postkey} {...post} />)
+          }
+        </MyPostUl>
       </MainContainer>
       <Nav />
     </>

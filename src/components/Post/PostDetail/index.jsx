@@ -11,6 +11,8 @@ import { collection, collectionGroup, doc, getDoc, getDocs, onSnapshot, orderBy,
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
 import Chatting from "../../../common/ChattingForm";
+
+
 export const UserContainer = styled.div`
   display: flex;
   align-items:center;
@@ -76,6 +78,8 @@ function PostDetailPage(){
   const currentPost = useSelector(state => state.post)
   const userInfo = useSelector(state => state.user.currentUser)
   const [chattings,setChattings] = useState([])
+
+  // 댓글 불러오기
   const getChatting = async (id) => {
     try{
       const q = query(collectionGroup (db, 'post'),where('currentPostId', '==', id),orderBy('CreateAt','asc'))
@@ -150,7 +154,8 @@ function PostDetailPage(){
       })
     console.log('완료')
   }
-  // 댓글 불러오기
+  
+
 
   useEffect( () => {
     getCurrentPost()
@@ -162,7 +167,7 @@ function PostDetailPage(){
       ? (<>...Loding</>)
       :
       (<>
-      <Header prv={true}  vertical={true}/>
+      <Header prv={true}  vertical={true} />
       <MainContainer pr='0'>
         <PostDetailContainer>
         <UserContainer>

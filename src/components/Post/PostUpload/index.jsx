@@ -141,6 +141,7 @@ function PostUploadPage(){
           writer:{
             ...userInfo
           },
+          uid:userInfo.uid,
           postDate:postDate.slice(5).replace('-','/'),
           postTime,
           party: {

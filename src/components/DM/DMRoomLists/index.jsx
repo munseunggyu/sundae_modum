@@ -12,7 +12,7 @@ function DMRoomLists(){
   const test = [1,2,3,4,5]
   return(
     <>
-    <Header prv={true} vertical={true}/>
+    <Header prv={true} />
     <MainContainer>
       <DMRoomUl>
         {

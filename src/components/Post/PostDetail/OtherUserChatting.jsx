@@ -40,7 +40,7 @@ function OtherUserChatting({CreateAt,writer,chatTxt}){
   return(
     <OtherUserChatContainer>
     <UserContainer>
-      <UserProfileImg src={userProfile || writer.photoURL} alt="유저 프로필" />
+      <UserProfileImg src={ writer.photoURL || userProfile} alt="유저 프로필" />
       <UserName>{writer.displayName}</UserName>
       <VerticalBtn />
     </UserContainer>
