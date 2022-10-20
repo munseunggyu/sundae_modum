@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
@@ -7,11 +7,12 @@ import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { collection, collectionGroup, doc, getDoc, getDocs, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
 import Chatting from "../../../common/ChattingForm";
-
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 export const UserContainer = styled.div`
   display: flex;
@@ -74,6 +75,7 @@ const PartyName = styled.span`
 
 function PostDetailPage(){
   const {id} = useParams()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentPost = useSelector(state => state.post)
   const userInfo = useSelector(state => state.user.currentUser)
@@ -154,6 +156,64 @@ function PostDetailPage(){
       })
     console.log('완료')
   }
+ 
+  const delPost = async () => {
+    await deleteDoc(doc(db, "posts", currentPost.currentPost.postkey))
+    navigate('/')
+  }
+  // DM의 같은 ID 값을 유지해주기 위해서
+  const CreateDMRoomId = (selectUser) => {  
+    return userInfo.uid > selectUser
+    ? `${selectUser}${userInfo.uid}`
+    :`${userInfo.uid}${selectUser}`
+  }
+  // 게시글 작성자와 DM하기 위해 방을 만든다.
+  const setDM = (dmRoomId) => {
+    const dmid = CreateDMRoomId(dmRoomId.uid) // DM방 생성
+    const dmRoom = doc(db,'DMROOMS',dmid)
+  
+    setDoc(dmRoom,{
+      id:dmid,
+      otherUser:dmRoomId.uid,
+      ids:[dmRoomId.uid,userInfo.uid],
+      names:[dmRoomId.displayName,userInfo.displayName]
+    })
+  }
+  const verticalSubmit = (e) => {
+    e.preventDefault()
+    if(userInfo.uid === currentPost.currentPost.writer.uid){
+    confirmAlert({
+      title: '게시글을 삭제하시겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            delPost()
+          }
+        },
+        {
+          label: '취소'
+        }
+      ]
+    })}
+  else{
+    confirmAlert({
+      title: '쪽지를 보내겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            setDM(currentPost.currentPost.writer)
+            console.log('DM방 생성')
+          }
+        },
+        {
+          label: '취소'
+        }
+      ]
+    })
+  }
+  }
   
 
 
@@ -167,7 +227,7 @@ function PostDetailPage(){
       ? (<>...Loding</>)
       :
       (<>
-      <Header prv={true}  vertical={true} />
+      <Header prv={true}  vertical={true} verticalSubmit={verticalSubmit}/>
       <MainContainer pr='0'>
         <PostDetailContainer>
         <UserContainer>

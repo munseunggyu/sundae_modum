@@ -5,12 +5,7 @@ import arrow from '../assets/arrow-left.png'
 import headerLogo from '../assets/header-logo.png'
 import verticalIcon from '../assets/icons/icon-more-vertical.png'
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-import { confirmAlert } from "react-confirm-alert";
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
-import { useSelector } from "react-redux";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase";
+
 
 const HeaderContainer= styled.article`
   width:100%;
@@ -52,13 +47,11 @@ const RightIconBtn = styled.button`
 const UploadBtn = styled.button`
   background-color:${props => props.theme.mainColor};
   width:80px;
-  /* padding:7px 0; */
   height:22px;
   color:white;
   border-radius:32px; 
   font-size:14px;
-  /* position: relative;
-  bottom:4px; */
+
 `;
 const PrvBtn = styled.button`
   background:url(${arrow});
@@ -76,33 +69,9 @@ const UserName = styled.div`
   position: relative;
 `;
 
-function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit}){
+function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit,verticalSubmit}){
   const navigate = useNavigate()
-  const userInfo = useSelector(state => state.user.currentUser)
-  const currentPost = useSelector(state => state.post.currentPost)
 
-  const delPost = async () => {
-    await deleteDoc(doc(db, "posts", currentPost.postkey))
-    navigate('/')
-  }
-  const verticalSubmit = (e) => {
-    e.preventDefault()
-    if(userInfo.uid === currentPost.writer.uid){
-    confirmAlert({
-      title: '게시글을 삭제하시겠습니까?',
-      buttons: [
-        {
-          label: '확인',
-          onClick: () => {
-            delPost()
-          }
-        },
-        {
-          label: '취소'
-        }
-      ]
-    })}
-  }
 
   return(
     <>
