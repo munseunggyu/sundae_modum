@@ -7,7 +7,7 @@ import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
 import Chatting from "../../../common/ChattingForm";
@@ -165,16 +165,17 @@ function PostDetailPage(){
     :`${userInfo.uid}${selectUser}`
   }
   // 게시글 작성자와 DM하기 위해 방을 만든다.
-  const setDM = (dmRoomId) => {
-    const dmid = CreateDMRoomId(dmRoomId.uid) // DM방 생성
+  const setDM = (otherUser) => {
+    const dmid = CreateDMRoomId(otherUser.uid) // DM방 생성
     const dmRoom = doc(db,'DMROOMS',dmid)
   
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom,{
       id:dmid,
-      otherUser:dmRoomId.uid,
-      ids:[dmRoomId.uid,userInfo.uid],
-      names:[dmRoomId.displayName,userInfo.displayName]
+      CreateAt:serverTimestamp(),
+      ids:[otherUser.uid,userInfo.uid],
+      names:[otherUser.displayName,userInfo.displayName],
+      photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
 

@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import userProfile from '../../../assets/user-profile.png'
@@ -44,14 +45,16 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoomList({value}){
+function DMRoomList({names,photoURLs}){
   const navigate = useNavigate()
+  const userInfo = useSelector(state => state.user.currentUser)
+  console.log(photoURLs.filter(photoURL => photoURL !== userInfo.photoURL))
   return(
     <DMRoomli>
-      <DMBtn onClick={() => navigate(`${value}`)}>
-        <UserImg src={userProfile} alt="" />
+      <DMBtn onClick={() => navigate(`/`)}>
+        <UserImg src={photoURLs.filter(photoURL => photoURL !== userInfo.photoURL)[0] ||  userProfile} alt="" />
         <TxtContainer>
-          <UserName>목짧은 기린</UserName>
+          <UserName>{names.filter(name => name !== userInfo.displayName)[0]}</UserName>
           <LastChatting>혹시 오늘 치킨 드시나요?</LastChatting>
         </TxtContainer>
         <Time>

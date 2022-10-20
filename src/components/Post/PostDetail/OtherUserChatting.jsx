@@ -1,4 +1,4 @@
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { confirmAlert } from "react-confirm-alert";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -54,16 +54,17 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
       ? `${selectUser}${userInfo.uid}`
       :`${userInfo.uid}${selectUser}`
     }
-  const setDM = (dmRoomId) => {
-    const dmid = CreateDMRoomId(dmRoomId.uid) // DM방 생성
+  const setDM = (otherUser) => {
+    const dmid = CreateDMRoomId(otherUser.uid) // DM방 생성
     const dmRoom = doc(db,'DMROOMS',dmid)
   
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom,{
       id:dmid,
-      otherUser:dmRoomId.uid,
-      ids:[dmRoomId.uid,userInfo.uid],
-      names:[dmRoomId.displayName,userInfo.displayName]
+      CreateAt:serverTimestamp(),
+      ids:[otherUser.uid,userInfo.uid],
+      names:[otherUser.displayName,userInfo.displayName],
+      photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
   const verticalSubmit = (e) => {
