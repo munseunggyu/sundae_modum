@@ -1,4 +1,5 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { confirmAlert } from "react-confirm-alert";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { UserContainer, UserName, UserProfileImg } from ".";
@@ -40,18 +41,73 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
     return `${month}/${day} ${hour}:${min}`
   }
   const time = getDate()
+  const userInfo = useSelector(state => state.user.currentUser)
   const currentPost = useSelector(state => state.post.currentPost)
   const delChatting = async () => { // 채팅 삭제
     const postChatDoc = doc(db,"post_chatting",currentPost.postkey)
     await deleteDoc(doc(postChatDoc,"post", chatId));
     console.log('완료')
   }
+    // DM의 같은 ID 값을 유지해주기 위해서
+    const CreateDMRoomId = (selectUser) => {  
+      return userInfo.uid > selectUser
+      ? `${selectUser}${userInfo.uid}`
+      :`${userInfo.uid}${selectUser}`
+    }
+  const setDM = (dmRoomId) => {
+    const dmid = CreateDMRoomId(dmRoomId.uid) // DM방 생성
+    const dmRoom = doc(db,'DMROOMS',dmid)
+  
+    //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
+    setDoc(dmRoom,{
+      id:dmid,
+      otherUser:dmRoomId.uid,
+      ids:[dmRoomId.uid,userInfo.uid],
+      names:[dmRoomId.displayName,userInfo.displayName]
+    })
+  }
+  const verticalSubmit = (e) => {
+    e.preventDefault()
+    if(userInfo.uid === writer.uid){
+    confirmAlert({
+      title: '댓글을 삭제하시겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            delChatting()
+          }
+        },
+        {
+          label: '취소'
+        }
+      ]
+    })}
+  else{
+    confirmAlert({
+      title: '쪽지를 보내겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            setDM(writer)
+            console.log('DM방 생성')
+          }
+        },
+        {
+          label: '취소'
+        }
+      ]
+    })
+  }
+  }
+
   return(
     <OtherUserChatContainer>
     <UserContainer>
       <UserProfileImg src={ writer.photoURL || userProfile} alt="유저 프로필" />
       <UserName>{writer.displayName}</UserName>
-      <VerticalBtn />
+      <VerticalBtn onClick={verticalSubmit} />
     </UserContainer>
     <OtherTxt>
       {chatTxt}
