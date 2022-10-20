@@ -86,9 +86,6 @@ function PostDetailPage(){
     try{
       const q = query(collectionGroup (db, 'post'),where('currentPostId', '==', id),orderBy('CreateAt','asc'))
       const querySnapshot = await getDocs(q);
-      // const newChatting = querySnapshot.forEach((doc) => {
-      //     console.log(doc.id, ' => ', doc.data());
-      // });
       onSnapshot(q,querySnapshot => {
         const newChatting = querySnapshot.docs.map(doc => {
           return doc.data({ serverTimestamps: "estimate" })
@@ -172,6 +169,7 @@ function PostDetailPage(){
     const dmid = CreateDMRoomId(dmRoomId.uid) // DM방 생성
     const dmRoom = doc(db,'DMROOMS',dmid)
   
+    //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom,{
       id:dmid,
       otherUser:dmRoomId.uid,
@@ -179,6 +177,7 @@ function PostDetailPage(){
       names:[dmRoomId.displayName,userInfo.displayName]
     })
   }
+
   const verticalSubmit = (e) => {
     e.preventDefault()
     if(userInfo.uid === currentPost.currentPost.writer.uid){

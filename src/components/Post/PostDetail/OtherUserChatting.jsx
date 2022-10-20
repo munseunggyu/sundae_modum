@@ -1,7 +1,9 @@
+import { deleteDoc, doc } from "firebase/firestore";
 import styled from "styled-components";
 import { UserContainer, UserName, UserProfileImg } from ".";
 import verticalIcon from '../../../assets/icons/icon-more-vertical.png'
 import userProfile from '../../../assets/user-profile.png'
+import { db } from "../../../firebase";
 
 const OtherUserChatContainer = styled.li`
 width:100%;
@@ -37,6 +39,9 @@ function OtherUserChatting({CreateAt,writer,chatTxt}){
     return `${month}/${day} ${hour}:${min}`
   }
   const time = getDate()
+  // const del = async () => {
+  //   await deleteDoc(doc(db, "cities", "DC"));
+  // }
   return(
     <OtherUserChatContainer>
     <UserContainer>
@@ -50,6 +55,9 @@ function OtherUserChatting({CreateAt,writer,chatTxt}){
     <OtherTime>
       {time}
     </OtherTime>
+    <button 
+    // onClick={del}
+    > del</button>
   </OtherUserChatContainer>
   )
 }

@@ -43,9 +43,10 @@ function Chatting(){
       e.preventDefault()
 
       const postChatting = collection(db, 'post_chatting');
-      const newId = collection(postChatting, currentPost.postkey, 'post')
+      const newId = doc(collection(postChatting, currentPost.postkey, 'post'))
       await Promise.all([
-          addDoc(newId, {
+          setDoc(newId, {
+              chatId:newId.id,
               currentPostId: currentPost.postkey,
               CreateAt:serverTimestamp(),
               chatTxt,
