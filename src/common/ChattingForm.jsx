@@ -41,7 +41,6 @@ function Chatting(){
   // 게시글 댓글 작성 기능
     const handleChattingSend = async (e) => {
       e.preventDefault()
-
       const postChatting = collection(db, 'post_chatting');
       const newId = doc(collection(postChatting, currentPost.postkey, 'post'))
       await Promise.all([

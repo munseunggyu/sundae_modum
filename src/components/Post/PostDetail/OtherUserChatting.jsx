@@ -1,4 +1,5 @@
 import { deleteDoc, doc } from "firebase/firestore";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { UserContainer, UserName, UserProfileImg } from ".";
 import verticalIcon from '../../../assets/icons/icon-more-vertical.png'
@@ -28,7 +29,7 @@ height:22px;
 margin-left:auto;
 `;
 
-function OtherUserChatting({CreateAt,writer,chatTxt}){
+function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
   const getDate = () => {
     const date = CreateAt.toDate()
     // const year = date.getFullYear()
@@ -39,9 +40,12 @@ function OtherUserChatting({CreateAt,writer,chatTxt}){
     return `${month}/${day} ${hour}:${min}`
   }
   const time = getDate()
-  // const del = async () => {
-  //   await deleteDoc(doc(db, "cities", "DC"));
-  // }
+  const currentPost = useSelector(state => state.post.currentPost)
+  const delChatting = async () => { // 채팅 삭제
+    const postChatDoc = doc(db,"post_chatting",currentPost.postkey)
+    await deleteDoc(doc(postChatDoc,"post", chatId));
+    console.log('완료')
+  }
   return(
     <OtherUserChatContainer>
     <UserContainer>
@@ -56,7 +60,7 @@ function OtherUserChatting({CreateAt,writer,chatTxt}){
       {time}
     </OtherTime>
     <button 
-    // onClick={del}
+    onClick={delChatting}
     > del</button>
   </OtherUserChatContainer>
   )
