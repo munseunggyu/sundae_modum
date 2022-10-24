@@ -25,6 +25,7 @@ function App() {
     // 로그인,회원가입,소셜로그인 시 firestore에 해당 유저가 있는지 확인
     onAuthStateChanged(auth, async (user) =>  {
       if(user){
+        // dispatch(setUser(user))
         onSnapshot(doc(db, "users", user.uid), async (doc) => {
           // 만약 없다면 첫 프로필 설정 화면으로 이동
           if (!doc.data()) {

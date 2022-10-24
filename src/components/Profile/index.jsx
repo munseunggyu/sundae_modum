@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../../common/Nav";
 import { signOut } from 'firebase/auth';
 import { auth, db } from "../../firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { collection, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { clearUser } from "../../redux/actions/user_action";
 
 const ProfileContainer = styled.div`
   width:100%;
@@ -50,6 +51,7 @@ const MyPostUl = styled.ul`
 `;
 function ProfilePage(){
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const userInfo = useSelector(state => state.user.currentUser)
   const [myPost,setMyPost] = useState([])
   const getMyPost = async () => {
@@ -61,6 +63,10 @@ function ProfilePage(){
       })
       setMyPost(newArr)
     })
+  }
+  const signOutUser = () => {
+    signOut(auth)
+    dispatch(clearUser())
   }
   useEffect(() => {
     getMyPost()
@@ -76,9 +82,7 @@ function ProfilePage(){
           <UserProfileEditBtn
           onClick={() => navigate('editprofile')}
           >프로필 수정하기</UserProfileEditBtn>
-          <button onClick={() => {
-            signOut(auth)
-          }}>로그아웃</button>
+          <button onClick={signOutUser}>로그아웃</button>
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
         <MyPostUl>

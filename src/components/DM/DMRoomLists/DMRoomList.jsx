@@ -51,7 +51,7 @@ function DMRoomList({names,photoURLs}){
   console.log(photoURLs.filter(photoURL => photoURL !== userInfo.photoURL))
   return(
     <DMRoomli>
-      <DMBtn onClick={() => navigate(`/`)}>
+      <DMBtn onClick={() => navigate(`${names.filter(name => name !== userInfo.displayName)[0]}`)}>
         <UserImg src={photoURLs.filter(photoURL => photoURL !== userInfo.photoURL)[0] ||  userProfile} alt="" />
         <TxtContainer>
           <UserName>{names.filter(name => name !== userInfo.displayName)[0]}</UserName>

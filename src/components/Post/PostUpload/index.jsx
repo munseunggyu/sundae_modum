@@ -139,7 +139,8 @@ function PostUploadPage(){
       }else{
         const postData = {
           writer:{
-            ...userInfo
+            displayName:userInfo.displayName,
+            photoURL:userInfo.photoURL
           },
           uid:userInfo.uid,
           postDate:postDate.slice(5).replace('-','/'),
