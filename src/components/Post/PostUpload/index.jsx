@@ -137,7 +137,6 @@ function PostUploadPage(){
       }else{
         const postData = {
           writerId:userInfo.uid,
-          uid:userInfo.uid,
           postDate:postDate.slice(5).replace('-','/'),
           postTime,
           party: {

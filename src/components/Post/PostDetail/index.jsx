@@ -13,6 +13,7 @@ import { setCurrentPost } from "../../../redux/actions/post_action";
 import Chatting from "../../../common/ChattingForm";
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import PartyName from "./PartyName";
 
 export const UserContainer = styled.div`
   display: flex;
@@ -69,9 +70,6 @@ const JoinBtn = styled.button`
 const JoinSpan = styled.span`
   font-size:16px;
 `;
-const PartyName = styled.span`
-  margin-right:5px;
-`;
 
 function PostDetailPage(){
   const {id} = useParams()
@@ -116,15 +114,16 @@ function PostDetailPage(){
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {
     // 이미 참여하고있으면 return해 준다.
-    const included = currentPost.currentPost.party.participants.find(participant => participant.uid === userInfo.uid)
+    const included = currentPost.currentPost.party.participants.find(participant => participant === userInfo.uid)
     if(included) return
     const newParty = {
       ...currentPost.currentPost.party,
       participants:[...currentPost.currentPost.party.participants,
-        {
-          displayName:userInfo.displayName,
-          uid:userInfo.uid
-        }
+        // {
+        //   displayName:userInfo.displayName,
+        //   uid:userInfo.uid
+        // }
+        userInfo.uid
       ],
       participateCount: currentPost.currentPost.party.participants.length+1
     }
@@ -142,9 +141,9 @@ function PostDetailPage(){
   }
   // 참여 취소하기 버튼 기능
   const handlePartyCanCelBtn = async () => {
-    const included = currentPost.currentPost.party.participants.find(participant => participant.uid === userInfo.uid)
+    const included = currentPost.currentPost.party.participants.find(participant => participant === userInfo.uid)
     if(!included) return
-    const cancel = currentPost.currentPost.party.participants.filter(v => v.uid !== userInfo.uid)
+    const cancel = currentPost.currentPost.party.participants.filter(v => v !== userInfo.uid)
     const newParty = {
       ...currentPost.currentPost.party,
       participants:[...cancel],
@@ -183,8 +182,6 @@ function PostDetailPage(){
       id:dmid,
       CreateAt:serverTimestamp(),
       ids:[otherUser,userInfo.uid],
-      // names:[otherUser.displayName,userInfo.displayName],
-      // photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
 
@@ -261,7 +258,7 @@ function PostDetailPage(){
         <div >
         {
         currentPost.currentPost.party.participants.map(participant => 
-          <PartyName key={participant.uid}>{participant.displayName}</PartyName>
+          <PartyName key={participant} id={participant}/>
           )
         }
         </div>

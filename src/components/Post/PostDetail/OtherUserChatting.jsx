@@ -109,7 +109,6 @@ function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
     })
   }
   }
-  console.log(writerId)
   return(
     <OtherUserChatContainer>
     <UserContainer>
