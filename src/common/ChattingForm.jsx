@@ -49,11 +49,7 @@ function Chatting(){
               currentPostId: currentPost.postkey,
               CreateAt:serverTimestamp(),
               chatTxt,
-              writer:{
-                displayName:userInfo.displayName,
-                photoURL:userInfo.photoURL,
-                uid:userInfo.uid
-            }
+              writerId:userInfo.uid
             }),
       ])
       setChatTxt('')

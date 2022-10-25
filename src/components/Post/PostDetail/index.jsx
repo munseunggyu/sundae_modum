@@ -190,7 +190,7 @@ function PostDetailPage(){
 
   const verticalSubmit = (e) => {
     e.preventDefault()
-    if(userInfo.uid === currentPost.currentPost.writer.uid){
+    if(userInfo.uid === currentPost.currentPost.writerId){
     confirmAlert({
       title: '게시글을 삭제하시겠습니까?',
       buttons: [

@@ -1,4 +1,5 @@
-import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
+import { useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -30,7 +31,7 @@ height:22px;
 margin-left:auto;
 `;
 
-function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
+function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
   const getDate = () => {
     const date = CreateAt.toDate()
     // const year = date.getFullYear()
@@ -43,6 +44,12 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
   const time = getDate()
   const userInfo = useSelector(state => state.user.currentUser)
   const currentPost = useSelector(state => state.post.currentPost)
+  const [writerName,setWriterName] = useState('')
+  const [writerPhotoURL,setWriterPhotoURL] = useState('')
+  onSnapshot(doc(db, "users", writerId), (doc) => {
+    setWriterName(doc.data().displayName)
+    setWriterPhotoURL(doc.data().photoURL)
+  })
   const delChatting = async () => { // 채팅 삭제
     const postChatDoc = doc(db,"post_chatting",currentPost.postkey)
     await deleteDoc(doc(postChatDoc,"post", chatId));
@@ -62,14 +69,14 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
     setDoc(dmRoom,{
       id:dmid,
       CreateAt:serverTimestamp(),
-      ids:[otherUser.uid,userInfo.uid],
-      names:[otherUser.displayName,userInfo.displayName],
-      photoURLs:[otherUser.photoURL,userInfo.photoURL],
+      ids:[writerId,userInfo.uid],
+      // names:[otherUser.displayName,userInfo.displayName],
+      // photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
   const verticalSubmit = (e) => {
     e.preventDefault()
-    if(userInfo.uid === writer.uid){
+    if(userInfo.uid === writerId){
     confirmAlert({
       title: '댓글을 삭제하시겠습니까?',
       buttons: [
@@ -91,7 +98,7 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
         {
           label: '확인',
           onClick: () => {
-            setDM(writer)
+            setDM(writerId)
             console.log('DM방 생성')
           }
         },
@@ -102,12 +109,12 @@ function OtherUserChatting({CreateAt,writer,chatTxt,chatId}){
     })
   }
   }
-
+  console.log(writerId)
   return(
     <OtherUserChatContainer>
     <UserContainer>
-      <UserProfileImg src={ writer.photoURL || userProfile} alt="유저 프로필" />
-      <UserName>{writer.displayName}</UserName>
+      <UserProfileImg src={ writerPhotoURL || userProfile} alt="유저 프로필" />
+      <UserName>{writerName}</UserName>
       <VerticalBtn onClick={verticalSubmit} />
     </UserContainer>
     <OtherTxt>
