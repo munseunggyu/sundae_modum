@@ -117,9 +117,7 @@ function PostUploadPage(){
           getDownloadURL(storageRef)
           .then( async downloadURL => {
             const postData = {
-              writer:{
-                ...userInfo
-              },
+              writerId:userInfo.uid,
               postDate:postDate.slice(5).replace('-','/'),
               postTime,
               postTit,
@@ -138,10 +136,7 @@ function PostUploadPage(){
         })
       }else{
         const postData = {
-          writer:{
-            displayName:userInfo.displayName,
-            photoURL:userInfo.photoURL
-          },
+          writerId:userInfo.uid,
           uid:userInfo.uid,
           postDate:postDate.slice(5).replace('-','/'),
           postTime,

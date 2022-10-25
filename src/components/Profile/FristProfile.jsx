@@ -5,10 +5,11 @@ import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
 import {  useEffect, useRef, useState } from "react";
 import { doc, setDoc } from "firebase/firestore"
-import {  db, storage } from "../../firebase";
+import {  auth, db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { updateProfile } from "firebase/auth";
 
 const UserProfileImg = styled.img`
   width:110px;
@@ -93,6 +94,10 @@ function FirstProfilePage(){
             email:userInfo.email,
             introduce
           }
+          updateProfile(auth.currentUser,{
+            displayName:nickName,
+            photoURL:downloadURL,
+          })
         setDoc(doc(db, "users",userInfo.uid), userData)
         })
     }
@@ -105,6 +110,9 @@ function FirstProfilePage(){
         email:userInfo.email,
         introduce
       }
+      updateProfile(auth.currentUser,{
+        displayName:nickName,
+      })
       await setDoc(doc(db, "users",userInfo.uid), userData)
       // 설정한 프로필로 friestore에 저장
     }

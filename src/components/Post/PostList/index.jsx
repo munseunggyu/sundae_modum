@@ -60,10 +60,17 @@ const PostTextBottomContainer = styled.div`
   span{
   }
 `
-function PostList({party,participants,participateCount,recruit,postkey,postImg,postDate,postTime,postTit,postTxt,writer}){
+function PostList({party,participants,participateCount,recruit,postkey,postImg,postDate,postTime,postTit,postTxt,writerId}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const [writerName,setWriterName] = useState('')
+  const [writerPhotoURL,setWriterPhotoURL] = useState('')
+  // 지금 작성자의 uid를 나는 알고 있다. 그러니 그것을 가지고 users에서 그 작성자를 찾아 그 데이터를 뿌려 준다
+  onSnapshot(doc(db, "users", writerId), (doc) => {
+    setWriterName(doc.data().displayName)
+    setWriterPhotoURL(doc.data().photoURL)
+  })
   const postData = {
     party: {
       recruit: party.recruit,
@@ -76,12 +83,16 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
     postTime,
     postTit,
     postTxt,
-    writer,
+    writer:{
+      displayName:writerName,
+      photoURL:writerPhotoURL
+    },
     isLoding:true
   }
   const handleClick = async (e) => {
     dispatch(clearCurrentPost())
-    await setDoc(doc(db, "current_post", "current_post"),postData);
+    dispatch(setCurrentPost(postData))
+    // await setDoc(doc(db, "current_post", "current_post"),postData);
     navigate(`postdetail/${postTit}`)
   }
   return(
@@ -89,9 +100,9 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
       <PostBtn onClick={handleClick}>
         <div>
         <PostContentContainer>
-          <UserProfileImg src={writer.photoURL || userProfile} alt="유저 프로필" />
+          <UserProfileImg src={writerPhotoURL || userProfile} alt="유저 프로필" />
           <PostTextContainer>
-          <UserName>{writer.displayName}</UserName>
+          <UserName>{writerName}</UserName>
           <strong>{postTit}</strong>
           <PostTextBottomContainer>
           <time>
