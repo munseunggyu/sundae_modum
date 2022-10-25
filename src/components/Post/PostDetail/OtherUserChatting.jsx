@@ -62,7 +62,7 @@ function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
       :`${userInfo.uid}${selectUser}`
     }
   const setDM = (otherUser) => {
-    const dmid = CreateDMRoomId(otherUser.uid) // DM방 생성
+    const dmid = CreateDMRoomId(otherUser) // DM방 생성
     const dmRoom = doc(db,'DMROOMS',dmid)
   
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.

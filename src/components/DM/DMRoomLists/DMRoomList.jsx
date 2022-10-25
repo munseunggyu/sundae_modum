@@ -1,7 +1,10 @@
+import { doc, onSnapshot } from "firebase/firestore";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import userProfile from '../../../assets/user-profile.png'
+import { db } from "../../../firebase";
 
 
 const DMRoomli = styled.li`
@@ -45,16 +48,22 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoomList({names,photoURLs}){
+function DMRoomList({names,ids}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
-  console.log(photoURLs.filter(photoURL => photoURL !== userInfo.photoURL))
+  const [outerUserrName,setOuterUserrName] = useState('')
+  const [outerUserrPhotoURL,setOuterUserrPhotoURL] = useState('')
+  const otherUserId = ids.filter(id => id !== userInfo.uid)[0]
+  onSnapshot(doc(db, "users", otherUserId), (doc) => {
+    setOuterUserrName(doc.data().displayName)
+    setOuterUserrPhotoURL(doc.data().photoURL)
+  })
   return(
     <DMRoomli>
-      <DMBtn onClick={() => navigate(`${names.filter(name => name !== userInfo.displayName)[0]}`)}>
-        <UserImg src={photoURLs.filter(photoURL => photoURL !== userInfo.photoURL)[0] ||  userProfile} alt="" />
+      <DMBtn onClick={() => navigate(`${outerUserrName}`)}>
+        <UserImg src={outerUserrPhotoURL ||  userProfile} alt="" />
         <TxtContainer>
-          <UserName>{names.filter(name => name !== userInfo.displayName)[0]}</UserName>
+          <UserName>{outerUserrName}</UserName>
           <LastChatting>혹시 오늘 치킨 드시나요?</LastChatting>
         </TxtContainer>
         <Time>

@@ -175,16 +175,16 @@ function PostDetailPage(){
   }
   // 게시글 작성자와 DM하기 위해 방을 만든다.
   const setDM = (otherUser) => {
-    const dmid = CreateDMRoomId(otherUser.uid) // DM방 생성
+    const dmid = CreateDMRoomId(otherUser) // DM방 생성
     const dmRoom = doc(db,'DMROOMS',dmid)
   
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom,{
       id:dmid,
       CreateAt:serverTimestamp(),
-      ids:[otherUser.uid,userInfo.uid],
-      names:[otherUser.displayName,userInfo.displayName],
-      photoURLs:[otherUser.photoURL,userInfo.photoURL],
+      ids:[otherUser,userInfo.uid],
+      // names:[otherUser.displayName,userInfo.displayName],
+      // photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
 
@@ -212,7 +212,7 @@ function PostDetailPage(){
         {
           label: '확인',
           onClick: () => {
-            setDM(currentPost.currentPost.writer)
+            setDM(currentPost.currentPost.writerId)
             console.log('DM방 생성')
           }
         },
@@ -224,7 +224,6 @@ function PostDetailPage(){
   }
   }
   
-
 
   useEffect( () => {
     getCurrentPost()
