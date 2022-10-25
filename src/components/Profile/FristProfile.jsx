@@ -52,6 +52,7 @@ const EditInput = styled.input`
 `;
 
 function FirstProfilePage(){
+
   const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -117,7 +118,7 @@ function FirstProfilePage(){
       // 설정한 프로필로 friestore에 저장
     }
     }catch(error){
-      console.log(error)
+      console.log(error) 
     }
     navigate('/')
   }
