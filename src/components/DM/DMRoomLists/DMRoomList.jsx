@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -48,19 +48,29 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoomList({names,ids}){
+function DMRoomList({names,ids,id}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
   const [outerUserrName,setOuterUserrName] = useState('')
   const [outerUserrPhotoURL,setOuterUserrPhotoURL] = useState('')
   const otherUserId = ids.filter(id => id !== userInfo.uid)[0]
+  console.log(id)
   onSnapshot(doc(db, "users", otherUserId), (doc) => {
     setOuterUserrName(doc.data().displayName)
     setOuterUserrPhotoURL(doc.data().photoURL)
   })
+
+  // 클릭시 current DROOM 생성
+  const currentDMROOM = async () => {
+    const currentDMData = {
+      otherUserId
+    }
+    await setDoc(doc(db, "current_dm", "current_dm"),currentDMData);
+    navigate(`${outerUserrName}`)
+  }
   return(
     <DMRoomli>
-      <DMBtn onClick={() => navigate(`${outerUserrName}`)}>
+      <DMBtn onClick={currentDMROOM}>
         <UserImg src={outerUserrPhotoURL ||  userProfile} alt="" />
         <TxtContainer>
           <UserName>{outerUserrName}</UserName>
