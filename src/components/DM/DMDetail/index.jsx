@@ -4,6 +4,9 @@ import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import arrow from '../../../assets/arrow-left.png'
 import DMChatting from "./DMChatting";
+import { useEffect, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase";
 const DMDetailContainer = styled.ul`
   width:100%;
   background-color:#f2f2f2;
@@ -45,11 +48,14 @@ const ChattingSubmitBtn = styled.button`
 `;
 
 function DMDetailPage(){
-  // 자 이부분 해봅시다 DM날리는 부분 
-  // 그럼 우선 채팅부터 그 아이디에 맞게 보내야겠죠 그럴려면 어캐해야죠? 
-  // 만든 DM방을 찾고 firebase에 currentDM을 저장한다.
-  // 그 해당 DM방 아이디로 Firebase에 또 그 채팅방의 채팅내역들을 만든다.
-  // 
+  const [currentDMROOM, setCurrentDMRROOM] = useState([])
+  useEffect(() => {
+    const currentDMRef = doc(db,'current_dm','current_dm')
+    const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
+      setCurrentDMRROOM(currentDMDoc.data())
+    })
+  },[])
+  console.log(currentDMROOM)
   return(
     <>
       <Header prv={true} userName='목짧은 기린' vertical={true}/>

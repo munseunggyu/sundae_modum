@@ -63,7 +63,8 @@ function DMRoomList({names,ids,id}){
   // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {
     const currentDMData = {
-      otherUserId
+      otherUserId,
+      roomId:id
     }
     await setDoc(doc(db, "current_dm", "current_dm"),currentDMData);
     navigate(`${outerUserrName}`)
