@@ -54,7 +54,6 @@ function DMRoomList({names,ids,id}){
   const [outerUserrName,setOuterUserrName] = useState('')
   const [outerUserrPhotoURL,setOuterUserrPhotoURL] = useState('')
   const otherUserId = ids.filter(id => id !== userInfo.uid)[0]
-  console.log(id)
   onSnapshot(doc(db, "users", otherUserId), (doc) => {
     setOuterUserrName(doc.data().displayName)
     setOuterUserrPhotoURL(doc.data().photoURL)

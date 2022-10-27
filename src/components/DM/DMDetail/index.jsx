@@ -49,13 +49,14 @@ const ChattingSubmitBtn = styled.button`
 
 function DMDetailPage(){
   const [currentDMROOM, setCurrentDMRROOM] = useState([])
+
   useEffect(() => {
     const currentDMRef = doc(db,'current_dm','current_dm')
     const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
+
       setCurrentDMRROOM(currentDMDoc.data())
     })
   },[])
-  console.log(currentDMROOM)
   return(
     <>
       <Header prv={true} userName='목짧은 기린' vertical={true}/>
