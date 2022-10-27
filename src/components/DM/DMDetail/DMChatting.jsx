@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components"
 import userImg from '../../../assets/user-profile.png'
 
@@ -32,13 +33,24 @@ const ChatTime = styled.time`
   font-size:10px;
   align-self:flex-end;
 `;
-function DMChatting({other}){
+function DMChatting({chat,CreateAt,writerId,otherUserPhotoURL}){
+  const userInfo = useSelector(state => state.user.currentUser)
+    const getDate = () => {
+    const date = CreateAt.toDate()
+    const month = date.getMonth()+1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const min = date.getMinutes()
+    return `${month}/${day} ${hour}:${min}`
+  }
+  const time = getDate()
+  const other = userInfo.uid !== writerId
   return(
   <DMChattingLi other={other} >
-    {other && <UserProfile src={userImg} alt="" />}
+    {other && <UserProfile src={ otherUserPhotoURL || userImg} alt="" />}
     <ChatContainer other={other} >
-      <ChatP other={other} >안녕하세요</ChatP>
-      <ChatTime>2017</ChatTime>
+      <ChatP other={other} >{chat}</ChatP>
+      <ChatTime>{time}</ChatTime>
     </ChatContainer>
   </DMChattingLi>
   )

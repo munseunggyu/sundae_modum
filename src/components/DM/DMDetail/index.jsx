@@ -66,7 +66,7 @@ function DMDetailPage(){
               chat,
               id:currentDMROOM.roomId,
               CreateAt:serverTimestamp(),
-              wirterId:userInfo.uid,
+              writerId:userInfo.uid,
             })
       ])
       setChat('')
@@ -74,7 +74,7 @@ function DMDetailPage(){
   }
   // DM 메시지 가져오기
   const getMessages = (id) => {
-    const q = query(collectionGroup (db, 'DM'), where('id', '==', id),orderBy('CreateAt','desc'))
+    const q = query(collectionGroup (db, 'DM'), where('id', '==', id),orderBy('CreateAt','asc'))
     onSnapshot(q,querySnapshot => {
       const newarr = querySnapshot.docs.map(doc => {
         return doc.data({ serverTimestamps: "estimate" })
@@ -83,6 +83,7 @@ function DMDetailPage(){
     })
   }
 
+  // 현재 DM방 id 가져오기
   const getCurrentDMROOM = () => {
     const currentDMRef = doc(db,'current_dm','current_dm')
     const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
@@ -92,20 +93,23 @@ function DMDetailPage(){
       })
       setCurrentDMRROOM(currentDMDoc.data())
       getMessages(currentDMDoc.data().roomId) // 현재 DM방 데이터 가져온걸 바로 넣어줘 메시지들도 가져온다.
-
     })
   }
   useEffect(() => {
     getCurrentDMROOM()
   },[])
-  console.log(messages)
   return(
     <>
-      <Header prv={true} userName='목짧은 기린' vertical={true}/>
+      <Header prv={true} userName={otherUserName}/>
       <MainContainer pr='0'>
       <DMDetailContainer>
-        <DMChatting other={true} />
-        <DMChatting />
+        {
+          messages.map(message => {
+            return(
+              <DMChatting {...message} otherUserPhotoURL={otherUserPhotoURL} />
+            )
+          })
+        }
       </DMDetailContainer>
         <ChattingFormContainer>
         <ChattingForm onSubmit={submitChat}>
