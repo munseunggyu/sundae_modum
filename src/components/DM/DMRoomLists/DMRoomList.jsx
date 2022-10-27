@@ -1,5 +1,5 @@
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
@@ -54,6 +54,19 @@ function DMRoomList({names,ids,id}){
   const [outerUserrName,setOuterUserrName] = useState('')
   const [outerUserrPhotoURL,setOuterUserrPhotoURL] = useState('')
   const otherUserId = ids.filter(id => id !== userInfo.uid)[0]
+  const [lastChat,setLastChat] = useState([])
+  const [time,setTime] = useState('')
+  const getDate = (time) => {
+    const date = time.CreateAt.toDate()
+    const month = date.getMonth()+1
+    const day = date.getDate()
+    let hour = date.getHours()
+    hour = hour.toString().padStart(2, '0')
+    let min = date.getMinutes()
+    min = min.toString().padStart(2, '0')
+    return `${month}/${day} ${hour}:${min}`
+  }
+  // const time = getDate()
   onSnapshot(doc(db, "users", otherUserId), (doc) => {
     setOuterUserrName(doc.data().displayName)
     setOuterUserrPhotoURL(doc.data().photoURL)
@@ -68,16 +81,26 @@ function DMRoomList({names,ids,id}){
     await setDoc(doc(db, "current_dm", "current_dm"),currentDMData);
     navigate(`${outerUserrName}`)
   }
+  const getLastChat = async () => {
+    const docRef = doc(db, "lastMessage", id);
+    const docSnap = await getDoc(docRef);
+    setLastChat(docSnap.data())
+    const time = getDate(docSnap.data())
+    setTime(time)
+  }
+  useEffect(() => {
+    getLastChat()
+  },[])
   return(
     <DMRoomli>
       <DMBtn onClick={currentDMROOM}>
         <UserImg src={outerUserrPhotoURL ||  userProfile} alt="" />
         <TxtContainer>
           <UserName>{outerUserrName}</UserName>
-          <LastChatting>혹시 오늘 치킨 드시나요?</LastChatting>
+          <LastChatting>{lastChat.chat}</LastChatting>
         </TxtContainer>
         <Time>
-          2022.10.06
+          {time}
         </Time>
       </DMBtn>
     </DMRoomli>
