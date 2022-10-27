@@ -39,8 +39,10 @@ function DMChatting({chat,CreateAt,writerId,otherUserPhotoURL}){
     const date = CreateAt.toDate()
     const month = date.getMonth()+1
     const day = date.getDate()
-    const hour = date.getHours()
-    const min = date.getMinutes()
+    let hour = date.getHours()
+    hour = hour.toString().padStart(2, '0')
+    let min = date.getMinutes()
+    min = min.toString().padStart(2, '0')
     return `${month}/${day} ${hour}:${min}`
   }
   const time = getDate()
