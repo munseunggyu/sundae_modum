@@ -4,19 +4,18 @@ import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import arrow from '../../../assets/arrow-left.png'
 import DMChatting from "./DMChatting";
-import { useEffect, useState } from "react";
-import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore";
+import React, { createRef, useEffect, useRef, useState } from "react";
+import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useSelector } from "react-redux";
 const DMDetailContainer = styled.ul`
   width:100%;
   background-color:#f2f2f2;
-  height:calc(100vh - 96px);
+  min-height:calc(100vh - 96px);
   display: flex;
   flex-direction:column;
   justify-content:flex-end;
   padding:16px;
-
 
 `;
 const ChattingFormContainer = styled.div`
@@ -54,8 +53,7 @@ function DMDetailPage(){
   const [chat,setChat] = useState('')
   const [otherUserName,setOtherUserName] = useState('')
   const [otherUserPhotoURL,setOtherUserPhotoURL] = useState('')
-  const [messages,setMessages] = useState([])
-
+  const [chats,setChats] = useState([])
   // 메시지 보내기
   const submitChat = async (e) => {
     e.preventDefault()
@@ -69,6 +67,13 @@ function DMDetailPage(){
               writerId:userInfo.uid,
             })
       ])
+      // 마지막 채팅 
+      // 데이터는 시간, 채팅내용, 방아이디, 
+      await setDoc(doc(db, "lastMessage", currentDMROOM.roomId), {
+        CreateAt: serverTimestamp(),
+        id:currentDMROOM.roomId,
+        chat
+      })
       setChat('')
       console.log('완료')
   }
@@ -79,8 +84,9 @@ function DMDetailPage(){
       const newarr = querySnapshot.docs.map(doc => {
         return doc.data({ serverTimestamps: "estimate" })
       })
-      setMessages(newarr)
+      setChats(newarr)
     })
+    
   }
 
   // 현재 DM방 id 가져오기
@@ -95,6 +101,7 @@ function DMDetailPage(){
       getMessages(currentDMDoc.data().roomId) // 현재 DM방 데이터 가져온걸 바로 넣어줘 메시지들도 가져온다.
     })
   }
+  
   useEffect(() => {
     getCurrentDMROOM()
   },[])
@@ -104,9 +111,9 @@ function DMDetailPage(){
       <MainContainer pr='0'>
       <DMDetailContainer>
         {
-          messages.map(message => {
+          chats.map(chat => {
             return(
-              <DMChatting {...message} otherUserPhotoURL={otherUserPhotoURL} />
+              <DMChatting {...chat} otherUserPhotoURL={otherUserPhotoURL} />
             )
           })
         }
@@ -117,7 +124,9 @@ function DMDetailPage(){
           type="text" 
           placeholder="메시지를 입력하세요."
           value={chat}
-          onChange={(e) => setChat(e.target.value)}
+          onChange={(e) => {
+            setChat(e.target.value)
+          }}
           />
           <ChattingSubmitBtn onClick={submitChat}/>
         </ChattingForm>
