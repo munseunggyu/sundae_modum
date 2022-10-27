@@ -72,10 +72,9 @@ function DMDetailPage(){
       setChat('')
       console.log('완료')
   }
-
   // DM 메시지 가져오기
-  const getMessages = async () => {
-    const q = query(collectionGroup (db, 'DM'),where('id', '==', currentDMROOM.roomId),orderBy('CreateAt','desc'))
+  const getMessages = (id) => {
+    const q = query(collectionGroup (db, 'DM'), where('id', '==', id),orderBy('CreateAt','desc'))
     onSnapshot(q,querySnapshot => {
       const newarr = querySnapshot.docs.map(doc => {
         return doc.data({ serverTimestamps: "estimate" })
@@ -92,11 +91,12 @@ function DMDetailPage(){
         setOtherUserPhotoURL(doc.data().photoURL)
       })
       setCurrentDMRROOM(currentDMDoc.data())
+      getMessages(currentDMDoc.data().roomId) // 현재 DM방 데이터 가져온걸 바로 넣어줘 메시지들도 가져온다.
+
     })
   }
   useEffect(() => {
     getCurrentDMROOM()
-    getMessages()
   },[])
   console.log(messages)
   return(

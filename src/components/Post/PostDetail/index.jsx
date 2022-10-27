@@ -82,10 +82,10 @@ function PostDetailPage(){
   const [writerPhotoURL,setWriterPhotoURL] = useState('')
 // console.log(currentPost.currentPost)
   // 댓글 불러오기
-  const getChatting = async (id) => {
+  const getChatting =  (id) => {
     try{
       const q = query(collectionGroup (db, 'post'),where('currentPostId', '==', id),orderBy('CreateAt','asc'))
-      const querySnapshot = await getDocs(q);
+      // const querySnapshot = await getDocs(q);
       onSnapshot(q,querySnapshot => {
         const newChatting = querySnapshot.docs.map(doc => {
           return doc.data({ serverTimestamps: "estimate" })
