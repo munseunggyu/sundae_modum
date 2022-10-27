@@ -20,7 +20,6 @@ const ChatContainer = styled.div`
 `;
 const ChatP = styled.p`
   display: inline-block;
-  /* max-width: 70%; */
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   border-radius: ${props => props.other ? '0px 10px 10px' : '10px 0 10px 10px'};
@@ -37,7 +36,7 @@ function DMChatting({other}){
   return(
   <DMChattingLi other={other} >
     {other && <UserProfile src={userImg} alt="" />}
-    <ChatContainer other={other}>
+    <ChatContainer other={other} >
       <ChatP other={other} >안녕하세요</ChatP>
       <ChatTime>2017</ChatTime>
     </ChatContainer>

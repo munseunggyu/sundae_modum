@@ -5,8 +5,9 @@ import { MainContainer } from "../../../common/MainContainer"
 import arrow from '../../../assets/arrow-left.png'
 import DMChatting from "./DMChatting";
 import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { useSelector } from "react-redux";
 const DMDetailContainer = styled.ul`
   width:100%;
   background-color:#f2f2f2;
@@ -49,11 +50,26 @@ const ChattingSubmitBtn = styled.button`
 
 function DMDetailPage(){
   const [currentDMROOM, setCurrentDMRROOM] = useState([])
-
+  const [chat,setChat] = useState('')
+  const userInfo = useSelector(state => state.user.currentUser)
+  const submitChat = async (e) => {
+    e.preventDefault()
+    const DMMessage = collection(db, 'DMMessage');
+      const newId = collection(DMMessage, currentDMROOM.roomId, 'DM')
+      await Promise.all([
+          addDoc(newId, {
+              chat,
+              id:currentDMROOM.roomId,
+              CreateAt:serverTimestamp(),
+              wirterId:userInfo.uid,
+            })
+      ])
+      setChat('')
+      console.log('완료')
+  }
   useEffect(() => {
     const currentDMRef = doc(db,'current_dm','current_dm')
     const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
-
       setCurrentDMRROOM(currentDMDoc.data())
     })
   },[])
@@ -66,9 +82,14 @@ function DMDetailPage(){
         <DMChatting />
       </DMDetailContainer>
         <ChattingFormContainer>
-        <ChattingForm>
-          <ChattingInput type="text" placeholder="메시지를 입력하세요."/>
-          <ChattingSubmitBtn />
+        <ChattingForm onSubmit={submitChat}>
+          <ChattingInput 
+          type="text" 
+          placeholder="메시지를 입력하세요."
+          value={chat}
+          onChange={(e) => setChat(e.target.value)}
+          />
+          <ChattingSubmitBtn onClick={submitChat}/>
         </ChattingForm>
       </ChattingFormContainer>
       </MainContainer>
