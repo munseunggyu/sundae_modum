@@ -5,7 +5,7 @@ import { MainContainer } from "../../../common/MainContainer"
 import arrow from '../../../assets/arrow-left.png'
 import DMChatting from "./DMChatting";
 import { useEffect, useState } from "react";
-import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, orderBy, query, serverTimestamp, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useSelector } from "react-redux";
 const DMDetailContainer = styled.ul`
@@ -49,9 +49,14 @@ const ChattingSubmitBtn = styled.button`
 `;
 
 function DMDetailPage(){
+  const userInfo = useSelector(state => state.user.currentUser)
   const [currentDMROOM, setCurrentDMRROOM] = useState([])
   const [chat,setChat] = useState('')
-  const userInfo = useSelector(state => state.user.currentUser)
+  const [otherUserName,setOtherUserName] = useState('')
+  const [otherUserPhotoURL,setOtherUserPhotoURL] = useState('')
+  const [messages,setMessages] = useState([])
+
+  // 메시지 보내기
   const submitChat = async (e) => {
     e.preventDefault()
     const DMMessage = collection(db, 'DMMessage');
@@ -67,12 +72,33 @@ function DMDetailPage(){
       setChat('')
       console.log('완료')
   }
-  useEffect(() => {
+
+  // DM 메시지 가져오기
+  const getMessages = async () => {
+    const q = query(collectionGroup (db, 'DM'),where('id', '==', currentDMROOM.roomId),orderBy('CreateAt','desc'))
+    onSnapshot(q,querySnapshot => {
+      const newarr = querySnapshot.docs.map(doc => {
+        return doc.data({ serverTimestamps: "estimate" })
+      })
+      setMessages(newarr)
+    })
+  }
+
+  const getCurrentDMROOM = () => {
     const currentDMRef = doc(db,'current_dm','current_dm')
     const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
+      onSnapshot(doc(db, "users", currentDMDoc.data().otherUserId), (doc) => {
+        setOtherUserName(doc.data().displayName)
+        setOtherUserPhotoURL(doc.data().photoURL)
+      })
       setCurrentDMRROOM(currentDMDoc.data())
     })
+  }
+  useEffect(() => {
+    getCurrentDMROOM()
+    getMessages()
   },[])
+  console.log(messages)
   return(
     <>
       <Header prv={true} userName='목짧은 기린' vertical={true}/>
