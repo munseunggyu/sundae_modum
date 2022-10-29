@@ -91,7 +91,7 @@ function DMDetailPage(){
 
   // 현재 DM방 id 가져오기
   const getCurrentDMROOM = () => {
-    const currentDMRef = doc(db,'current_dm','current_dm')
+    const currentDMRef = doc(db,'current_dm',userInfo.uid)
     const currentDMSnap =  onSnapshot(currentDMRef,currentDMDoc => {
       onSnapshot(doc(db, "users", currentDMDoc.data().otherUserId), (doc) => {
         setOtherUserName(doc.data().displayName)

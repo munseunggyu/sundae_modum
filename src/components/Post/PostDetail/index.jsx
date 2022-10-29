@@ -98,7 +98,7 @@ function PostDetailPage(){
   }
   const getCurrentPost =  () => {
     // 사용자에게 정보를 빠르게 보여주기 위해 실시간 업데이트 수신 대기 함수 사용
-    const currentPostRef = doc(db,'current_post','current_post')
+    const currentPostRef = doc(db,'current_post',userInfo.uid)
     const currentPostSnap =  onSnapshot(currentPostRef,currentPostDoc => {
       // 프로필 편집 이후에도 사용자의 닉네임과 프로필사진을 적용해주기위해
       onSnapshot(doc(db, "users", currentPostDoc.data().writerId), (doc) => {

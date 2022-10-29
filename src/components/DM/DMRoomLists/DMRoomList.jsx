@@ -71,14 +71,13 @@ function DMRoomList({names,ids,id}){
     setOuterUserrName(doc.data().displayName)
     setOuterUserrPhotoURL(doc.data().photoURL)
   })
-
   // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {
     const currentDMData = {
       otherUserId,
       roomId:id
     }
-    await setDoc(doc(db, "current_dm", "current_dm"),currentDMData);
+    await setDoc(doc(db, "current_dm", userInfo.uid),currentDMData);
     navigate(`${outerUserrName}`)
   }
   const getLastChat = async () => {

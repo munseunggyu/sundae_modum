@@ -62,7 +62,7 @@ const PostTextBottomContainer = styled.div`
 `
 function PostList({party,participants,participateCount,recruit,postkey,postImg,postDate,postTime,postTit,postTxt,writerId}){
   const navigate = useNavigate()
-  const userInfo = useSelector(state => state.user)
+  const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
   const [writerName,setWriterName] = useState('')
   const [writerPhotoURL,setWriterPhotoURL] = useState('')
@@ -89,7 +89,7 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
   const handleClick = async (e) => {
     dispatch(clearCurrentPost())
     dispatch(setCurrentPost(postData))
-    await setDoc(doc(db, "current_post", "current_post"),postData);
+    await setDoc(doc(db, "current_post", userInfo.uid),postData);
     navigate(`postdetail/${postTit}`)
   }
   return(
