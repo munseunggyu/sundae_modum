@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
+import { useForm } from "react-hook-form";
+import { ErrorMessageP } from "../Register";
 
 const UserProfileImg = styled.img`
   width:110px;
@@ -52,11 +54,10 @@ const EditInput = styled.input`
 `;
 
 function FirstProfilePage(){
-
   const userInfo = useSelector(state => state.user.currentUser)
+  const {register,watch,formState:{errors},handleSubmit} = useForm()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [nickName,setNickName] = useState('')
   const [introduce,setIntroduce] = useState('')
   const [prevFile, setPrevFile] = useState(userInfo.photoURL)
   const [dbFile,setDbFile] = useState({})
@@ -78,9 +79,7 @@ function FirstProfilePage(){
   const hadleFileRef = () => {
     fileRef.current.click()
   }
-  const onSubmit = async (e) => {
-    e.preventDefault()
-
+  const onSubmit = async ({userName,introduce}) => {
     try{
       // 프로필 사진을 변경 했을때 실행
       if(prevFile !== userInfo.photoURL){
@@ -89,14 +88,14 @@ function FirstProfilePage(){
         getDownloadURL(storageRef)
         .then(downloadURL => {
           const userData = {
-            displayName: nickName,
+            displayName: userName,
             photoURL:downloadURL,
             uid: userInfo.uid,
             email:userInfo.email,
             introduce
           }
           updateProfile(auth.currentUser,{
-            displayName:nickName,
+            displayName:userName,
             photoURL:downloadURL,
           })
         setDoc(doc(db, "users",userInfo.uid), userData)
@@ -105,14 +104,14 @@ function FirstProfilePage(){
     // 프로필 사진을 변경 안 했을때
     else{
       const userData = {
-        displayName: nickName,
+        displayName: userName,
         photoURL:userInfo.photoURL,
         uid: userInfo.uid,
         email:userInfo.email,
         introduce
       }
       updateProfile(auth.currentUser,{
-        displayName:nickName,
+        displayName:userName,
       })
       await setDoc(doc(db, "users",userInfo.uid), userData)
       // 설정한 프로필로 friestore에 저장
@@ -125,31 +124,33 @@ function FirstProfilePage(){
 
   return(
     <>
-    <Header prv={true} upload={true} onSubmit={onSubmit} />
+    <Header prv={true} upload={true} onSubmit={handleSubmit(onSubmit)} />
     <MainContainer>
-      <EditFormConatiner onSubmit={onSubmit}>
+      <EditFormConatiner onSubmit={handleSubmit(onSubmit)}>
         <UserProfilImgContainer onClick={hadleFileRef}>
         <UserProfileImg src={prevFile || userImg} alt='' />
         <FileIcon  />
         </UserProfilImgContainer>
-        <EditLabel htmlFor='user-nickname'>사용자 이름</EditLabel>
+        <EditLabel 
+        htmlFor='user-nickname'
+        >사용자 이름</EditLabel>
         <EditInput 
         type="text" 
         id='user-nickname' 
         placeholder='2~10자 이내여야 합니다.'
-        minLength={2}
-        maxLength={10}
-        value={nickName}
-        onChange={(e) => setNickName(e.target.value)}
+        name='userNicName'
+        {...register("userName", { required: true,minLength:2,maxLength:10 })}
         />
+        {errors.userName && <ErrorMessageP> 2~10자 이내여야 합니다.</ErrorMessageP>}
         <EditLabel htmlFor='user-introduce'>소개</EditLabel>
         <EditInput 
         type="text" 
         id="user-introduce" 
         placeholder={"자신을 소개해주세요."}
-        value={introduce}
-        onChange={(e) => setIntroduce(e.target.value)}
+        name='introduce'
+        {...register("introduce", { required: true,minLength:2,maxLength:10 })}
         />
+        {errors.introduce && <ErrorMessageP>자신을 소개해주세요.</ErrorMessageP>}
         <FileInput
         onChange={preview}
         ref={fileRef} type="file" 

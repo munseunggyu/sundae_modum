@@ -71,7 +71,8 @@ export const PrevPage = styled.button`
 export const ErrorMessageP = styled.p`
   font-size:10px;
   font-weight:300;
-
+  margin-top:5px;
+  margin-right:auto;
 `;
 function RegisterPage(){
   const navigate = useNavigate()
@@ -110,6 +111,7 @@ function RegisterPage(){
           placeholder="이메일을 입력하세요."
           {...register("email",{required:true,pattern:/^\S+@\S+$/i })}
           />
+          {errors.email && <ErrorMessageP>이메일 형식에 맞게 작성해 주세요.</ErrorMessageP>}
           <SignLabel htmlFor='user-pw'>
           비밀번호
         </SignLabel>
