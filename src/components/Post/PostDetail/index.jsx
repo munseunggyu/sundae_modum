@@ -119,10 +119,6 @@ function PostDetailPage(){
     const newParty = {
       ...currentPost.currentPost.party,
       participants:[...currentPost.currentPost.party.participants,
-        // {
-        //   displayName:userInfo.displayName,
-        //   uid:userInfo.uid
-        // }
         userInfo.uid
       ],
       participateCount: currentPost.currentPost.party.participants.length+1

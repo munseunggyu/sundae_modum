@@ -86,11 +86,11 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
     writerId,
     isLoding:true
   }
-  const handleClick = async (e) => {
+  const handleClick = async () => {
     dispatch(clearCurrentPost())
     dispatch(setCurrentPost(postData))
     await setDoc(doc(db, "current_post", userInfo.uid),postData);
-    navigate(`postdetail/${postTit}`)
+    navigate(`/postdetail/${postTit}`)
   }
   return(
     <Postli>

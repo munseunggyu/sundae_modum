@@ -56,10 +56,10 @@ function ProfilePage(){
   const [myPost,setMyPost] = useState([])
   const getMyPost = async () => {
     const postsRef = collection(db,'posts')
-    const q = query(postsRef,where('uid','==',userInfo.uid),orderBy('CreateAt','desc')) 
+    const q = query(postsRef,where('writerId','==',userInfo.uid),orderBy('CreateAt','desc')) 
     const posts = onSnapshot(q,snapshot => {
       const newArr = snapshot.docs.map(doc => {
-        return doc.data() 
+      return doc.data() 
       })
       setMyPost(newArr)
     })
@@ -73,7 +73,7 @@ function ProfilePage(){
   },[])
   return(
     <>
-      <Header prv={true} vertical={true} />
+      <Header prv={true}/>
       <MainContainer>
         <ProfileContainer>
           <UserProfileImg src={ userInfo.photoURL || userImg} />

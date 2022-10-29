@@ -83,7 +83,7 @@ function EditProfile(){
       // 만약 프로필 사진을 업데이트 하면 실행
       if(prevFile !== userInfo.photoURL){
         const storageRef = ref(storage,`user_image/${userInfo.uid}`)
-        const uploadTask = uploadBytes(storageRef,dbFile,metadata)
+        const uploadTask = await uploadBytes(storageRef,dbFile,metadata)
         getDownloadURL(storageRef).then(downloadURL => {
           updateProfile(auth.currentUser,{
             displayName:nickName,

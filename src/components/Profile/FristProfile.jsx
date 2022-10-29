@@ -84,7 +84,7 @@ function FirstProfilePage(){
       // 프로필 사진을 변경 했을때 실행
       if(prevFile !== userInfo.photoURL){
         const storageRef = ref(storage,`user_image/${userInfo.uid}`)
-        const uploadTask = uploadBytes(storageRef,dbFile,metadata)
+        const uploadTask = await uploadBytes(storageRef,dbFile,metadata)
         getDownloadURL(storageRef)
         .then(downloadURL => {
           const userData = {
