@@ -76,7 +76,6 @@ function PostUploadPage(){
   const [postDate,setPostDate] = useState('') 
   const [postTime,setPostTime] = useState('') 
   const [postTit,setPostTit] = useState('')
-  const [recruit,setRecruit] = useState(0)
   const [prevFile, setPrevFile] = useState('')
   const [dbFile,setDbFile] = useState(null)
   const [metadata,setMetadata] = useState({})
@@ -101,20 +100,31 @@ function PostUploadPage(){
     fileRef.current.click()
   }
   const handleAutoHeight = () =>{
-    // console.log(textArearRef.current.style)
     textArearRef.current.style.height = '70px'
     textArearRef.current.style.height = textArearRef.current.scrollHeight + 'px'
   }
+  const errorAlert = (data,errorMessage) => {
+    if(!data){
+      alert(errorMessage)
+    }
+  }
   const handlePostSubmit = async (e) => {
     e.preventDefault()
+    if(!postDate || !postTime || !postTit || !postTxt){
+      if(!postDate) errorAlert(postDate,'날짜를 선택해주세요.')
+      else if(!postTime) errorAlert(postTime,'시간을 선택해주세요.')
+      else if(!postTit) errorAlert(postTit,'제목을 입력해주세요.')
+      else if(!postTxt) errorAlert(postTxt,'게시글 내용을 입력해주세요.')
+      return
+    }
     try{
       const postRef = doc(collection(db,'posts'))
       // 이미지 파일이 있으면 실행
       if(dbFile){
-        const storageRef = ref(storage,`posts_images/${postRef.id}`)
-        const uploadTask = uploadBytes(storageRef, dbFile,metadata)
+        const postStorageRef = ref(storage,`posts_images/${postRef.id}`)
+        uploadBytes(postStorageRef, dbFile,metadata)
         .then(() => {
-          getDownloadURL(storageRef)
+          getDownloadURL(postStorageRef)
           .then( async downloadURL => {
             const postData = {
               writerId:userInfo.uid,
@@ -122,7 +132,6 @@ function PostUploadPage(){
               postTime,
               postTit,
               party: {
-                recruit,
                 participants:[],
                 participateCount:0
               },
@@ -140,7 +149,6 @@ function PostUploadPage(){
           postDate:postDate.slice(5).replace('-','/'),
           postTime,
           party: {
-            recruit,
             participants:[],
             participateCount:0
           },
@@ -175,14 +183,6 @@ function PostUploadPage(){
           required
           /> : 까지 모집
           </DeadlineContainer>
-          <CountInput 
-          type="number"
-          value={recruit}
-          onChange={(e) => {
-            setRecruit(e.target.value)}}
-          placeholder="인원수를 입력해주세요." 
-          required
-          />
           <TitInput 
           type="text"
           value={postTit}

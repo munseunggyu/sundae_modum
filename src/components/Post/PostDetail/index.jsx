@@ -125,7 +125,7 @@ function PostDetailPage(){
     }
     // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
     // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
-    const currentPostRef = doc(db,'current_post','current_post')
+    const currentPostRef = doc(db,'current_post',userInfo.uid)
     await updateDoc(currentPostRef,{
       party:newParty
     })
@@ -147,7 +147,7 @@ function PostDetailPage(){
     }
     // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
     // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
-    const currentPostRef = doc(db,'current_post','current_post')
+    const currentPostRef = doc(db,'current_post',userInfo.uid)
     await updateDoc(currentPostRef,{
       party:newParty
     })
