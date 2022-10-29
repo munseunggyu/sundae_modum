@@ -5,11 +5,9 @@ import kakaologo from '../../assets/kakaologo.png'
 import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
-import { FacebookAuthProvider, getRedirectResult, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { auth} from "../../firebase";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTest } from "../../redux/actions/user_action";
+
 const SNSLoginContainer= styled.article`
   width:100%;
 `;
@@ -33,7 +31,6 @@ const LoginBtnContainer = styled.div`
   top:-1.25rem;
   position:relative;
   border-radius: 20px 20px 0px 0px;
-
 `;
 const LoginBtns = styled.ul`
   display: flex;
@@ -89,14 +86,10 @@ const EmailRegisterContainer = styled.div`
 `;
 
 function SNSLoginPage(){
-  const [errorMessage,setErrorMessage] = useState('')
   const googleProvider = new GoogleAuthProvider()
   const facebookProvider = new FacebookAuthProvider()
-  const dispatch = useDispatch()
-  const hi = useSelector(state => state.test)
-  const [gl,setGl] = useState('')
   const onSocialLogin = async (e) => {
-   try{
+  try{
     const {target:{name}} = e
     if(name === 'google'){
       await signInWithRedirect(auth,googleProvider)
@@ -104,12 +97,10 @@ function SNSLoginPage(){
       await signInWithRedirect(auth, facebookProvider);
     }else{
     }
-   }
-   catch(error){
+  }
+  catch(error){
     console.log(error)
-  }
-
-  }
+  }}
   return(
     <SNSLoginContainer>
       <IrH1>SNS 로그인 페이지</IrH1>
@@ -151,10 +142,6 @@ function SNSLoginPage(){
         <EmailRegisterContainer>
           <Link to='/emaillogin'>이메일 로그인</Link>
           <Link to='/register'>회원가입</Link>
-          <button onClick={() => {
-            signOut(auth)
-            console.log('로그아웃')
-          }}>로그아웃</button>
         </EmailRegisterContainer>
       </LoginBtnContainer>
     </SNSLoginContainer>

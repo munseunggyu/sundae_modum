@@ -81,26 +81,16 @@ function RegisterPage(){
   const password = useRef()
   password.current = watch('password')
   
-  const Register = async ({email,nickName,password}) => {
+  const Register = async ({email,password}) => {
     try{
       setLoding(true)
-      console.log('완료')
-      const createUser = await createUserWithEmailAndPassword(auth,email,password)  
-      // const userData = {
-      //   displayName: nickName,
-      //   photoURL:'',
-      //   uid: createUser.user.uid,
-      //   email,
-      //   introduce:''
-      // }
-      // await updateProfile(auth.currentUser,userData)
-      // await setDoc(doc(db, "users", createUser.user.uid), userData);
-      // oneCollectionSetDoc('users',userData)
-      // const usersDB = doc(collection(db,'users'))
-      // await setDoc(usersDB,userData)
+      await createUserWithEmailAndPassword(auth,email,password)  
       setLoding(false)
     }catch(error){
-      console.log(error)
+      if(error.code === 'auth/email-already-in-use'){
+        alert('이미 가입된 이메일 입니다.')
+      }
+      setLoding(false)
     }
   }
   return(
@@ -120,18 +110,6 @@ function RegisterPage(){
           placeholder="이메일을 입력하세요."
           {...register("email",{required:true,pattern:/^\S+@\S+$/i })}
           />
-          <SignLabel htmlFor='user-nickname'>
-          닉네임
-        </SignLabel>
-        <SignInput 
-          type="text" 
-          name='nickName'
-          id="user-nickname" 
-          placeholder="2~10자 이내 닉네임을 입력하세요. "
-          {...register("nickName", { required: true, minLength:2,maxLength: 10 })}
-          />
-          {errors.nickName && <ErrorMessageP>2~10자 이내로 입력해주세요.</ErrorMessageP>}
-
           <SignLabel htmlFor='user-pw'>
           비밀번호
         </SignLabel>
