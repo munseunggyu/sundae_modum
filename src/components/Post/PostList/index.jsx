@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { collection, doc, onSnapshot, orderBy, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { clearCurrentPost, setCurrentPost } from "../../../redux/actions/post_action";
+import partyUser from '../../../assets/icons/icon-user.png';
 
 const Postli = styled.li`
   border-bottom:1px solid #dbdbdb;
@@ -38,7 +39,7 @@ const UserProfileImg = styled.img`
   border-radius:50%;
   margin:10px 10px 10px 0;
 `;
-const FoodImg = styled.img`
+const PostImg = styled.img`
   width:60px;
   height:60px;
   border-radius:20px;
@@ -52,20 +53,28 @@ const PostTextContainer = styled.div`
 `;
 const UserName = styled.span`
   font-weight:600;
-    font-size:15px;
-`
+  font-size:15px;
+`;
 const PostTextBottomContainer = styled.div`
   display: flex;
   gap:3px;
   span{
   }
-`
-function PostList({party,participants,participateCount,recruit,postkey,postImg,postDate,postTime,postTit,postTxt,writerId}){
+`;
+const PartyContainer = styled.div`
+  display: flex;
+`;
+const PartyUser = styled.img`
+  width:14px;
+  height:14px;
+`;
+function PostList({party,postkey,postImg,postDate,postTime,postTit,postTxt,writerId}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch()
   const [writerName,setWriterName] = useState('')
   const [writerPhotoURL,setWriterPhotoURL] = useState('')
+
   // 지금 작성자의 uid를 나는 알고 있다. 그러니 그것을 가지고 users에서 그 작성자를 찾아 그 데이터를 뿌려 준다
   onSnapshot(doc(db, "users", writerId), (doc) => {
     setWriterName(doc.data().displayName)
@@ -73,7 +82,6 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
   })
   const postData = {
     party: {
-      recruit: party.recruit,
       participateCount:party.participateCount,
       participants:party.participants
     },
@@ -106,7 +114,10 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
             {postDate} {postTime}
           </time>
           {/* <span>18</span> 채팅 수 */}
-          <strong>{party.participateCount}/{party.recruit}</strong> {/* 인원 수 */}
+          <PartyContainer>
+            <PartyUser src={partyUser} alt="" />
+            <strong>{party.participateCount}</strong> 
+          </PartyContainer>
           </PostTextBottomContainer>
           </PostTextContainer>
         </PostContentContainer>
@@ -114,7 +125,7 @@ function PostList({party,participants,participateCount,recruit,postkey,postImg,p
         {
           postImg &&
           (
-            <FoodImg src={postImg} alt="" />
+            <PostImg src={postImg} alt="" />
           )
         }
       </PostBtn>

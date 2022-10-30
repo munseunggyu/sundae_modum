@@ -175,12 +175,10 @@ function PostUploadPage(){
           <input type="date"
           value={postDate}
           onChange={(e) => setPostDate(e.target.value)}
-          required
           />
           <input type="time" 
           value={postTime}
           onChange={(e) => setPostTime(e.target.value)}
-          required
           /> : 까지 모집
           </DeadlineContainer>
           <TitInput 
@@ -189,7 +187,6 @@ function PostUploadPage(){
           onChange={(e) => {
             setPostTit(e.target.value)}}
           placeholder="제목을 입력해 주세요." 
-          required
             />
           <TextArea
           ref={textArearRef}
@@ -198,7 +195,6 @@ function PostUploadPage(){
           onChange={(e) => {
             setPostTxt(e.target.value)}}
           placeholder="게시글을 입력해주세요..."
-          required
           />
         </form>
         {prevFile && (

@@ -250,7 +250,7 @@ function PostDetailPage(){
         }
         <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
         <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
-        <JoinSpan> {currentPost.currentPost.party.participateCount} / {currentPost.currentPost.party.recruit} </JoinSpan>
+        <JoinSpan> {currentPost.currentPost.party.participateCount}</JoinSpan>
         <div >
         {
         currentPost.currentPost.party.participants.map(participant => 
