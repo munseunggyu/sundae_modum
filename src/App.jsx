@@ -56,7 +56,6 @@ function App() {
         </>
         )
         : userInfo.currentUser
-
         ? (
           <>
             <Route path="/" element={<HomePage /> } />

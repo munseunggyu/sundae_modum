@@ -154,7 +154,6 @@ function FirstProfilePage(){
         <FileInput
         onChange={preview}
         ref={fileRef} type="file" 
-        
         />
       </EditFormConatiner>
     </MainContainer>
