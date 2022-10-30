@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import userProfile from '../../../assets/user-profile.png'
+import partyUser from '../../../assets/icons/icon-user.png'
 import OtherUserChatting from "./OtherUserChatting";
 import arrow from '../../../assets/arrow-left.png'
 import { useDispatch, useSelector } from "react-redux";
@@ -65,14 +66,23 @@ const JoinBtn = styled.button`
   color:white;
   background-color:#6BB4D3; //#9ec1d0
   border-radius:11px;
-  margin:0 10px 10px 0;
+  margin-right:8px;
 `;
 const JoinSpan = styled.span`
-  font-size:16px;
+  font-size:18px;
+  margin-top:5px;
+`;
+const JoinConatiner = styled.div`
+  display: flex;
+  align-items:center;
+  margin-bottom:15px;
+`;
+const JoinUserIcon = styled.img`
+  width:20px;
+  height:20px;
 `;
 
 function PostDetailPage(){
-  const {id} = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentPost = useSelector(state => state.post)
@@ -109,7 +119,6 @@ function PostDetailPage(){
       getChatting(currentPostDoc.data().postkey)
     })
   }
-
 
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {
@@ -248,9 +257,12 @@ function PostDetailPage(){
           currentPost.currentPost.postImg &&
         <ContentsImg src={currentPost.currentPost.postImg} alt="" />
         }
-        <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
-        <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
-        <JoinSpan> {currentPost.currentPost.party.participateCount}</JoinSpan>
+        <JoinConatiner>
+          <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
+          <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
+          <JoinUserIcon src={partyUser} alt="" />
+          <JoinSpan> {currentPost.currentPost.party.participateCount}</JoinSpan>
+        </JoinConatiner>
         <div >
         {
         currentPost.currentPost.party.participants.map(participant => 

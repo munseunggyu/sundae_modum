@@ -4,13 +4,13 @@ import { confirmAlert } from "react-confirm-alert";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { UserContainer, UserName, UserProfileImg } from ".";
-import verticalIcon from '../../../assets/icons/icon-more-vertical.png'
-import userProfile from '../../../assets/user-profile.png'
+import verticalIcon from '../../../assets/icons/icon-more-vertical.png';
+import userProfile from '../../../assets/user-profile.png';
 import { db } from "../../../firebase";
 
 const OtherUserChatContainer = styled.li`
 width:100%;
-padding-bottom:10px;
+padding: 0 12px 12px 12px;
 border-bottom:0.5px solid #C4C4C4;
 margin-bottom:10px;
 &:last-child{
@@ -71,8 +71,6 @@ function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
       id:dmid,
       CreateAt:serverTimestamp(),
       ids:[writerId,userInfo.uid],
-      // names:[otherUser.displayName,userInfo.displayName],
-      // photoURLs:[otherUser.photoURL,userInfo.photoURL],
     })
   }
   const verticalSubmit = (e) => {
@@ -123,9 +121,6 @@ function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
     <OtherTime>
       {time}
     </OtherTime>
-    <button 
-    onClick={delChatting}
-    > del</button>
   </OtherUserChatContainer>
   )
 }
