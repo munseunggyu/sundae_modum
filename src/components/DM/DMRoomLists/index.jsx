@@ -12,6 +12,13 @@ const DMRoomUl = styled.ul`
   padding-top:12px;
 `;
 
+const NoDMRomm = styled.div`
+  width:100%;
+  text-align:center;
+  margin-top:300px;
+  opacity: .5;
+`;
+
 function DMRoomLists(){
   const [dmRooms,setDmRooms] = useState([])
   const userInfo = useSelector(state => state.user.currentUser)
@@ -34,6 +41,7 @@ function DMRoomLists(){
     <>
     <Header prv={true} ir='DM채팅방 리스트'/>
     <MainContainer>
+      {dmRooms.length === 0 && <NoDMRomm>채팅방이 없습니다.</NoDMRomm>}
       <DMRoomUl>
         {
           dmRooms.map(dmRoom => <DMRoom {...dmRoom} key={dmRoom.id} />)

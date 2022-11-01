@@ -15,8 +15,8 @@ const DMDetailContainer = styled.ul`
   flex-direction:column;
   justify-content:flex-end;
   padding:16px;
-
 `;
+
 const ChattingFormContainer = styled.div`
   display: flex;
   justify-content:center;
@@ -112,15 +112,15 @@ function DMDetailPage(){
       userName={otherUserName}
       />
       <MainContainer pr='0'>
-      <DMDetailContainer>
-        {
-          chats.map(chat => {
-            return(
-              <DMChatting {...chat} otherUserPhotoURL={otherUserPhotoURL} />
-            )
-          })
-        }
-      </DMDetailContainer>
+        <DMDetailContainer>
+          {
+            chats.map(chat => {
+              return(
+                <DMChatting {...chat} otherUserPhotoURL={otherUserPhotoURL} />
+              )
+            })
+          }
+        </DMDetailContainer>
         <ChattingFormContainer>
         <ChattingForm onSubmit={submitChat}>
           <ChattingInput 
