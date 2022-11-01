@@ -5,16 +5,16 @@ import { MainContainer } from "../../../common/MainContainer"
 import userProfile from '../../../assets/user-profile.png'
 import partyUser from '../../../assets/icons/icon-user.png'
 import OtherUserChatting from "./OtherUserChatting";
-import arrow from '../../../assets/arrow-left.png'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import {  collectionGroup, deleteDoc, doc , onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { setCurrentPost } from "../../../redux/actions/post_action";
 import Chatting from "../../../common/ChattingForm";
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import PartyName from "./PartyName";
+import { IrH2 } from "../../../common/TextHide";
 
 export const UserContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const UserProfileImg = styled.img`
 export const UserName = styled.span`
   font-weight:500;
 `;
-const PostDetailContainer = styled.div`
+const PostDetailContainer = styled.section`
   padding:10px 12px 0;
   margin-bottom:10px;
   border-bottom: 1px solid #C4C4C4;
@@ -60,6 +60,12 @@ const ContentsImg = styled.img`
   display: block;
   margin:0 auto;  
 `;
+const JoinUserNames = styled.div`
+  display: flex;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+`;
+
 const JoinBtn = styled.button`
   width:80px;
   padding:10px 0;
@@ -68,6 +74,8 @@ const JoinBtn = styled.button`
   border-radius:11px;
   margin-right:8px;
 `;
+
+
 const JoinSpan = styled.span`
   font-size:18px;
   margin-top:5px;
@@ -237,9 +245,15 @@ function PostDetailPage(){
       ? (<>...Loding</>)
       :
       (<>
-      <Header prv={true}  vertical={true} verticalSubmit={verticalSubmit}/>
+      <Header 
+      ir='게시물 상세페이지'
+      prv={true}  
+      vertical={true} 
+      verticalSubmit={verticalSubmit}
+      />
       <MainContainer pr='0'>
         <PostDetailContainer>
+          <IrH2>게시글 콘텐츠</IrH2>
         <UserContainer>
           <UserProfileImg src={ writerPhotoURL || userProfile} alt="유저 프로필" />
           <UserName>{writerName} </UserName>
@@ -263,13 +277,18 @@ function PostDetailPage(){
           <JoinUserIcon src={partyUser} alt="" />
           <JoinSpan> {currentPost.currentPost.party.participateCount}</JoinSpan>
         </JoinConatiner>
-        <div >
+        <JoinUserNames >
         {
-        currentPost.currentPost.party.participants.map(participant => 
-          <PartyName key={participant} id={participant}/>
+        currentPost.currentPost.party.participants.map((participant,index) => 
+          <PartyName 
+          key={participant}
+          id={participant} 
+          index={index}
+          length={currentPost.currentPost.party.participants.length}
+          />
           )
         }
-        </div>
+        </JoinUserNames>
         </PostDetailContainer>
         <ul>
           {chattings.map((chatting,i) => 

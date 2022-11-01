@@ -1,7 +1,7 @@
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import userProfile from '../../../assets/user-profile.png'
 import { db } from "../../../firebase";
@@ -9,9 +9,6 @@ import { db } from "../../../firebase";
 
 const DMRoomli = styled.li`
   margin-bottom:24px;  
-  /* position: relative;
-  display: flex;
-  gap:12px; */
 `;
 const DMBtn = styled.button`
   position: relative;
@@ -28,13 +25,15 @@ const UserImg = styled.img`
 const TxtContainer = styled.div`
   display: flex;
   flex-direction:column;
-  /* justify-content:space-around; */
   gap:5px;
   align-items:flex-start;
+  position: relative;
 `;
 const UserName = styled.strong`
   font-weight:500;
   font-size:16px;
+  position: relative;
+  top:${props => props.isLastChat ? '0' : '-13px'};
 `;
 const LastChatting = styled.p`
   font-size:12px;
@@ -48,11 +47,11 @@ const Time = styled.time`
   opacity: 0.7;
   font-size:12px;
 `;
-function DMRoomList({names,ids,id}){
+function DMRoomList({ids,id}){
   const navigate = useNavigate()
   const userInfo = useSelector(state => state.user.currentUser)
-  const [outerUserrName,setOuterUserrName] = useState('')
-  const [outerUserrPhotoURL,setOuterUserrPhotoURL] = useState('')
+  const [otherUserName,setOtherUserName] = useState('')
+  const [otherUserPhotoURL,setOtherUserPhotoURL] = useState('')
   const otherUserId = ids.filter(id => id !== userInfo.uid)[0]
   const [lastChat,setLastChat] = useState([])
   const [time,setTime] = useState('')
@@ -68,8 +67,8 @@ function DMRoomList({names,ids,id}){
   }
   // const time = getDate()
   onSnapshot(doc(db, "users", otherUserId), (doc) => {
-    setOuterUserrName(doc.data().displayName)
-    setOuterUserrPhotoURL(doc.data().photoURL)
+    setOtherUserName(doc.data().displayName)
+    setOtherUserPhotoURL(doc.data().photoURL)
   })
   // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {
@@ -78,14 +77,17 @@ function DMRoomList({names,ids,id}){
       roomId:id
     }
     await setDoc(doc(db, "current_dm", userInfo.uid),currentDMData);
-    navigate(`${outerUserrName}`)
+    navigate(`${otherUserName}`)
   }
   const getLastChat = async () => {
     const docRef = doc(db, "lastMessage", id);
     const docSnap = await getDoc(docRef);
     setLastChat(docSnap.data())
-    const time = getDate(docSnap.data())
-    setTime(time)
+    if(!docSnap.data()){
+      return
+    }
+    const date = getDate(docSnap.data())
+    setTime(date)
   }
   useEffect(() => {
     getLastChat()
@@ -93,13 +95,13 @@ function DMRoomList({names,ids,id}){
   return(
     <DMRoomli>
       <DMBtn onClick={currentDMROOM}>
-        <UserImg src={outerUserrPhotoURL ||  userProfile} alt="" />
+        <UserImg src={otherUserPhotoURL ||  userProfile} alt="" />
         <TxtContainer>
-          <UserName>{outerUserrName}</UserName>
-          <LastChatting>{lastChat.chat}</LastChatting>
+          <UserName isLastChat={time}>{otherUserName}</UserName>
+          {lastChat && <LastChatting>{lastChat.chat}</LastChatting>}
         </TxtContainer>
         <Time>
-          {time}
+          {time && time}
         </Time>
       </DMBtn>
     </DMRoomli>

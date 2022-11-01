@@ -71,14 +71,11 @@ const UserName = styled.div`
 
 function Header({h1,prv,ir,search,upload,vertical,userName,onSubmit,verticalSubmit}){
   const navigate = useNavigate()
-
-
   return(
     <>
     <HeaderContainer>
       <HeaderWrappper>
         {h1 && <HeaderH1> {h1} </HeaderH1>}
-        
         {ir && (<IrH1> {ir} </IrH1>)}
         {prv && 
           (

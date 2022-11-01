@@ -4,7 +4,7 @@ import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import Nav from "../../../common/Nav"
 import DMRoom from "./DMRoomList";
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore"
+import {  collection, onSnapshot, orderBy, query, where } from "firebase/firestore"
 import { db } from "../../../firebase";
 import { useEffect, useState } from "react";
 
@@ -32,11 +32,11 @@ function DMRoomLists(){
   },[])
   return(
     <>
-    <Header prv={true} />
+    <Header prv={true} ir='DM채팅방 리스트'/>
     <MainContainer>
       <DMRoomUl>
         {
-          dmRooms.map(v => <DMRoom {...v} key={v.id} />)
+          dmRooms.map(dmRoom => <DMRoom {...dmRoom} key={dmRoom.id} />)
         }
       </DMRoomUl>
     </MainContainer>
