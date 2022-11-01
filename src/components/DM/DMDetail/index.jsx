@@ -106,7 +106,11 @@ function DMDetailPage(){
   },[])
   return(
     <>
-      <Header prv={true} userName={otherUserName}/>
+      <Header
+      ir={`${otherUserName}와(과)의 DM채팅방`}
+      prv={true} 
+      userName={otherUserName}
+      />
       <MainContainer pr='0'>
       <DMDetailContainer>
         {

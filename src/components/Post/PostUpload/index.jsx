@@ -166,7 +166,12 @@ function PostUploadPage(){
   }
   return(
     <>
-    <Header prv={true} upload={true} onSubmit={handlePostSubmit}/>
+    <Header
+    ir='게시물 작성 페이지' 
+    prv={true} 
+    upload={true} 
+    onSubmit={handlePostSubmit}
+    />
       <MainContainer>
         <IrH2>게시물 작성</IrH2>
         <form onSubmit={handlePostSubmit}>

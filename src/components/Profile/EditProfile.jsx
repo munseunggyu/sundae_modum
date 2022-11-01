@@ -7,7 +7,7 @@ import {  useRef, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore"
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from "../../firebase";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 const UserProfileImg = styled.img`
@@ -113,7 +113,12 @@ function EditProfile(){
   }
   return(
     <>
-    <Header prv={true} upload={true} onSubmit={onSubmit} />
+    <Header 
+    ir='프로필 편집 페이지'
+    prv={true} 
+    upload={true} 
+    onSubmit={onSubmit}
+    />
     <MainContainer>
       <EditFormConatiner onSubmit={onSubmit}>
         <UserProfilImgContainer onClick={hadleFileRef}>

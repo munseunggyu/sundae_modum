@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { collection,  onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { clearUser } from "../../redux/actions/user_action";
+import { IrH2 } from "../../common/TextHide";
 
-const ProfileContainer = styled.div`
+const ProfileContainer = styled.section`
   width:100%;
   margin-top:20px;
   display: flex;
@@ -73,9 +74,13 @@ function ProfilePage(){
   },[])
   return(
     <>
-      <Header prv={true}/>
+      <Header 
+      ir='프로필 페이지'
+      prv={true}
+      />
       <MainContainer>
         <ProfileContainer>
+          <IrH2>프로필 정보 및 수정</IrH2>
           <UserProfileImg src={ userInfo.photoURL || userImg} />
           <UserName>{userInfo.displayName}</UserName>
           <UserIntroduce>{userInfo.introduce} </UserIntroduce>
