@@ -1,10 +1,9 @@
-import { useParams } from "react-router-dom"
 import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
 import arrow from '../../../assets/arrow-left.png'
 import DMChatting from "./DMChatting";
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useSelector } from "react-redux";

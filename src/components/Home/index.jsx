@@ -1,14 +1,11 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
 import styled from "styled-components"
 import Header from "../../common/Header"
 import { MainContainer } from "../../common/MainContainer"
 import Nav from "../../common/Nav"
 import { IrH2 } from "../../common/TextHide"
 import { db } from "../../firebase"
-import { setUser } from "../../redux/actions/user_action"
 import Post from "../Post/PostList"
 
 const HomeContainer = styled.div`

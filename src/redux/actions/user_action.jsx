@@ -14,13 +14,6 @@ export function setPhotoURL(photoURL){
   }
 }
 
-export function setTest(test){
-  return{
-    type:'TEST',
-    payload:test
-  }
-}
-
 export function clearUser(){
   return{
     type:CLEAR_USER

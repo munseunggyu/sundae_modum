@@ -3,13 +3,12 @@ import { MainContainer } from "../../common/MainContainer"
 import userImg from '../../assets/user-profile.png'
 import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
-import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
-import { getStorage, uploadBytesResumable,ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import {  useRef, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore"
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "firebase/auth";
-import { setPhotoURL, setUser } from "../../redux/actions/user_action";
 import { useNavigate } from "react-router-dom";
 const UserProfileImg = styled.img`
   width:110px;
@@ -53,7 +52,6 @@ const EditInput = styled.input`
 
 function EditProfile(){
   const userInfo = useSelector(state => state.user.currentUser)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [nickName,setNickName] = useState(userInfo.displayName)
   const [introduce,setIntroduce] = useState(userInfo.introduce)

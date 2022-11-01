@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import styled from "styled-components";
 import Header from "../../../common/Header"
 import { MainContainer } from "../../../common/MainContainer"
@@ -6,10 +6,9 @@ import Nav from "../../../common/Nav"
 import { IrH2 } from "../../../common/TextHide"
 import fileImg  from '../../../assets/img-file-button.png'
 import { useDispatch, useSelector } from "react-redux";
-import { setTest } from "../../../redux/actions/user_action";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {  collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db, storage } from "../../../firebase";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 const TextArea = styled.textarea`

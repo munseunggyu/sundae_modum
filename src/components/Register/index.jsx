@@ -1,13 +1,10 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import arrowLeft from '../../assets/arrow-left.png'
-import { auth, db } from "../../firebase";
-import { oneCollectionSetDoc } from "../../utils";
+import { auth } from "../../firebase";
 export const SignContainer = styled.article`
   margin:78px auto 0;
   width:100%;

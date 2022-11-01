@@ -3,12 +3,12 @@ import { MainContainer } from "../../common/MainContainer"
 import userImg from '../../assets/user-profile.png'
 import fileImg from '../../assets/img-file-button.png'
 import styled from "styled-components";
-import {  useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { doc, setDoc } from "firebase/firestore"
 import {  auth, db, storage } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { ErrorMessageP } from "../Register";
@@ -56,14 +56,11 @@ const EditInput = styled.input`
 function FirstProfilePage(){
   const userInfo = useSelector(state => state.user.currentUser)
   const {register,watch,formState:{errors},handleSubmit} = useForm()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [introduce,setIntroduce] = useState('')
   const [prevFile, setPrevFile] = useState(userInfo.photoURL)
   const [dbFile,setDbFile] = useState({})
   const [metadata,setMetadata] = useState({})
   const fileRef = useRef()
-  const [users,setUsers] = useState([])
 
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = e => {

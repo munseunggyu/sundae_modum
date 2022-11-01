@@ -33,7 +33,7 @@ const UserName = styled.strong`
   font-weight:500;
   font-size:16px;
   position: relative;
-  top:${props => props.isLastChat ? '0' : '-13px'};
+  top:${props => props.isLastChat ? '0' : '-17px'};
 `;
 const LastChatting = styled.p`
   font-size:12px;

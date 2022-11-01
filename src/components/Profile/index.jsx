@@ -9,7 +9,7 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { collection, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { collection,  onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { clearUser } from "../../redux/actions/user_action";
 
 const ProfileContainer = styled.div`
