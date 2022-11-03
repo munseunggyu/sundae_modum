@@ -35,7 +35,7 @@ const ChatTime = styled.time`
 `;
 function DMChatting({chat,CreateAt,writerId,otherUserPhotoURL}){
   const userInfo = useSelector(state => state.user.currentUser)
-    const getDate = () => {
+  const getDate = () => {
     const date = CreateAt.toDate()
     const month = date.getMonth()+1
     const day = date.getDate()

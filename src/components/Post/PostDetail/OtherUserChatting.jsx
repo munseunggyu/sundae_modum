@@ -90,23 +90,23 @@ function OtherUserChatting({CreateAt,writerId,chatTxt,chatId}){
         }
       ]
     })}
-  else{
-    confirmAlert({
-      title: '쪽지를 보내겠습니까?',
-      buttons: [
-        {
-          label: '확인',
-          onClick: () => {
-            setDM(writerId)
-            console.log('DM방 생성')
+    else{
+      confirmAlert({
+        title: '쪽지를 보내겠습니까?',
+        buttons: [
+          {
+            label: '확인',
+            onClick: () => {
+              setDM(writerId)
+              console.log('DM방 생성')
+            }
+          },
+          {
+            label: '취소'
           }
-        },
-        {
-          label: '취소'
-        }
-      ]
-    })
-  }
+        ]
+      })
+    }
   }
   return(
     <OtherUserChatContainer>
