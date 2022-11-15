@@ -61,6 +61,7 @@ const ContentsTitle = styled.strong`
 const ContentsTxt = styled.pre`
   font-size: 16px;
   margin-bottom: 20px;
+  line-height: 1.4;
 `;
 const ContentsImg = styled.img`
   width: 100%;
@@ -80,7 +81,7 @@ const JoinBtn = styled.button`
   width: 80px;
   padding: 10px 0;
   color: white;
-  background-color: #6bb4d3; //#9ec1d0
+  background-color: #6bb4d3;
   border-radius: 11px;
   margin-right: 8px;
 `;
