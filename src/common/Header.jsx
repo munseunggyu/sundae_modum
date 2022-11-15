@@ -93,12 +93,15 @@ function Header({
   userName,
   onSubmit,
   verticalSubmit,
+  handleSearch,
+  setIsSearch,
 }) {
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchTxt, setSearchTxt] = useState('');
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
-    setSearchTxt('');
+    if (searchOpen === true) {
+      setIsSearch(false);
+    }
   };
   const navigate = useNavigate();
   return (
@@ -120,8 +123,7 @@ function Header({
           <AnimatePresence>
             {searchOpen && (
               <SearchInput
-                value={searchTxt}
-                onChange={(e) => setSearchTxt(e.target.value)}
+                onChange={handleSearch}
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 exit={{ scaleX: 0 }}

@@ -17,6 +17,23 @@ const PostUl = styled.ul`
 
 function HomePage() {
   const [postsData, setPostsData] = useState([]);
+  const [searchList, setSearchList] = useState([]);
+  const [isSearch, setIsSearch] = useState(false);
+
+  // 검색 기능
+  // 게시글의 제목 또는 게시글의 내용으로 검색
+  const handleSearch = (e) => {
+    if (e.target.value.length > 0) {
+      setIsSearch(true);
+      const regex = new RegExp(e.target.value, 'gi');
+      const newPost = postsData.filter(
+        (post) => regex.test(post.postTit) || regex.test(post.postTxt)
+      );
+      setSearchList(newPost);
+    } else {
+      setIsSearch(false);
+    }
+  };
 
   useEffect(() => {
     // 최신 작성 순으로 정렬
@@ -31,13 +48,18 @@ function HomePage() {
   }, []);
   return (
     <HomeContainer>
-      <Header h1="순대 모둠" search={true} />
+      <Header
+        h1="순대 모둠"
+        search={true}
+        handleSearch={handleSearch}
+        setIsSearch={setIsSearch}
+      />
       <MainContainer>
         <IrH2>게시글</IrH2>
         <PostUl>
-          {postsData.map((post) => (
-            <Post {...post} key={post.postkey} />
-          ))}
+          {isSearch
+            ? searchList.map((post) => <Post {...post} key={post.postkey} />)
+            : postsData.map((post) => <Post {...post} key={post.postkey} />)}
         </PostUl>
       </MainContainer>
       <Nav />
