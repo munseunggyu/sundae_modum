@@ -5,7 +5,7 @@ import kakaologo from '../../assets/kakaologo.png'
 import googlelogo from '../../assets/googlelogo.png'
 import facebooklogo from '../../assets/facebooklogo.png'
 import { Link } from "react-router-dom";
-import { FacebookAuthProvider, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth} from "../../firebase";
 import LodingPage from "../Loding";
 
