@@ -1,12 +1,12 @@
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Header from '../../common/Header';
-import { MainContainer } from '../../common/MainContainer';
-import Nav from '../../common/Nav';
-import { IrH2 } from '../../common/TextHide';
-import { db } from '../../firebase';
-import Post from '../Post/PostList';
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import Header from "../../common/Header";
+import { MainContainer } from "../../common/MainContainer";
+import Nav from "../../common/Nav";
+import { IrH2 } from "../../common/TextHide";
+import { db } from "../../firebase";
+import Post from "../Post/PostList";
 
 const HomeContainer = styled.div`
   position: relative;
@@ -25,7 +25,7 @@ function HomePage() {
   const handleSearch = (e) => {
     if (e.target.value.length > 0) {
       setIsSearch(true);
-      const regex = new RegExp(e.target.value, 'gi');
+      const regex = new RegExp(e.target.value, "gi");
       const newPost = postsData.filter(
         (post) => regex.test(post.postTit) || regex.test(post.postTxt)
       );
@@ -37,8 +37,8 @@ function HomePage() {
 
   useEffect(() => {
     // 최신 작성 순으로 정렬
-    const postsRef = collection(db, 'posts');
-    const q = query(postsRef, orderBy('CreateAt', 'desc'));
+    const postsRef = collection(db, "posts");
+    const q = query(postsRef, orderBy("CreateAt", "desc"));
     const posts = onSnapshot(q, (snapshot) => {
       const newArr = snapshot.docs.map((doc) => {
         return doc.data();
@@ -58,8 +58,12 @@ function HomePage() {
         <IrH2>게시글</IrH2>
         <PostUl>
           {isSearch
-            ? searchList.map((post) => <Post {...post} key={post.postkey} />)
-            : postsData.map((post) => <Post {...post} key={post.postkey} />)}
+            ? searchList.map((post, index) => (
+                <Post index={index} {...post} key={post.postkey} />
+              ))
+            : postsData.map((post, index) => (
+                <Post index={index} {...post} key={post.postkey} />
+              ))}
         </PostUl>
       </MainContainer>
       <Nav />

@@ -1,12 +1,12 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import Header from '../../../common/Header';
-import { MainContainer } from '../../../common/MainContainer';
-import userProfile from '../../../assets/user-profile.png';
-import partyUser from '../../../assets/icons/icon-user.png';
-import OtherUserChatting from './OtherUserChatting';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import Header from "../../../common/Header";
+import { MainContainer } from "../../../common/MainContainer";
+import userProfile from "../../../assets/user-profile.png";
+import partyUser from "../../../assets/icons/icon-user.png";
+import OtherUserChatting from "./OtherUserChatting";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import {
   collectionGroup,
   deleteDoc,
@@ -18,14 +18,14 @@ import {
   setDoc,
   updateDoc,
   where,
-} from 'firebase/firestore';
-import { db } from '../../../firebase';
-import { setCurrentPost } from '../../../redux/actions/post_action';
-import Chatting from '../../../common/ChattingForm';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import PartyName from './PartyName';
-import { IrH2 } from '../../../common/TextHide';
+} from "firebase/firestore";
+import { db } from "../../../firebase";
+import { setCurrentPost } from "../../../redux/actions/post_action";
+import Chatting from "../../../common/ChattingForm";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import PartyName from "./PartyName";
+import { IrH2 } from "../../../common/TextHide";
 
 export const UserContainer = styled.div`
   display: flex;
@@ -103,24 +103,26 @@ const JoinUserIcon = styled.img`
 function PostDetailPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  console.log(id);
   const currentPost = useSelector((state) => state.post);
   const userInfo = useSelector((state) => state.user.currentUser);
   const [chattings, setChattings] = useState([]);
-  const [writerName, setWriterName] = useState('');
-  const [writerPhotoURL, setWriterPhotoURL] = useState('');
+  const [writerName, setWriterName] = useState("");
+  const [writerPhotoURL, setWriterPhotoURL] = useState("");
   // console.log(currentPost.currentPost)
   // 댓글 불러오기
   const getChatting = (id) => {
     try {
       const q = query(
-        collectionGroup(db, 'post'),
-        where('currentPostId', '==', id),
-        orderBy('CreateAt', 'asc')
+        collectionGroup(db, "post"),
+        where("currentPostId", "==", id),
+        orderBy("CreateAt", "asc")
       );
       // const querySnapshot = await getDocs(q);
       onSnapshot(q, (querySnapshot) => {
         const newChatting = querySnapshot.docs.map((doc) => {
-          return doc.data({ serverTimestamps: 'estimate' });
+          return doc.data({ serverTimestamps: "estimate" });
         });
         setChattings(newChatting);
       });
@@ -130,10 +132,10 @@ function PostDetailPage() {
   };
   const getCurrentPost = () => {
     // 사용자에게 정보를 빠르게 보여주기 위해 실시간 업데이트 수신 대기 함수 사용
-    const currentPostRef = doc(db, 'current_post', userInfo.uid);
+    const currentPostRef = doc(db, "current_post", userInfo.uid);
     const currentPostSnap = onSnapshot(currentPostRef, (currentPostDoc) => {
       // 프로필 편집 이후에도 사용자의 닉네임과 프로필사진을 적용해주기위해
-      onSnapshot(doc(db, 'users', currentPostDoc.data().writerId), (doc) => {
+      onSnapshot(doc(db, "users", currentPostDoc.data().writerId), (doc) => {
         setWriterName(doc.data().displayName);
         setWriterPhotoURL(doc.data().photoURL);
       });
@@ -157,17 +159,15 @@ function PostDetailPage() {
       ],
       participateCount: currentPost.currentPost.party.participants.length + 1,
     };
-    // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
-    // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
-    const currentPostRef = doc(db, 'current_post', userInfo.uid);
+    const currentPostRef = doc(db, "current_post", userInfo.uid);
     await updateDoc(currentPostRef, {
       party: newParty,
     });
-    const postRef = doc(db, 'posts', currentPost.currentPost.postkey);
+    const postRef = doc(db, "posts", currentPost.currentPost.postkey);
     await updateDoc(postRef, {
       party: newParty,
     });
-    console.log('완료');
+    console.log("완료");
   };
   // 참여 취소하기 버튼 기능
   const handlePartyCanCelBtn = async () => {
@@ -183,22 +183,20 @@ function PostDetailPage() {
       participants: [...cancel],
       participateCount: currentPost.currentPost.party.participants.length - 1,
     };
-    // 먼저 current_post가 있는 데이터베이스에 참여자를 추가한다 그후 posts에 있는 해당 방에도 업데이트 해준다.
-    // 사용자가 버튼 클릭시 숫자가 올라가는 것을 빨리 보여주기 위해 먼저 current_post데이터 먼저 업데이트 해준다.
-    const currentPostRef = doc(db, 'current_post', userInfo.uid);
+    const currentPostRef = doc(db, "current_post", userInfo.uid);
     await updateDoc(currentPostRef, {
       party: newParty,
     });
-    const postRef = doc(db, 'posts', currentPost.currentPost.postkey);
+    const postRef = doc(db, "posts", currentPost.currentPost.postkey);
     await updateDoc(postRef, {
       party: newParty,
     });
-    console.log('완료');
+    console.log("완료");
   };
 
   const delPost = async () => {
-    await deleteDoc(doc(db, 'posts', currentPost.currentPost.postkey));
-    navigate('/');
+    await deleteDoc(doc(db, "posts", currentPost.currentPost.postkey));
+    navigate("/");
   };
   // DM의 같은 ID 값을 유지해주기 위해서
   const CreateDMRoomId = (selectUser) => {
@@ -209,7 +207,7 @@ function PostDetailPage() {
   // 게시글 작성자와 DM하기 위해 방을 만든다.
   const setDM = (otherUser) => {
     const dmid = CreateDMRoomId(otherUser); // DM방 생성
-    const dmRoom = doc(db, 'DMROOMS', dmid);
+    const dmRoom = doc(db, "DMROOMS", dmid);
 
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom, {
@@ -223,32 +221,32 @@ function PostDetailPage() {
     e.preventDefault();
     if (userInfo.uid === currentPost.currentPost.writerId) {
       confirmAlert({
-        title: '게시글을 삭제하시겠습니까?',
+        title: "게시글을 삭제하시겠습니까?",
         buttons: [
           {
-            label: '확인',
+            label: "확인",
             onClick: () => {
               delPost();
             },
           },
           {
-            label: '취소',
+            label: "취소",
           },
         ],
       });
     } else {
       confirmAlert({
-        title: '쪽지를 보내겠습니까?',
+        title: "쪽지를 보내겠습니까?",
         buttons: [
           {
-            label: '확인',
+            label: "확인",
             onClick: () => {
               setDM(currentPost.currentPost.writerId);
-              console.log('DM방 생성');
+              console.log("DM방 생성");
             },
           },
           {
-            label: '취소',
+            label: "취소",
           },
         ],
       });
@@ -281,7 +279,7 @@ function PostDetailPage() {
                 <UserName>{writerName} </UserName>
               </UserContainer>
               <DeadLine>
-                {currentPost.currentPost.postDate}{' '}
+                {currentPost.currentPost.postDate}{" "}
                 {currentPost.currentPost.postTime} 까지 모집
               </DeadLine>
               <ContentsTitle>{currentPost.currentPost.postTit}</ContentsTitle>
@@ -294,7 +292,7 @@ function PostDetailPage() {
                 <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
                 <JoinUserIcon src={partyUser} alt="" />
                 <JoinSpan>
-                  {' '}
+                  {" "}
                   {currentPost.currentPost.party.participateCount}
                 </JoinSpan>
               </JoinConatiner>
