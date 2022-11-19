@@ -107,9 +107,6 @@ function PostList({
     isLoding: true,
   };
   const handleClick = async () => {
-    dispatch(clearCurrentPost());
-    dispatch(setCurrentPost(postData));
-    await setDoc(doc(db, 'current_post', userInfo.uid), postData);
     navigate(`/postdetail/${postkey}`);
   };
   return (
