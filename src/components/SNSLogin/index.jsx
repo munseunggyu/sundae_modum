@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { IrH1 } from '../../common/TextHide';
 import logo from '../../assets/logo.png';
 import kakaologo from '../../assets/kakaologo.png';

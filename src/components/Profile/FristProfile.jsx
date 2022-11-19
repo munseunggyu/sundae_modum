@@ -1,7 +1,6 @@
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import userImg from '../../assets/user-profile.png';
-import fileImg from '../../assets/img-file-button.png';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
@@ -12,46 +11,15 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import { ErrorMessageP } from '../Register/style';
-
-const UserProfileImg = styled.img`
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-`;
-const EditFormConatiner = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-  padding: 20px;
-`;
-const UserProfilImgContainer = styled.div`
-  position: relative;
-`;
-const FileIcon = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  right: -20px;
-  background: url(${fileImg}) center/cover;
-`;
-const FileInput = styled.input`
-  display: none;
-`;
-const EditLabel = styled.label`
-  align-self: flex-start;
-  margin-top: 20px;
-  font-weight: 500;
-  color: #767676;
-  margin-bottom: 10px;
-`;
-const EditInput = styled.input`
-  border: 0;
-  border-bottom: 1px solid #dbdbdb;
-  width: 100%;
-  outline: none;
-`;
+import {
+  EditFormConatiner,
+  EditInput,
+  EditLabel,
+  FileIcon,
+  FileInput,
+  UserProfileImg,
+  UserProfilImgContainer,
+} from './style';
 
 function FirstProfilePage() {
   const userInfo = useSelector((state) => state.user.currentUser);
