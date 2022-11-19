@@ -40,6 +40,7 @@ function SNSLoginPage() {
       console.log(error);
     }
   };
+
   return (
     <>
       <SNSLoginContainer>
