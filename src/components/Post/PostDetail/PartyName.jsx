@@ -1,11 +1,7 @@
 import { doc, onSnapshot } from 'firebase/firestore';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { db } from '../../../firebase';
-
-const PartyNameContainer = styled.span`
-  margin-right: 5px;
-`;
+import { PartyNameContainer } from './style';
 
 function PartyName({ userId, length, index }) {
   const [name, setName] = useState('');

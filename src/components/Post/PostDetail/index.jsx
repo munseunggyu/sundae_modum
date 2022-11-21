@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import Header from '../../../common/Header';
 import { MainContainer } from '../../../common/MainContainer';
 import userProfile from '../../../assets/user-profile.png';
@@ -28,79 +27,21 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import PartyName from './PartyName';
 import { IrH2 } from '../../../common/TextHide';
-
-export const UserContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-`;
-export const UserProfileImg = styled.img`
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-`;
-export const UserName = styled.span`
-  font-weight: 500;
-`;
-const PostDetailContainer = styled.section`
-  padding: 10px 12px 0;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #c4c4c4;
-`;
-const DeadLine = styled.time`
-  display: block;
-  margin-top: 20px;
-  font-size: 12px;
-  opacity: 0.7;
-`;
-const ContentsTitle = styled.strong`
-  display: block;
-  margin: 10px 0;
-  font-weight: 600;
-  font-size: 18px;
-`;
-const ContentsTxt = styled.pre`
-  font-size: 16px;
-  margin-bottom: 20px;
-  line-height: 1.4;
-`;
-const ContentsImg = styled.img`
-  width: 100%;
-  height: 350px;
-  border-radius: 44px;
-  padding-bottom: 20px;
-  display: block;
-  margin: 0 auto;
-`;
-const JoinUserNames = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-`;
-
-const JoinBtn = styled.button`
-  width: 80px;
-  padding: 10px 0;
-  color: white;
-  background-color: #6bb4d3;
-  border-radius: 11px;
-  margin-right: 8px;
-`;
-
-const JoinSpan = styled.span`
-  font-size: 18px;
-  margin-top: 5px;
-`;
-const JoinConatiner = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-`;
-const JoinUserIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
+import {
+  ContentsImg,
+  ContentsTitle,
+  ContentsTxt,
+  DeadLine,
+  JoinBtn,
+  JoinConatiner,
+  JoinSpan,
+  JoinUserIcon,
+  JoinUserNames,
+  PostDetailContainer,
+  UserContainer,
+  UserName,
+  UserProfileImg,
+} from './style';
 
 function PostDetailPage() {
   const navigate = useNavigate();
