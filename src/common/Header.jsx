@@ -25,6 +25,7 @@ const HeaderWrappper = styled.header`
   justify-content: space-between;
   padding: 14px 12px;
   font-weight: 600;
+  position: relative;
 `;
 const HeaderH1 = styled.h1`
   font-size: 22px;
@@ -48,8 +49,8 @@ const RightIconBtn = styled.button`
 
 const SearchInput = styled(motion.input)`
   transform-origin: right center;
-  right: 200px;
   font-size: 16px;
+  right: 40px;
   width: 130px;
   border: 1px solid #bdbdbd;
   border-radius: 3px;

@@ -33,7 +33,7 @@ function PostUploadPage() {
   const [metadata, setMetadata] = useState({});
   const fileRef = useRef();
   const textArearRef = useRef();
-
+  console.log(dbFile);
   const preview = (e) => {
     const files = e.target.files;
     const reader = new FileReader(); // FileReader Api
@@ -146,12 +146,14 @@ function PostUploadPage() {
             onChange={(e) => {
               setPostTit(e.target.value);
             }}
+            maxLength={20}
             placeholder="제목을 입력해 주세요."
           />
           <TextArea
             ref={textArearRef}
             onInput={handleAutoHeight}
             value={postTxt}
+            // style="ime-mode:auto"
             onChange={(e) => {
               setPostTxt(e.target.value);
             }}

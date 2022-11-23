@@ -19,6 +19,7 @@ import {
 } from './style';
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
+import { useParams } from 'react-router-dom';
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const getDate = () => {
@@ -31,6 +32,7 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
     min = min.toString().padStart(2, '0');
     return `${month}/${day} ${hour}:${min}`;
   };
+  const { id } = useParams();
   const time = getDate();
   const userInfo = useSelector((state) => state.user.currentUser);
   const currentPost = useSelector((state) => state.post.currentPost);
@@ -42,7 +44,7 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   });
   const delChatting = async () => {
     // 채팅 삭제
-    const postChatDoc = doc(db, 'post_chatting', currentPost.postkey);
+    const postChatDoc = doc(db, 'post_chatting', id);
     await deleteDoc(doc(postChatDoc, 'post', chatId));
     console.log('완료');
   };
