@@ -2,7 +2,7 @@ import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import userImg from '../../assets/user-profile.png';
 import { useRef, useState } from 'react';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../firebase';
 import { useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ import {
   UserProfilImgContainer,
 } from './style';
 
-function EditProfile() {
+function EditProfile({ isFrist }) {
   const userInfo = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   const [nickName, setNickName] = useState(userInfo.displayName);
@@ -27,7 +27,6 @@ function EditProfile() {
   const [prevFile, setPrevFile] = useState(userInfo.photoURL);
   const [metadata, setMetadata] = useState({});
   const fileRef = useRef();
-
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = (e) => {
     const files = e.target.files;
@@ -44,40 +43,50 @@ function EditProfile() {
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // 만약 프로필 사진을 업데이트 하면 실행
+      if (nickName === null) {
+        alert('닉네임을 설정해주세요');
+        return;
+      }
       if (prevFile !== userInfo.photoURL) {
+        // 만약 프로필 사진을 업데이트 하면 실행
         const storageRef = ref(storage, `user_image/${userInfo.uid}`);
         const uploadTask = await uploadBytes(storageRef, dbFile, metadata);
         getDownloadURL(storageRef).then((downloadURL) => {
+          const userData = {
+            displayName: nickName,
+            photoURL: downloadURL,
+            uid: userInfo.uid,
+            email: userInfo.email,
+            introduce: introduce || '',
+          };
           updateProfile(auth.currentUser, {
             displayName: nickName,
             photoURL: downloadURL,
           });
-          const userProfile = doc(db, 'users', userInfo.uid);
-          updateDoc(userProfile, {
-            displayName: nickName,
-            photoURL: downloadURL,
-            introduce,
-          });
+          setDoc(doc(db, 'users', userInfo.uid), userData);
         });
       } else {
+        const userData = {
+          displayName: nickName,
+          photoURL: userInfo.photoURL,
+          uid: userInfo.uid,
+          email: userInfo.email,
+          introduce: introduce || '',
+        };
+        console.log(userData);
         // 프로필 사진을 업데이트 하지 않으면 실행
         updateProfile(auth.currentUser, {
           displayName: nickName,
         });
-        const userProfile = doc(db, 'users', userInfo.uid);
-        await updateDoc(userProfile, {
-          displayName: nickName,
-          introduce,
-        });
+        await setDoc(doc(db, 'users', userInfo.uid), userData);
       }
     } catch (error) {
       console.log(error);
     }
-    navigate('/profile');
+    isFrist ? navigate('/') : navigate('/profile');
   };
+
   return (
     <>
       <Header
@@ -96,7 +105,7 @@ function EditProfile() {
           <EditInput
             type="text"
             id="user-nickname"
-            placeholder={userInfo.displayName}
+            placeholder={userInfo.displayName || '닉네임을 설정해주세요.'}
             minLength={2}
             maxLength={10}
             value={nickName}

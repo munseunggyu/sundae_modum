@@ -30,7 +30,7 @@ function App() {
           // 만약 없다면 첫 프로필 설정 화면으로 이동
           if (!doc.data()) {
             dispatch(firstSetUser(user));
-            navigate('/editsns');
+            navigate('/firstedit');
             return;
           }
           // 있다면 바로 홈으로 이동
@@ -49,7 +49,7 @@ function App() {
           <Route path="/" element={<SNSLoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/emaillogin" element={<EmailLoginPage />} />
-          <Route path="/editsns" element={<FirstProfilePage />} />
+          <Route path="/firstedit" element={<EditProfile isFrist={true} />} />
         </>
       ) : userInfo.currentUser ? (
         <>
@@ -59,7 +59,10 @@ function App() {
           <Route path="/dm" element={<DMPage />} />
           <Route path="/dm/:id" element={<DMDetailPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/editprofile" element={<EditProfile />} />
+          <Route
+            path="/profile/editprofile"
+            element={<EditProfile isFrist={false} />}
+          />
         </>
       ) : (
         <Route path="/" element={<>...loding</>} />

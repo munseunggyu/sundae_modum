@@ -1,16 +1,13 @@
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import userImg from '../../assets/user-profile.png';
-import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { auth, db, storage } from '../../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useSelector } from 'react-redux';
 import { updateProfile } from 'firebase/auth';
-import { useForm } from 'react-hook-form';
-import { ErrorMessageP } from '../Register/style';
+import { useNavigate } from 'react-router-dom';
 import {
   EditFormConatiner,
   EditInput,
@@ -21,20 +18,15 @@ import {
   UserProfilImgContainer,
 } from './style';
 
-function FirstProfilePage() {
+function EditProfile() {
   const userInfo = useSelector((state) => state.user.currentUser);
-  const {
-    register,
-    watch,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
   const navigate = useNavigate();
+  const [nickName, setNickName] = useState(userInfo.displayName);
+  const [introduce, setIntroduce] = useState(userInfo.introduce);
+  const [dbFile, setDbFile] = useState(userInfo.photoURL);
   const [prevFile, setPrevFile] = useState(userInfo.photoURL);
-  const [dbFile, setDbFile] = useState({});
   const [metadata, setMetadata] = useState({});
   const fileRef = useRef();
-
   // 사진 프리뷰 함수 FileReader api 이용
   const preview = (e) => {
     const files = e.target.files;
@@ -49,53 +41,59 @@ function FirstProfilePage() {
   const hadleFileRef = () => {
     fileRef.current.click();
   };
-  const onSubmit = async ({ userName, introduce }) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      // 프로필 사진을 변경 했을때 실행
+      // 만약 프로필 사진을 업데이트 하면 실행
       if (prevFile !== userInfo.photoURL) {
         const storageRef = ref(storage, `user_image/${userInfo.uid}`);
         const uploadTask = await uploadBytes(storageRef, dbFile, metadata);
         getDownloadURL(storageRef).then((downloadURL) => {
           const userData = {
-            displayName: userName,
+            displayName: nickName,
             photoURL: downloadURL,
             uid: userInfo.uid,
             email: userInfo.email,
-            introduce,
+            introduce: introduce || '',
           };
           updateProfile(auth.currentUser, {
-            displayName: userName,
+            displayName: nickName,
             photoURL: downloadURL,
           });
           setDoc(doc(db, 'users', userInfo.uid), userData);
         });
-      }
-      // 프로필 사진을 변경 안 했을때
-      else {
+      } else {
         const userData = {
-          displayName: userName,
+          displayName: nickName,
           photoURL: userInfo.photoURL,
           uid: userInfo.uid,
           email: userInfo.email,
-          introduce,
+          introduce: introduce || '',
         };
+        console.log(userData);
+        // 프로필 사진을 업데이트 하지 않으면 실행
         updateProfile(auth.currentUser, {
-          displayName: userName,
+          displayName: nickName,
         });
         await setDoc(doc(db, 'users', userInfo.uid), userData);
-        // 설정한 프로필로 friestore에 저장
       }
     } catch (error) {
       console.log(error);
     }
-    navigate('/');
+    navigate('/profile');
   };
 
   return (
     <>
-      <Header prv={true} upload={true} onSubmit={handleSubmit(onSubmit)} />
+      <Header
+        ir="프로필 편집 페이지"
+        prv={true}
+        upload={true}
+        onSubmit={onSubmit}
+      />
       <MainContainer>
-        <EditFormConatiner onSubmit={handleSubmit(onSubmit)}>
+        <EditFormConatiner onSubmit={onSubmit}>
           <UserProfilImgContainer onClick={hadleFileRef}>
             <UserProfileImg src={prevFile || userImg} alt="" />
             <FileIcon />
@@ -104,32 +102,20 @@ function FirstProfilePage() {
           <EditInput
             type="text"
             id="user-nickname"
-            placeholder="2~10자 이내여야 합니다."
-            name="userNicName"
-            {...register('userName', {
-              required: true,
-              minLength: 2,
-              maxLength: 10,
-            })}
+            placeholder={userInfo.displayName || '닉네임을 설정해주세요.'}
+            minLength={2}
+            maxLength={10}
+            value={nickName}
+            onChange={(e) => setNickName(e.target.value)}
           />
-          {errors.userName && (
-            <ErrorMessageP> 2~10자 이내여야 합니다.</ErrorMessageP>
-          )}
           <EditLabel htmlFor="user-introduce">소개</EditLabel>
           <EditInput
             type="text"
             id="user-introduce"
-            placeholder={'자신을 소개해주세요.'}
-            name="introduce"
-            {...register('introduce', {
-              required: true,
-              minLength: 2,
-              maxLength: 10,
-            })}
+            placeholder={userInfo.introduce || '자신을 소개해주세요.'}
+            value={introduce}
+            onChange={(e) => setIntroduce(e.target.value)}
           />
-          {errors.introduce && (
-            <ErrorMessageP>자신을 소개해주세요.</ErrorMessageP>
-          )}
           <FileInput onChange={preview} ref={fileRef} type="file" />
         </EditFormConatiner>
       </MainContainer>
@@ -137,4 +123,4 @@ function FirstProfilePage() {
   );
 }
 
-export default FirstProfilePage;
+export default EditProfile;
