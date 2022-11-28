@@ -20,20 +20,11 @@ import {
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
+import getDate from '../../../utils/getDate';
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
-  const getDate = () => {
-    const date = CreateAt.toDate();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    let hour = date.getHours();
-    hour = hour.toString().padStart(2, '0');
-    let min = date.getMinutes();
-    min = min.toString().padStart(2, '0');
-    return `${month}/${day} ${hour}:${min}`;
-  };
   const { id } = useParams();
-  const time = getDate();
+  const time = getDate(CreateAt);
   const userInfo = useSelector((state) => state.user.currentUser);
   const currentPost = useSelector((state) => state.post.currentPost);
   const [writerName, setWriterName] = useState('');

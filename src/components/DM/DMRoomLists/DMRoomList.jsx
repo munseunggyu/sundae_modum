@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
+import getDate from '../../../utils/getDate';
 import {
   DMBtn,
   DMRoomli,
@@ -22,17 +23,7 @@ function DMRoomList({ ids, id }) {
   const otherUserId = ids.filter((id) => id !== userInfo.uid)[0];
   const [lastChat, setLastChat] = useState([]);
   const [time, setTime] = useState('');
-  const getDate = (time) => {
-    const date = time.toDate();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    let hour = date.getHours();
-    hour = hour.toString().padStart(2, '0');
-    let min = date.getMinutes();
-    min = min.toString().padStart(2, '0');
-    return `${month}/${day} ${hour}:${min}`;
-  };
-  // const time = getDate()
+
   onSnapshot(doc(db, 'users', otherUserId), (doc) => {
     setOtherUserName(doc.data().displayName);
     setOtherUserPhotoURL(doc.data().photoURL);
