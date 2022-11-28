@@ -1,56 +1,59 @@
-import { useSelector } from "react-redux";
-import styled from "styled-components";
-import Header from "../../../common/Header"
-import { MainContainer } from "../../../common/MainContainer"
-import Nav from "../../../common/Nav"
-import DMRoom from "./DMRoomList";
-import {  collection, onSnapshot, orderBy, query, where } from "firebase/firestore"
-import { db } from "../../../firebase";
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import Header from '../../../common/Header';
+import { MainContainer } from '../../../common/MainContainer';
+import Nav from '../../../common/Nav';
+import DMRoom from './DMRoomList';
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { useEffect, useState } from 'react';
+import { DMRoomUl, NoDMRoom } from './style';
 
-const DMRoomUl = styled.ul`
-  padding-top:12px;
-`;
-
-const NoDMRomm = styled.div`
-  width:100%;
-  text-align:center;
-  margin-top:300px;
-  opacity: .5;
-`;
-
-function DMRoomLists(){
-  const [dmRooms,setDmRooms] = useState([])
-  const userInfo = useSelector(state => state.user.currentUser)
-  const getDMROOMS = async () => {    //  [방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
-    const q = query(collection(db,'DMROOMS'),where('ids','array-contains-any',[userInfo.uid],orderBy('CreateAt','asc')))
-    onSnapshot(q,snapshot => {
-      const newarr = snapshot.docs.map(doc => 
-        ({
-        id:doc.id,
-        ...doc.data(),
-      })
+function DMRoomLists() {
+  const [dmRooms, setDmRooms] = useState([]);
+  const userInfo = useSelector((state) => state.user.currentUser);
+  const getDMROOMS = async () => {
+    //  [방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
+    const q = query(
+      collection(db, 'DMROOMS'),
+      where(
+        'ids',
+        'array-contains-any',
+        [userInfo.uid],
+        orderBy('CreateAt', 'asc')
       )
-      setDmRooms(newarr)
-    })
-  }
+    );
+    onSnapshot(q, (snapshot) => {
+      const newarr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDmRooms(newarr);
+    });
+  };
   useEffect(() => {
-    getDMROOMS()
-  },[])
-  return(
+    getDMROOMS();
+  }, []);
+  return (
     <>
-    <Header prv={true} ir='DM채팅방 리스트'/>
-    <MainContainer>
-      {dmRooms.length === 0 && <NoDMRomm>채팅방이 없습니다.</NoDMRomm>}
-      <DMRoomUl>
-        {
-          dmRooms.map(dmRoom => <DMRoom {...dmRoom} key={dmRoom.id} />)
-        }
-      </DMRoomUl>
-    </MainContainer>
-    <Nav />
+      <Header prv={true} ir="DM채팅방 리스트" />
+      <MainContainer>
+        {dmRooms.length === 0 && <NoDMRoom>채팅방이 없습니다.</NoDMRoom>}
+        <DMRoomUl>
+          {dmRooms.map((dmRoom) => (
+            <DMRoom {...dmRoom} key={dmRoom.id} />
+          ))}
+        </DMRoomUl>
+      </MainContainer>
+      <Nav />
     </>
-  )
+  );
 }
 
-export default DMRoomLists
+export default DMRoomLists;
