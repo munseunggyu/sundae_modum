@@ -91,41 +91,30 @@ function PostDetailPage() {
   };
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {
-    // 이미 참여하고있으면 return해 준다.
-    const included = currentPost.party.participants.find(
+    const isParty = currentPost.party.participants.find(
       (participant) => participant === userInfo.uid
     );
-    if (included) return;
-    const newParty = {
-      ...currentPost.party,
-      participants: [...currentPost.party.participants, userInfo.uid],
-      participateCount: currentPost.party.participants.length + 1,
-    };
+    let newParty;
+    if (isParty) {
+      const cancel = currentPost.party.participants.filter(
+        (v) => v !== userInfo.uid
+      );
+      newParty = {
+        ...currentPost.party,
+        participants: [...cancel],
+        participateCount: currentPost.party.participants.length - 1,
+      };
+    } else {
+      newParty = {
+        ...currentPost.party,
+        participants: [...currentPost.party.participants, userInfo.uid],
+        participateCount: currentPost.party.participants.length + 1,
+      };
+    }
     const postRef = doc(db, 'posts', currentPost.postkey);
     await updateDoc(postRef, {
       party: newParty,
     });
-    console.log('완료');
-  };
-  // 참여 취소하기 버튼 기능
-  const handlePartyCanCelBtn = async () => {
-    const included = currentPost.party.participants.find(
-      (participant) => participant === userInfo.uid
-    );
-    if (!included) return;
-    const cancel = currentPost.party.participants.filter(
-      (v) => v !== userInfo.uid
-    );
-    const newParty = {
-      ...currentPost.party,
-      participants: [...cancel],
-      participateCount: currentPost.party.participants.length - 1,
-    };
-    const postRef = doc(db, 'posts', currentPost.postkey);
-    await updateDoc(postRef, {
-      party: newParty,
-    });
-    console.log('완료');
   };
 
   const delPost = async () => {
@@ -222,7 +211,6 @@ function PostDetailPage() {
               )}
               <JoinConatiner>
                 <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
-                <JoinBtn onClick={handlePartyCanCelBtn}>취소하기</JoinBtn>
                 <JoinUserIcon src={partyUser} alt="" />
                 <JoinSpan> {currentPost.party.participateCount}</JoinSpan>
               </JoinConatiner>

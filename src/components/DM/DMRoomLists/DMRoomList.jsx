@@ -2,7 +2,6 @@ import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
 import {
@@ -55,7 +54,6 @@ function DMRoomList({ ids, id }) {
       return;
     }
     const date = getDate(docSnap.data().CreateAt);
-    console.log(docSnap.data().CreateAt);
     setTime(date);
   };
   useEffect(() => {
