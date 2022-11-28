@@ -30,7 +30,7 @@ function DropDown({ chooseCategory, setChooseCategory }) {
       <DropBtn onClick={dropdownClick} type="button">
         <span>{chooseCategory}</span>
       </DropBtn>
-      <DropDownUl open={open} class="ul_drop">
+      <DropDownUl open={open}>
         {categoryList.map((category) => (
           <DropDownLi onClick={showMenu}>{category}</DropDownLi>
         ))}

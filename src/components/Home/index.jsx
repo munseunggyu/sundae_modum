@@ -1,4 +1,11 @@
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Category from '../../common/Category';
@@ -14,6 +21,7 @@ function HomePage() {
   const [postsData, setPostsData] = useState([]);
   const [searchList, setSearchList] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
+  const [select, setSelect] = useState('치킨');
 
   // 검색 기능
   // 게시글의 제목 또는 게시글의 내용으로 검색
@@ -33,14 +41,18 @@ function HomePage() {
   useEffect(() => {
     // 최신 작성 순으로 정렬
     const postsRef = collection(db, 'posts');
-    const q = query(postsRef, orderBy('CreateAt', 'desc'));
+    const q = query(
+      postsRef,
+      where('category', '==', select),
+      orderBy('CreateAt', 'desc')
+    );
     const posts = onSnapshot(q, (snapshot) => {
       const newArr = snapshot.docs.map((doc) => {
         return doc.data();
       });
       setPostsData(newArr);
     });
-  }, []);
+  }, [select]);
   return (
     <HomeContainer>
       <Header
@@ -49,7 +61,7 @@ function HomePage() {
         handleSearch={handleSearch}
         setIsSearch={setIsSearch}
       >
-        <Category />
+        <Category select={select} setSelect={setSelect} />
       </Header>
       <MainContainer>
         <IrH2>게시글</IrH2>

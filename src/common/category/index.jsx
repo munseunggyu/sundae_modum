@@ -16,8 +16,8 @@ const CategorySpan = styled.span`
   color: ${(props) => (props.changeColor ? 'black' : '#dbdbdb')};
   cursor: pointer;
 `;
-function Category() {
-  const [select, setSelect] = useState('치킨');
+function Category({ select, setSelect }) {
+  // const [select, setSelect] = useState('치킨');
   const categoryList = [
     '치킨',
     '중식',
