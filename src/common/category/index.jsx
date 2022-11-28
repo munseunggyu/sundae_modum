@@ -6,27 +6,43 @@ import 'swiper/css';
 const CategoryCon = styled.article`
   max-width: 450px;
   margin: 0 auto;
-  padding: 14px 12px;
+  padding: 14px 18px;
   font-weight: 600;
   position: relative;
-  ${Swiper} {
-    display: flex;
-  }
+  text-align: center;
 `;
-const CategoryUl = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const CategorySpan = styled.span`
+  font-size: 14px;
+  color: ${(props) => (props.changeColor ? 'black' : '#dbdbdb')};
+  cursor: pointer;
 `;
-
 function Category() {
-  let [a, setA] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [select, setSelect] = useState('치킨');
+  const categoryList = [
+    '치킨',
+    '중식',
+    '패스트푸드',
+    '양식',
+    '돈까스',
+    '회',
+    '고기',
+    '분식',
+    '카페',
+  ];
+  const selectCategory = (e) => {
+    setSelect(e.target.textContent);
+  };
   return (
     <CategoryCon>
-      <Swiper slidesPerView={5} spaceBetween={30}>
-        {a.map((v) => (
+      <Swiper slidesPerView={6} spaceBetween={0}>
+        {categoryList.map((category, i) => (
           <SwiperSlide>
-            <button>{v} </button>
+            <CategorySpan
+              onClick={selectCategory}
+              changeColor={select === category ? true : false}
+            >
+              {category}
+            </CategorySpan>
           </SwiperSlide>
         ))}
       </Swiper>
