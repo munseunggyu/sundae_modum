@@ -1,6 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Category from '../../common/category';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import Nav from '../../common/Nav';
@@ -47,7 +48,9 @@ function HomePage() {
         search={true}
         handleSearch={handleSearch}
         setIsSearch={setIsSearch}
-      />
+      >
+        <Category />
+      </Header>
       <MainContainer>
         <IrH2>게시글</IrH2>
         <PostUl>
@@ -59,7 +62,6 @@ function HomePage() {
                 <Post index={index} {...post} key={post.postkey} />
               ))}
         </PostUl>
-        <div>asdklfjadslfj</div>
       </MainContainer>
       <Nav />
     </HomeContainer>

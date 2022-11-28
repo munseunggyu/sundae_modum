@@ -11,7 +11,7 @@ import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 const HeaderContainer = styled.article`
   width: 100%;
   position: fixed;
-  height: 48px;
+  min-height: 48px;
   overflow: hidden;
   border-bottom: 0.5px solid rgb(219, 219, 219);
   background-color: white;
@@ -96,6 +96,7 @@ function Header({
   verticalSubmit,
   handleSearch,
   setIsSearch,
+  children,
 }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const toggleSearch = () => {
@@ -135,6 +136,7 @@ function Header({
           </AnimatePresence>
           {upload && <UploadBtn onClick={onSubmit}>업로드</UploadBtn>}
         </HeaderWrappper>
+        {children}
       </HeaderContainer>
     </>
   );
