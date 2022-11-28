@@ -18,6 +18,7 @@ import {
   TextArea,
   TitInput,
 } from './style';
+import DropDown from '../../../common/DropDown';
 
 function PostUploadPage() {
   const navigate = useNavigate();
@@ -31,9 +32,9 @@ function PostUploadPage() {
   const [prevFile, setPrevFile] = useState('');
   const [dbFile, setDbFile] = useState(null);
   const [metadata, setMetadata] = useState({});
+  const [chooseCategory, setChooseCategory] = useState('카테고리');
   const fileRef = useRef();
   const textArearRef = useRef();
-  console.log(dbFile);
   const preview = (e) => {
     const files = e.target.files;
     const reader = new FileReader(); // FileReader Api
@@ -59,15 +60,24 @@ function PostUploadPage() {
   const errorAlert = (data, errorMessage) => {
     if (!data) {
       alert(errorMessage);
+      return;
     }
   };
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    if (!postDate || !postTime || !postTit || !postTxt) {
+    if (
+      !postDate ||
+      !postTime ||
+      !postTit ||
+      !postTxt ||
+      chooseCategory === '카테고리'
+    ) {
       if (!postDate) errorAlert(postDate, '날짜를 선택해주세요.');
       else if (!postTime) errorAlert(postTime, '시간을 선택해주세요.');
+      else if (chooseCategory === '카테고리') alert('카테고리를 선택해주세요.');
       else if (!postTit) errorAlert(postTit, '제목을 입력해주세요.');
       else if (!postTxt) errorAlert(postTxt, '게시글 내용을 입력해주세요.');
+
       return;
     }
     try {
@@ -90,6 +100,7 @@ function PostUploadPage() {
               postImg: downloadURL,
               postkey: postRef.id,
               CreateAt: serverTimestamp(),
+              category: chooseCategory,
             };
             await setDoc(postRef, postData);
           });
@@ -108,6 +119,7 @@ function PostUploadPage() {
           postkey: postRef.id,
           postImg: null,
           CreateAt: serverTimestamp(),
+          category: chooseCategory,
         };
         await setDoc(postRef, postData);
       }
@@ -140,6 +152,10 @@ function PostUploadPage() {
             />{' '}
             : 까지 모집
           </DeadlineContainer>
+          <DropDown
+            chooseCategory={chooseCategory}
+            setChooseCategory={setChooseCategory}
+          />
           <TitInput
             type="text"
             value={postTit}
@@ -149,6 +165,7 @@ function PostUploadPage() {
             maxLength={20}
             placeholder="제목을 입력해 주세요."
           />
+
           <TextArea
             ref={textArearRef}
             onInput={handleAutoHeight}

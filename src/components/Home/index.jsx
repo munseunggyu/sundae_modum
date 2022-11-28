@@ -1,7 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Category from '../../common/category';
+import Category from '../../common/Category';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import Nav from '../../common/Nav';
