@@ -41,6 +41,7 @@ import {
   UserName,
   UserProfileImg,
 } from './style';
+import handleVertical from '../../../utils/handleVertical';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -143,40 +144,6 @@ function PostDetailPage() {
     });
   };
 
-  const verticalSubmit = (e) => {
-    if (userInfo.uid === currentPost.writerId) {
-      confirmAlert({
-        title: '게시글을 삭제하시겠습니까?',
-        buttons: [
-          {
-            label: '확인',
-            onClick: () => {
-              delPost();
-            },
-          },
-          {
-            label: '취소',
-          },
-        ],
-      });
-    } else {
-      confirmAlert({
-        title: '쪽지를 보내겠습니까?',
-        buttons: [
-          {
-            label: '확인',
-            onClick: () => {
-              setDM(currentPost.writerId);
-              console.log('DM방 생성');
-            },
-          },
-          {
-            label: '취소',
-          },
-        ],
-      });
-    }
-  };
   useEffect(() => {
     getNew();
     getChatting();
@@ -191,7 +158,16 @@ function PostDetailPage() {
             ir="게시물 상세페이지"
             prv={true}
             vertical={true}
-            verticalSubmit={verticalSubmit}
+            verticalSubmit={() =>
+              handleVertical(
+                userInfo.uid,
+                currentPost.writerId,
+                '게시글을 삭제하시겠습니까?',
+                delPost,
+                '쪽지를 보내겠습니까?',
+                setDM
+              )
+            }
           />
           <MainContainer pr="0">
             <PostDetailContainer>

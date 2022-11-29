@@ -21,6 +21,7 @@ import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import getDate from '../../../utils/getDate';
+import handleVertical from '../../../utils/handleVertical';
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
@@ -45,8 +46,8 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
       ? `${selectUser}${userInfo.uid}`
       : `${userInfo.uid}${selectUser}`;
   };
-  const setDM = (otherUser) => {
-    const dmid = CreateDMRoomId(otherUser); // DM방 생성
+  const setDM = () => {
+    const dmid = CreateDMRoomId(writerId); // DM방 생성
     const dmRoom = doc(db, 'DMROOMS', dmid);
 
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
@@ -56,47 +57,25 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
       ids: [writerId, userInfo.uid],
     });
   };
-  const verticalSubmit = (e) => {
-    e.preventDefault();
-    if (userInfo.uid === writerId) {
-      confirmAlert({
-        title: '댓글을 삭제하시겠습니까?',
-        buttons: [
-          {
-            label: '확인',
-            onClick: () => {
-              delChatting();
-            },
-          },
-          {
-            label: '취소',
-          },
-        ],
-      });
-    } else {
-      confirmAlert({
-        title: '쪽지를 보내겠습니까?',
-        buttons: [
-          {
-            label: '확인',
-            onClick: () => {
-              setDM(writerId);
-              console.log('DM방 생성');
-            },
-          },
-          {
-            label: '취소',
-          },
-        ],
-      });
-    }
-  };
+
   return (
     <OtherUserChatContainer>
       <UserContainer>
         <UserProfileImg src={writerPhotoURL || userProfile} alt="유저 프로필" />
         <UserName>{writerName}</UserName>
-        <VerticalBtn onClick={verticalSubmit} />
+        <VerticalBtn
+          type="button"
+          onClick={() => {
+            handleVertical(
+              userInfo.uid,
+              writerId,
+              '댓글을 삭제하시겠습니까?',
+              delChatting,
+              '쪽지를 보내겠습니까?',
+              setDM
+            );
+          }}
+        />
       </UserContainer>
       <OtherTxt>{chatTxt}</OtherTxt>
       <OtherTime>{time}</OtherTime>
