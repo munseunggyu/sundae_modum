@@ -119,7 +119,11 @@ function Header({
             </LeftIconBtn>
           )}
           {vertical && (
-            <RightIconBtn icon={verticalIcon} onClick={verticalSubmit} />
+            <RightIconBtn
+              type="button"
+              icon={verticalIcon}
+              onClick={verticalSubmit}
+            />
           )}
           {search && <RightIconBtn icon={searchIcon} onClick={toggleSearch} />}
           <AnimatePresence>

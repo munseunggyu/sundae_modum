@@ -26,7 +26,8 @@ function EmailLoginPage() {
   const onSignIn = async ({ email, password }) => {
     try {
       setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      const userInfo = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userInfo.user.uid);
       setLoading(false);
       console.log('로그인 완료');
       navigate('/');
@@ -46,7 +47,10 @@ function EmailLoginPage() {
           name="email"
           id="user-email"
           placeholder="이메일을 입력하세요."
-          {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+          {...register('email', {
+            required: true,
+            pattern: /^\S+@\S+$/i,
+          })}
         />
         {errorMessage === 'auth/user-not-found' && (
           <ErrorMessageP>아이디가 없습니다.</ErrorMessageP>

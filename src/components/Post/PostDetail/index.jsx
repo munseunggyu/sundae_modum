@@ -21,7 +21,6 @@ import {
   where,
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { setCurrentPost } from '../../../redux/actions/post_action';
 import Chatting from '../../../common/ChattingForm';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -82,6 +81,10 @@ function PostDetailPage() {
         postData.push(postDoc.data({ serverTimestamps: 'estimate' }));
       });
       setCurrentPost(...postData);
+      if (postData.length <= 0) {
+        navigate('/');
+        return;
+      }
       onSnapshot(doc(db, 'users', postData[0].writerId), (writerDoc) => {
         setWriterName(writerDoc.data().displayName);
         setWriterPhotoURL(writerDoc.data().photoURL);
@@ -119,7 +122,7 @@ function PostDetailPage() {
 
   const delPost = async () => {
     await deleteDoc(doc(db, 'posts', currentPost.postkey));
-    navigate('/');
+    navigate(-1);
   };
   // DM의 같은 ID 값을 유지해주기 위해서
   const CreateDMRoomId = (selectUser) => {
@@ -141,7 +144,6 @@ function PostDetailPage() {
   };
 
   const verticalSubmit = (e) => {
-    e.preventDefault();
     if (userInfo.uid === currentPost.writerId) {
       confirmAlert({
         title: '게시글을 삭제하시겠습니까?',
