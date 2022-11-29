@@ -27,7 +27,6 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
   const time = getDate(CreateAt);
   const userInfo = useSelector((state) => state.user.currentUser);
-  const currentPost = useSelector((state) => state.post.currentPost);
   const [writerName, setWriterName] = useState('');
   const [writerPhotoURL, setWriterPhotoURL] = useState('');
   onSnapshot(doc(db, 'users', writerId), (doc) => {

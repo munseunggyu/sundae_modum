@@ -36,25 +36,27 @@ function DMDetailPage() {
   // 메시지 보내기
   const submitChat = async (e) => {
     e.preventDefault();
-    const DMMessage = collection(db, 'DMMessage');
-    const newId = collection(DMMessage, currentDMROOM.roomId, 'DM');
-    await Promise.all([
-      addDoc(newId, {
-        chat,
-        id: currentDMROOM.roomId,
+    if (chat) {
+      const DMMessage = collection(db, 'DMMessage');
+      const newId = collection(DMMessage, currentDMROOM.roomId, 'DM');
+      await Promise.all([
+        addDoc(newId, {
+          chat,
+          id: currentDMROOM.roomId,
+          CreateAt: serverTimestamp(),
+          writerId: userInfo.uid,
+        }),
+      ]);
+      // 마지막 채팅
+      // 데이터는 시간, 채팅내용, 방아이디,
+      await setDoc(doc(db, 'lastMessage', currentDMROOM.roomId), {
         CreateAt: serverTimestamp(),
-        writerId: userInfo.uid,
-      }),
-    ]);
-    // 마지막 채팅
-    // 데이터는 시간, 채팅내용, 방아이디,
-    await setDoc(doc(db, 'lastMessage', currentDMROOM.roomId), {
-      CreateAt: serverTimestamp(),
-      id: currentDMROOM.roomId,
-      chat,
-    });
-    setChat('');
-    console.log('완료');
+        id: currentDMROOM.roomId,
+        chat,
+      });
+      setChat('');
+      console.log('완료');
+    }
   };
   // DM 메시지 가져오기
   const getMessages = (id) => {

@@ -43,19 +43,20 @@ function Chatting() {
   // 게시글 댓글 작성 기능
   const handleChattingSend = async (e) => {
     e.preventDefault();
-    const postChatting = collection(db, 'post_chatting');
-    const newId = doc(collection(postChatting, id, 'post'));
-    await Promise.all([
-      setDoc(newId, {
-        chatId: newId.id,
-        currentPostId: id,
-        CreateAt: serverTimestamp(),
-        chatTxt,
-        writerId: userInfo.uid,
-      }),
-    ]);
-    setChatTxt('');
-    console.log('완료');
+    if (chatTxt) {
+      const postChatting = collection(db, 'post_chatting');
+      const newId = doc(collection(postChatting, id, 'post'));
+      await Promise.all([
+        setDoc(newId, {
+          chatId: newId.id,
+          currentPostId: id,
+          CreateAt: serverTimestamp(),
+          chatTxt,
+          writerId: userInfo.uid,
+        }),
+      ]);
+      setChatTxt('');
+    }
   };
 
   return (
