@@ -82,45 +82,31 @@ function PostUploadPage() {
     }
     try {
       const postRef = doc(collection(db, 'posts'));
+      let postData = {
+        writerId: userInfo.uid,
+        postDate: postDate.slice(5).replace('-', '/'),
+        postTime,
+        party: {
+          participants: [],
+          participateCount: 0,
+        },
+        postTit,
+        postTxt,
+        postkey: postRef.id,
+        postImg: null,
+        CreateAt: serverTimestamp(),
+        category: chooseCategory,
+      };
       // 이미지 파일이 있으면 실행
       if (dbFile) {
         const postStorageRef = ref(storage, `posts_images/${postRef.id}`);
         uploadBytes(postStorageRef, dbFile, metadata).then(() => {
           getDownloadURL(postStorageRef).then(async (downloadURL) => {
-            const postData = {
-              writerId: userInfo.uid,
-              postDate: postDate.slice(5).replace('-', '/'),
-              postTime,
-              postTit,
-              party: {
-                participants: [],
-                participateCount: 0,
-              },
-              postTxt,
-              postImg: downloadURL,
-              postkey: postRef.id,
-              CreateAt: serverTimestamp(),
-              category: chooseCategory,
-            };
+            postData = { ...postData, postImg: downloadURL };
             await setDoc(postRef, postData);
           });
         });
       } else {
-        const postData = {
-          writerId: userInfo.uid,
-          postDate: postDate.slice(5).replace('-', '/'),
-          postTime,
-          party: {
-            participants: [],
-            participateCount: 0,
-          },
-          postTit,
-          postTxt,
-          postkey: postRef.id,
-          postImg: null,
-          CreateAt: serverTimestamp(),
-          category: chooseCategory,
-        };
         await setDoc(postRef, postData);
       }
       navigate('/');

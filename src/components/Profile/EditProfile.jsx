@@ -48,18 +48,19 @@ function EditProfile({ isFrist }) {
         alert('닉네임을 설정해주세요');
         return;
       }
+      let userData = {
+        displayName: nickName,
+        photoURL: null,
+        uid: userInfo.uid,
+        email: userInfo.email,
+        introduce: introduce || '',
+      };
       if (prevFile !== userInfo.photoURL) {
         // 만약 프로필 사진을 업데이트 하면 실행
         const storageRef = ref(storage, `user_image/${userInfo.uid}`);
         const uploadTask = await uploadBytes(storageRef, dbFile, metadata);
         getDownloadURL(storageRef).then((downloadURL) => {
-          const userData = {
-            displayName: nickName,
-            photoURL: downloadURL,
-            uid: userInfo.uid,
-            email: userInfo.email,
-            introduce: introduce || '',
-          };
+          userData = { ...userData, photoURL: downloadURL };
           updateProfile(auth.currentUser, {
             displayName: nickName,
             photoURL: downloadURL,
@@ -67,15 +68,7 @@ function EditProfile({ isFrist }) {
           setDoc(doc(db, 'users', userInfo.uid), userData);
         });
       } else {
-        const userData = {
-          displayName: nickName,
-          photoURL: userInfo.photoURL,
-          uid: userInfo.uid,
-          email: userInfo.email,
-          introduce: introduce || '',
-        };
-        console.log(userData);
-        // 프로필 사진을 업데이트 하지 않으면 실행
+        userData = { ...userData, photoURL: userInfo.photoURL };
         updateProfile(auth.currentUser, {
           displayName: nickName,
         });
