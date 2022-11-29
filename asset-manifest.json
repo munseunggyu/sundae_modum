@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "/sundae_modum/static/css/main.e4c7bfb0.css",
-    "main.js": "/sundae_modum/static/js/main.c38b63d8.js",
+    "main.css": "/sundae_modum/static/css/main.f292d884.css",
+    "main.js": "/sundae_modum/static/js/main.a69759c4.js",
     "static/media/logo.png": "/sundae_modum/static/media/logo.74266ab99c218106dc18.png",
     "index.html": "/sundae_modum/index.html",
-    "main.e4c7bfb0.css.map": "/sundae_modum/static/css/main.e4c7bfb0.css.map",
-    "main.c38b63d8.js.map": "/sundae_modum/static/js/main.c38b63d8.js.map"
+    "static/media/dropDown.svg": "/sundae_modum/static/media/dropDown.6ecdbe88604a95adabd3c7bec6026c55.svg",
+    "main.f292d884.css.map": "/sundae_modum/static/css/main.f292d884.css.map",
+    "main.a69759c4.js.map": "/sundae_modum/static/js/main.a69759c4.js.map"
   },
   "entrypoints": [
-    "static/css/main.e4c7bfb0.css",
-    "static/js/main.c38b63d8.js"
+    "static/css/main.f292d884.css",
+    "static/js/main.a69759c4.js"
   ]
 }
