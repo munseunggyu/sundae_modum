@@ -40,7 +40,7 @@ export const SNSBtn = styled.button`
   border: 0;
   position: relative;
   background-color: transparent;
-  border: 1px solid ${(props) => props.color || 'black'};
+  border: 1px solid ${(props) => props.btnColor || 'black'};
   img {
     position: absolute;
     left: 14px;

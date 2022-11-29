@@ -20,7 +20,7 @@ export const PostDetailContainer = styled.section`
   margin-bottom: 10px;
   border-bottom: 1px solid #c4c4c4;
 `;
-export const DeadLine = styled.time`
+export const DeadLine = styled.span`
   display: block;
   margin-top: 20px;
   font-size: 12px;
@@ -96,7 +96,7 @@ export const OtherTxt = styled.p`
   white-space: pre-wrap;
   word-wrap: break-word;
 `;
-export const OtherTime = styled.time`
+export const OtherTime = styled.span`
   opacity: 0.7;
   font-size: 14px;
 `;

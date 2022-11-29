@@ -11,7 +11,6 @@ import {
   collectionGroup,
   deleteDoc,
   doc,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -22,7 +21,6 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import Chatting from '../../../common/ChattingForm';
-import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import PartyName from './PartyName';
 import { IrH2 } from '../../../common/TextHide';

@@ -51,7 +51,7 @@ function SNSLoginPage() {
           <LoginBtns>
             <li>
               <SNSBtn
-                color="#F1C94B"
+                btnColor="#F1C94B"
                 logoImg={kakaologo}
                 name="kakao"
                 onClick={onSocialLogin}
@@ -70,7 +70,7 @@ function SNSLoginPage() {
             </li>
             <li>
               <SNSBtn
-                color="#2C9CDB"
+                btnColor="#2C9CDB"
                 logoImg={facebooklogo}
                 name="facebook"
                 onClick={onSocialLogin}

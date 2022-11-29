@@ -26,35 +26,17 @@ function PostList({
   postDate,
   postTime,
   postTit,
-  postTxt,
   writerId,
-  index,
 }) {
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state.user.currentUser);
-  const dispatch = useDispatch();
   const [writerName, setWriterName] = useState('');
   const [writerPhotoURL, setWriterPhotoURL] = useState('');
 
-  // 지금 작성자의 uid를 나는 알고 있다. 그러니 그것을 가지고 users에서 그 작성자를 찾아 그 데이터를 뿌려 준다
   onSnapshot(doc(db, 'users', writerId), (doc) => {
     setWriterName(doc.data().displayName);
     setWriterPhotoURL(doc.data().photoURL);
   });
-  const postData = {
-    party: {
-      participateCount: party.participateCount,
-      participants: party.participants,
-    },
-    postkey,
-    postImg,
-    postDate,
-    postTime,
-    postTit,
-    postTxt,
-    writerId,
-    isLoding: true,
-  };
+
   const handleClick = async () => {
     navigate(`/postdetail/${postkey}`);
   };
@@ -71,10 +53,9 @@ function PostList({
               <UserName>{writerName}</UserName>
               <strong>{postTit}</strong>
               <PostTextBottomContainer>
-                <time>
+                <span>
                   {postDate} {postTime}
-                </time>
-                {/* <span>18</span> 채팅 수 */}
+                </span>
                 <PartyContainer>
                   <PartyUser src={partyUser} alt="" />
                   <strong>{party.participateCount}</strong>

@@ -39,7 +39,7 @@ function EmailLoginPage() {
   return (
     <SignContainer>
       <SignH1>로그인</SignH1>
-      <PrevPage onClick={() => navigate('/snslogin')}></PrevPage>
+      <PrevPage onClick={() => navigate('/')}></PrevPage>
       <SignFormContainer onSubmit={handleSubmit(onSignIn)}>
         <SignLabel htmlFor="user-email">이메일</SignLabel>
         <SignInput

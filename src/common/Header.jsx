@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 
-const HeaderContainer = styled.article`
+const HeaderContainer = styled.div`
   width: 100%;
   position: fixed;
   min-height: 48px;
@@ -114,7 +114,7 @@ function Header({
           {ir && <IrH1> {ir} </IrH1>}
           {prv && (
             <LeftIconBtn>
-              <PrvBtn alt="이전" onClick={() => navigate(-1)} />
+              <PrvBtn onClick={() => navigate(-1)} />
               {userName && <UserName> {userName} </UserName>}
             </LeftIconBtn>
           )}

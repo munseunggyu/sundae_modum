@@ -3,18 +3,18 @@ import logo from '../../assets/logo.png';
 import { LodingConatiner, LogoImg } from './style';
 
 function LodingPage() {
-    const [display, setDisplay] = useState('flex');
-    const hi = () => {
-        setTimeout(() => {
-            setDisplay('none');
-        }, 1500);
-    };
-    hi();
-    return (
-        <LodingConatiner display={display}>
-            <LogoImg src={logo} alt="" />
-        </LodingConatiner>
-    );
+  const [isLoad, setIsLoad] = useState('flex');
+  const hi = () => {
+    setTimeout(() => {
+      setIsLoad('none');
+    }, 1500);
+  };
+  hi();
+  return (
+    <LodingConatiner isLoad={isLoad}>
+      <LogoImg src={logo} alt="" />
+    </LodingConatiner>
+  );
 }
 
 export default LodingPage;

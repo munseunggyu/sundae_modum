@@ -75,7 +75,7 @@ export const ChatP = styled.p`
   word-wrap: break-word;
 `;
 
-export const ChatTime = styled.time`
+export const ChatTime = styled.span`
   font-size: 10px;
   align-self: flex-end;
 `;

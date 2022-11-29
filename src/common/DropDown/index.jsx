@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { DropBtn, DropDonContainer, DropDownLi, DropDownUl } from './style';
 
 function DropDown({ chooseCategory, setChooseCategory }) {

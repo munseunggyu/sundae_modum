@@ -11,7 +11,7 @@ export const Postli = styled.li`
   }
 `;
 
-export const PostBtn = styled.button`
+export const PostBtn = styled.div`
   width: 100%;
   padding-bottom: 5px;
   background-color: transparent;
@@ -39,7 +39,6 @@ export const PostImg = styled.img`
 export const PostTextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 2px;
 `;
 export const UserName = styled.span`
@@ -49,6 +48,8 @@ export const UserName = styled.span`
 export const PostTextBottomContainer = styled.div`
   display: flex;
   gap: 3px;
+  font-size: 12px;
+  line-height: 18px;
   span {
   }
 `;
@@ -58,4 +59,5 @@ export const PartyContainer = styled.div`
 export const PartyUser = styled.img`
   width: 14px;
   height: 14px;
+  /* line-height: 18px; */
 `;

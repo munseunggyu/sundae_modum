@@ -60,7 +60,10 @@ function ProfilePage() {
       <MainContainer>
         <ProfileContainer>
           <IrH2>프로필 정보 및 수정</IrH2>
-          <UserProfileImg src={userInfo.photoURL || userImg} />
+          <UserProfileImg
+            src={userInfo.photoURL || userImg}
+            alt="유저 프로필 이미지"
+          />
           <UserName>{userInfo.displayName}</UserName>
           <UserIntroduce>{userInfo.introduce} </UserIntroduce>
           <UserProfileEditBtn onClick={() => navigate('editprofile')}>

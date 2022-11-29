@@ -15,7 +15,7 @@ export const NoDMRoom = styled.div`
 export const DMRoomli = styled.li`
   margin-bottom: 24px;
 `;
-export const DMBtn = styled.button`
+export const DMBtn = styled.div`
   position: relative;
   display: flex;
   gap: 12px;
@@ -45,7 +45,7 @@ export const LastChatting = styled.p`
   opacity: 0.6;
 `;
 
-export const Time = styled.time`
+export const Time = styled.span`
   position: absolute;
   bottom: 0;
   right: 0;

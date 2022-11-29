@@ -6,7 +6,6 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import { useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
 import { useSelector } from 'react-redux';
 import {
   OtherTime,
