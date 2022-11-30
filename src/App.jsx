@@ -1,7 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import DMPage from './components/DM/DMRoomLists';
 import HomePage from './components/Home';
-import SNSLoginPage from './components/SNSLogin';
 import RegisterPage from './components/Register';
 import EmailLoginPage from './components/EmailLogin';
 import ProfilePage from './components/Profile';
@@ -16,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { firstSetUser, setUser } from './redux/actions/user_action';
 import { onSnapshot, doc } from 'firebase/firestore';
 import FirstProfilePage from './components/Profile/FristProfile';
+import SNSLoginPage from './pages/SNSLoginPage';
 
 function App() {
   const dispatch = useDispatch();

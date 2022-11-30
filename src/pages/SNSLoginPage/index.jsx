@@ -5,41 +5,17 @@ import googlelogo from '../../assets/googlelogo.png';
 import facebooklogo from '../../assets/facebooklogo.png';
 import { Link } from 'react-router-dom';
 import {
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  signInWithRedirect,
-} from 'firebase/auth';
-import { auth } from '../../firebase';
-import LodingPage from '../Loding';
-import {
   EmailRegisterContainer,
   LoginBtnContainer,
   LoginBtns,
   LogoContainer,
   LogoImg,
-  SNSBtn,
   SNSLoginContainer,
 } from './style';
+import LodingPage from '../../components/Loding';
+import SNSBtn from '../../components/SNSLogin/\bSNSBtn';
 
 function SNSLoginPage() {
-  const googleProvider = new GoogleAuthProvider();
-  const facebookProvider = new FacebookAuthProvider();
-  const onSocialLogin = async (e) => {
-    try {
-      const {
-        target: { name },
-      } = e;
-      if (name === 'google') {
-        await signInWithRedirect(auth, googleProvider);
-      } else if (name === 'facebook') {
-        await signInWithRedirect(auth, facebookProvider);
-      } else {
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       <SNSLoginContainer>
@@ -50,31 +26,17 @@ function SNSLoginPage() {
         <LoginBtnContainer>
           <LoginBtns>
             <li>
-              <SNSBtn
-                btnColor="#F1C94B"
-                logoImg={kakaologo}
-                name="kakao"
-                onClick={onSocialLogin}
-              >
+              <SNSBtn btnColor="#F1C94B" logoImg={kakaologo} name="kakao">
                 카카오 계정으로 로그인
               </SNSBtn>
             </li>
             <li>
-              <SNSBtn
-                logoImg={googlelogo}
-                name="google"
-                onClick={onSocialLogin}
-              >
+              <SNSBtn btnColor="black" logoImg={googlelogo} name="google">
                 구글 계정으로 로그인
               </SNSBtn>
             </li>
             <li>
-              <SNSBtn
-                btnColor="#2C9CDB"
-                logoImg={facebooklogo}
-                name="facebook"
-                onClick={onSocialLogin}
-              >
+              <SNSBtn btnColor="#2C9CDB" logoImg={facebooklogo} name="facebook">
                 페이스북 계정으로 로그인
               </SNSBtn>
             </li>
