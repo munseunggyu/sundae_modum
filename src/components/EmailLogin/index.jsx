@@ -12,7 +12,7 @@ import {
   SignInput,
   SignLabel,
   SignSubmitBtn,
-} from '../Register/style';
+} from '../SignUp/style';
 
 function EmailLoginPage() {
   const navigate = useNavigate();

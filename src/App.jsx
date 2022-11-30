@@ -1,7 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import DMPage from './components/DM/DMRoomLists';
 import HomePage from './components/Home';
-import RegisterPage from './components/Register';
 import EmailLoginPage from './components/EmailLogin';
 import ProfilePage from './components/Profile';
 import PostUploadPage from './components/Post/PostUpload';
@@ -15,7 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { firstSetUser, setUser } from './redux/actions/user_action';
 import { onSnapshot, doc } from 'firebase/firestore';
 import FirstProfilePage from './components/Profile/FristProfile';
-import SNSLoginPage from './pages/SNSLoginPage';
+import SNSLoginPage from './components/SNSLogin';
+import SignUpPage from './components/SignUp';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function App() {
       {userInfo.isLoading ? (
         <>
           <Route path="/" element={<SNSLoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register" element={<SignUpPage />} />
           <Route path="/emaillogin" element={<EmailLoginPage />} />
           <Route path="/firstedit" element={<EditProfile isFrist={true} />} />
         </>
