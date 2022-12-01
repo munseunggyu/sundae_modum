@@ -1,4 +1,5 @@
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { useRef } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -37,6 +38,7 @@ const ChattingSubmitBtn = styled.button`
 
 function Chatting() {
   const currentPost = useSelector((state) => state.post.currentPost);
+  const scrollRef = useRef(null);
   const userInfo = useSelector((state) => state.user.currentUser);
   const { id } = useParams();
   const [chatTxt, setChatTxt] = useState('');
@@ -56,21 +58,25 @@ function Chatting() {
         }),
       ]);
       setChatTxt('');
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
-    <ChattingFormContainer>
-      <ChattingForm onSubmit={handleChattingSend}>
-        <ChattingInput
-          type="text"
-          placeholder="메시지를 입력하세요."
-          value={chatTxt}
-          onChange={(e) => setChatTxt(e.target.value)}
-        />
-        <ChattingSubmitBtn onClick={handleChattingSend} />
-      </ChattingForm>
-    </ChattingFormContainer>
+    <>
+      <div ref={scrollRef} />
+      <ChattingFormContainer>
+        <ChattingForm onSubmit={handleChattingSend}>
+          <ChattingInput
+            type="text"
+            placeholder="메시지를 입력하세요."
+            value={chatTxt}
+            onChange={(e) => setChatTxt(e.target.value)}
+          />
+          <ChattingSubmitBtn onClick={handleChattingSend} />
+        </ChattingForm>
+      </ChattingFormContainer>
+    </>
   );
 }
 

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Header from '../../../common/Header';
 import { MainContainer } from '../../../common/MainContainer';
 import DMChatting from './DMChatting';
@@ -8,7 +7,6 @@ import {
   collection,
   collectionGroup,
   doc,
-  getDocs,
   onSnapshot,
   orderBy,
   query,

@@ -73,7 +73,7 @@ function PostUploadPage() {
       chooseCategory === '카테고리'
     ) {
       if (!postDate) errorAlert(postDate, '날짜를 선택해주세요.');
-      else if (!postTime) errorAlert(postTime, '시간을 선택해주세요.');
+      if (!postTime) errorAlert(postTime, '시간을 선택해주세요.');
       else if (chooseCategory === '카테고리') alert('카테고리를 선택해주세요.');
       else if (!postTit) errorAlert(postTit, '제목을 입력해주세요.');
       else if (!postTxt) errorAlert(postTxt, '게시글 내용을 입력해주세요.');
