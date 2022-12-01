@@ -23,6 +23,7 @@ import {
   ChattingSubmitBtn,
   DMDetailContainer,
 } from './style';
+import { useRef } from 'react';
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
@@ -31,6 +32,7 @@ function DMDetailPage() {
   const [otherUserName, setOtherUserName] = useState('');
   const [otherUserPhotoURL, setOtherUserPhotoURL] = useState('');
   const [chats, setChats] = useState([]);
+  const scrollRef = useRef(null);
   // 메시지 보내기
   const submitChat = async (e) => {
     e.preventDefault();
@@ -53,6 +55,7 @@ function DMDetailPage() {
         chat,
       });
       setChat('');
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       console.log('완료');
     }
   };
@@ -102,6 +105,7 @@ function DMDetailPage() {
             );
           })}
         </DMDetailContainer>
+        <div ref={scrollRef} />
         <ChattingFormContainer>
           <ChattingForm onSubmit={submitChat}>
             <ChattingInput
