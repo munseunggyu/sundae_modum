@@ -81,9 +81,14 @@ export const JoinUserIcon = styled.img`
 // otherUser
 export const OtherUserChatContainer = styled.li`
   width: 100%;
-  padding: 0 12px 12px 12px;
+  padding: 12px;
   border-bottom: 0.5px solid #c4c4c4;
+  border-top: 0.5px solid #c4c4c4;
   margin-bottom: 10px;
+  background-color: ${(props) => (props.bgc ? '#bdbdbd' : 'white')};
+  &:first-child {
+    border-top: 0;
+  }
   &:last-child {
     border-bottom: 0;
   }

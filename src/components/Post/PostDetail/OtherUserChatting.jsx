@@ -55,9 +55,8 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
       ids: [writerId, userInfo.uid],
     });
   };
-
   return (
-    <OtherUserChatContainer>
+    <OtherUserChatContainer bgc={writerId === userInfo.uid}>
       <UserContainer>
         <UserProfileImg src={writerPhotoURL || userProfile} alt="유저 프로필" />
         <UserName>{writerName}</UserName>

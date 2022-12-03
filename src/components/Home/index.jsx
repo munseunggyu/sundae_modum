@@ -6,7 +6,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Category from '../../common/Category';
 import Header from '../../common/Header';
@@ -16,6 +16,11 @@ import { IrH2 } from '../../common/TextHide';
 import { db } from '../../firebase';
 import Post from '../Post/PostList';
 import { HomeContainer, PostUl } from './style';
+
+const TopScrollBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+`;
 
 function HomePage() {
   const [postsData, setPostsData] = useState([]);
@@ -75,6 +80,7 @@ function HomePage() {
               ))}
         </PostUl>
       </MainContainer>
+
       <Nav />
     </HomeContainer>
   );
