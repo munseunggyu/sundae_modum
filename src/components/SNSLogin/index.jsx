@@ -10,7 +10,7 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
-import LodingPage from '../Loding';
+import LodingPage from '../Splash';
 import {
   EmailRegisterContainer,
   LoginBtnContainer,

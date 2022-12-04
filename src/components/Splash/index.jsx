@@ -2,14 +2,14 @@ import { useState } from 'react';
 import logo from '../../assets/logo.png';
 import { LodingConatiner, LogoImg } from './style';
 
-function LodingPage() {
+function Splash() {
   const [isLoad, setIsLoad] = useState('flex');
-  const hi = () => {
+  const splashStart = () => {
     setTimeout(() => {
       setIsLoad('none');
     }, 1500);
   };
-  hi();
+  splashStart();
   return (
     <LodingConatiner isLoad={isLoad}>
       <LogoImg src={logo} alt="" />
@@ -17,4 +17,4 @@ function LodingPage() {
   );
 }
 
-export default LodingPage;
+export default Splash;
