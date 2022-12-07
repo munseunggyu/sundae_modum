@@ -17,7 +17,6 @@ import {
   where,
 } from 'firebase/firestore';
 import { clearUser } from '../../redux/actions/user_action';
-import { IrH2 } from '../../common/TextHide';
 import {
   MyPost,
   MyPostUl,
@@ -59,7 +58,7 @@ function ProfilePage() {
       <Header ir="프로필 페이지" prv={true} />
       <MainContainer>
         <ProfileContainer>
-          <IrH2>프로필 정보 및 수정</IrH2>
+          <h2 className="ir">프로필 정보 및 수정</h2>
           <UserProfileImg
             src={userInfo.photoURL || userImg}
             alt="유저 프로필 이미지"

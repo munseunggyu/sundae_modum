@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import Header from '../../../common/Header';
 import { MainContainer } from '../../../common/MainContainer';
 import Nav from '../../../common/Nav';
-import { IrH2 } from '../../../common/TextHide';
 import { useDispatch, useSelector } from 'react-redux';
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db, storage } from '../../../firebase';
@@ -123,7 +122,7 @@ function PostUploadPage() {
         onSubmit={handlePostSubmit}
       />
       <MainContainer>
-        <IrH2>게시물 작성</IrH2>
+        <h2 className="ir">게시물 작성</h2>
         <form onSubmit={handlePostSubmit}>
           <DeadlineContainer>
             <input

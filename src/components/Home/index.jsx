@@ -12,7 +12,6 @@ import Category from '../../common/Category';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import Nav from '../../common/Nav';
-import { IrH2 } from '../../common/TextHide';
 import { db } from '../../firebase';
 import Post from '../Post/PostList';
 import { HomeContainer, PostUl } from './style';
@@ -69,7 +68,7 @@ function HomePage() {
         <Category select={select} setSelect={setSelect} />
       </Header>
       <MainContainer>
-        <IrH2>게시글</IrH2>
+        <h2 className="ir">게시글</h2>
         <PostUl>
           {isSearch
             ? searchList.map((post, index) => (

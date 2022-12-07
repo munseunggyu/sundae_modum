@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 import searchIcon from '../assets/icons/icon-search.png';
-import { IrH1 } from './TextHide';
 import arrow from '../assets/arrow-left.png';
 import headerLogo from '../assets/header-logo.png';
 import verticalIcon from '../assets/icons/icon-more-vertical.png';
@@ -110,8 +109,8 @@ function Header({
     <>
       <HeaderContainer>
         <HeaderWrappper>
-          {h1 && <HeaderH1> {h1} </HeaderH1>}
-          {ir && <IrH1> {ir} </IrH1>}
+          {h1 && <h1 className="ir"> {h1} </h1>}
+          {ir && <h1 className="ir"> {ir} </h1>}
           {prv && (
             <LeftIconBtn>
               <PrvBtn onClick={() => navigate(-1)} />

@@ -23,7 +23,6 @@ import { db } from '../../../firebase';
 import Chatting from '../../../common/ChattingForm';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import PartyName from './PartyName';
-import { IrH2 } from '../../../common/TextHide';
 import {
   ContentsImg,
   ContentsTitle,
@@ -169,7 +168,7 @@ function PostDetailPage() {
           />
           <MainContainer pr="0">
             <PostDetailContainer>
-              <IrH2>게시글 콘텐츠</IrH2>
+              <h2 className="ir">게시글 콘텐츠</h2>
               <UserContainer>
                 <UserProfileImg
                   src={writerPhotoURL || userProfile}

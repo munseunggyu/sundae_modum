@@ -22,7 +22,7 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     // 로그인,회원가입,소셜로그인 시 firestore에 해당 유저가 있는지 확인
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // dispatch(setUser(user))
         onSnapshot(doc(db, 'users', user.uid), async (doc) => {

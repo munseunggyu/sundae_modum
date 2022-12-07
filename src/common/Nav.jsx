@@ -8,7 +8,6 @@ import userFill from '../assets/icons/icon-user-fill.png';
 import message from '../assets/icons/icon-message-circle.png';
 import messageFill from '../assets/icons/icon-message-fill.png';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
-import { IrH2 } from './TextHide';
 const NavContainer = styled.nav`
   width: 100%;
   position: fixed;
@@ -48,7 +47,7 @@ function Nav() {
   const postUploadMatch = useMatch('/postupload');
   return (
     <NavContainer>
-      {/* <IrH2></IrH2> */}
+      {/* <h2 className='ir'></h2> */}
       <IconsUl>
         <Iconsli onClick={() => navigate('/')}>
           <IconImg icon={homeMatch ? homeFill : home} />
