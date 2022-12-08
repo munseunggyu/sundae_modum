@@ -1,11 +1,4 @@
-import {
-  deleteDoc,
-  doc,
-  onSnapshot,
-  serverTimestamp,
-  setDoc,
-} from 'firebase/firestore';
-import { useState } from 'react';
+import { deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import {
   OtherTime,
@@ -21,22 +14,19 @@ import { db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import getDate from '../../../utils/getDate';
 import handleVertical from '../../../utils/handleVertical';
+import useWriter from '../../../hooks/useGetInfo';
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
   const time = getDate(CreateAt);
   const userInfo = useSelector((state) => state.user.currentUser);
-  const [writerName, setWriterName] = useState('');
-  const [writerPhotoURL, setWriterPhotoURL] = useState('');
-  onSnapshot(doc(db, 'users', writerId), (doc) => {
-    setWriterName(doc.data().displayName);
-    setWriterPhotoURL(doc.data().photoURL);
-  });
+  const { userName, userPhotoURL, getInfo } = useWriter();
+  getInfo(writerId);
+
   const delChatting = async () => {
     // 채팅 삭제
     const postChatDoc = doc(db, 'post_chatting', id);
     await deleteDoc(doc(postChatDoc, 'post', chatId));
-    console.log('완료');
   };
   // DM의 같은 ID 값을 유지해주기 위해서
   const CreateDMRoomId = (selectUser) => {
@@ -58,8 +48,8 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   return (
     <OtherUserChatContainer bgc={writerId === userInfo.uid}>
       <UserContainer>
-        <UserProfileImg src={writerPhotoURL || userProfile} alt="유저 프로필" />
-        <UserName>{writerName}</UserName>
+        <UserProfileImg src={userPhotoURL || userProfile} alt="유저 프로필" />
+        <UserName>{userName}</UserName>
         <VerticalBtn
           type="button"
           onClick={() => {

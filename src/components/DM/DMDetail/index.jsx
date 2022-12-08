@@ -24,13 +24,13 @@ import {
   DMDetailContainer,
 } from './style';
 import { useRef } from 'react';
+import useGetInfo from '../../../\bhooks/useGetInfo';
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
   const [currentDMROOM, setCurrentDMRROOM] = useState([]);
   const [chat, setChat] = useState('');
-  const [otherUserName, setOtherUserName] = useState('');
-  const [otherUserPhotoURL, setOtherUserPhotoURL] = useState('');
+  const { userName, userPhotoURL, getInfo } = useGetInfo();
   const [chats, setChats] = useState([]);
   const scrollRef = useRef(null);
   // 메시지 보내기
@@ -78,10 +78,7 @@ function DMDetailPage() {
   const getCurrentDMROOM = () => {
     const currentDMRef = doc(db, 'current_dm', userInfo.uid);
     const currentDMSnap = onSnapshot(currentDMRef, (currentDMDoc) => {
-      onSnapshot(doc(db, 'users', currentDMDoc.data().otherUserId), (doc) => {
-        setOtherUserName(doc.data().displayName);
-        setOtherUserPhotoURL(doc.data().photoURL);
-      });
+      getInfo(currentDMDoc.data().otherUserId);
       setCurrentDMRROOM(currentDMDoc.data());
       getMessages(currentDMDoc.data().roomId); // 현재 DM방 데이터 가져온걸 바로 넣어줘 메시지들도 가져온다.
     });
@@ -93,16 +90,14 @@ function DMDetailPage() {
   return (
     <>
       <Header
-        ir={`${otherUserName}와(과)의 DM채팅방`}
+        ir={`${userName}와(과)의 DM채팅방`}
         prv={true}
-        userName={otherUserName}
+        userName={userName}
       />
       <MainContainer pr="0">
         <DMDetailContainer>
           {chats.map((chat) => {
-            return (
-              <DMChatting {...chat} otherUserPhotoURL={otherUserPhotoURL} />
-            );
+            return <DMChatting {...chat} otherUserPhotoURL={userPhotoURL} />;
           })}
         </DMDetailContainer>
         <div ref={scrollRef} />

@@ -1,7 +1,8 @@
-import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import useGetInfo from '../../../\bhooks/useGetInfo';
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
 import getDate from '../../../utils/getDate';
@@ -18,16 +19,12 @@ import {
 function DMRoomList({ ids, id }) {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user.currentUser);
-  const [otherUserName, setOtherUserName] = useState('');
-  const [otherUserPhotoURL, setOtherUserPhotoURL] = useState('');
   const otherUserId = ids.filter((id) => id !== userInfo.uid)[0];
   const [lastChat, setLastChat] = useState([]);
   const [time, setTime] = useState('');
+  const { userName, userPhotoURL, getInfo } = useGetInfo();
 
-  onSnapshot(doc(db, 'users', otherUserId), (doc) => {
-    setOtherUserName(doc.data().displayName);
-    setOtherUserPhotoURL(doc.data().photoURL);
-  });
+  getInfo(otherUserId);
   // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {
     const currentDMData = {
@@ -35,7 +32,7 @@ function DMRoomList({ ids, id }) {
       roomId: id,
     };
     await setDoc(doc(db, 'current_dm', userInfo.uid), currentDMData);
-    navigate(`${otherUserName}`);
+    navigate(`${userName}`);
   };
   const getLastChat = async () => {
     const docRef = doc(db, 'lastMessage', id);
@@ -53,9 +50,9 @@ function DMRoomList({ ids, id }) {
   return (
     <DMRoomli>
       <DMBtn onClick={currentDMROOM}>
-        <UserImg src={otherUserPhotoURL || userProfile} alt="" />
+        <UserImg src={userPhotoURL || userProfile} alt="" />
         <TxtContainer>
-          <UserName isLastChat={time}>{otherUserName}</UserName>
+          <UserName isLastChat={time}>{userName}</UserName>
           {lastChat && (
             <LastChatting>
               {String(lastChat.chat).length > 10

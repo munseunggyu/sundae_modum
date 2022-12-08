@@ -1,16 +1,12 @@
-import { doc, onSnapshot } from 'firebase/firestore';
-import { useState } from 'react';
-import { db } from '../../../firebase';
+import useWriter from '../../../hooks/useGetInfo';
 import { PartyNameContainer } from './style';
 
 function PartyName({ userId, length, index }) {
-  const [name, setName] = useState('');
-  onSnapshot(doc(db, 'users', userId), (doc) => {
-    setName(doc.data().displayName);
-  });
+  const { userName, getInfo } = useWriter();
+  getInfo(userId);
   return (
     <PartyNameContainer>
-      {name} {length !== index + 1 && '/'}
+      {userName} {length !== index + 1 && '/'}
     </PartyNameContainer>
   );
 }

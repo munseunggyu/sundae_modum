@@ -39,6 +39,7 @@ import {
   UserProfileImg,
 } from './style';
 import handleVertical from '../../../utils/handleVertical';
+import useWriter from '../../../hooks/useGetInfo';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -48,8 +49,7 @@ function PostDetailPage() {
   const [currentPost, setCurrentPost] = useState([]);
   const [postLoding, setPostLoding] = useState(true);
   const [chattings, setChattings] = useState([]);
-  const [writerName, setWriterName] = useState('');
-  const [writerPhotoURL, setWriterPhotoURL] = useState('');
+  const { userName, userPhotoURL, getInfo } = useWriter();
 
   // 댓글 불러오기
   const getChatting = () => {
@@ -83,10 +83,7 @@ function PostDetailPage() {
         navigate('/');
         return;
       }
-      onSnapshot(doc(db, 'users', postData[0].writerId), (writerDoc) => {
-        setWriterName(writerDoc.data().displayName);
-        setWriterPhotoURL(writerDoc.data().photoURL);
-      });
+      getInfo(postData[0].writerId);
       setPostLoding(false);
     });
   };
@@ -171,10 +168,10 @@ function PostDetailPage() {
               <h2 className="ir">게시글 콘텐츠</h2>
               <UserContainer>
                 <UserProfileImg
-                  src={writerPhotoURL || userProfile}
+                  src={userPhotoURL || userProfile}
                   alt="유저 프로필"
                 />
-                <UserName>{writerName} </UserName>
+                <UserName>{userName} </UserName>
               </UserContainer>
               <DeadLine>
                 {currentPost.postDate} {currentPost.postTime} 까지 모집

@@ -18,6 +18,7 @@ import {
   UserName,
   UserProfileImg,
 } from './style';
+import useWriter from '../../../hooks/useGetInfo';
 
 function PostList({
   party,
@@ -29,13 +30,9 @@ function PostList({
   writerId,
 }) {
   const navigate = useNavigate();
-  const [writerName, setWriterName] = useState('');
-  const [writerPhotoURL, setWriterPhotoURL] = useState('');
+  const { userName, userPhotoURL, getInfo } = useWriter();
 
-  onSnapshot(doc(db, 'users', writerId), (doc) => {
-    setWriterName(doc.data().displayName);
-    setWriterPhotoURL(doc.data().photoURL);
-  });
+  getInfo(writerId);
 
   const handleClick = async () => {
     navigate(`/postdetail/${postkey}`);
@@ -46,11 +43,11 @@ function PostList({
         <div>
           <PostContentContainer>
             <UserProfileImg
-              src={writerPhotoURL || userProfile}
+              src={userPhotoURL || userProfile}
               alt="유저 프로필"
             />
             <PostTextContainer>
-              <UserName>{writerName}</UserName>
+              <UserName>{userName}</UserName>
               <strong>{postTit}</strong>
               <PostTextBottomContainer>
                 <span>
