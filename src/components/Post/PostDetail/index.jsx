@@ -8,11 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   collection,
-  collectionGroup,
   deleteDoc,
   doc,
   onSnapshot,
-  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -40,6 +38,7 @@ import {
 } from './style';
 import handleVertical from '../../../utils/handleVertical';
 import useWriter from '../../../hooks/useGetInfo';
+import useCollectionGroup from '../../../\bhooks/useCollectionGroup';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -48,28 +47,9 @@ function PostDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
   const [currentPost, setCurrentPost] = useState([]);
   const [postLoding, setPostLoding] = useState(true);
-  const [chattings, setChattings] = useState([]);
   const { userName, userPhotoURL, getInfo } = useWriter();
+  const { chats, error, getChats } = useCollectionGroup();
 
-  // 댓글 불러오기
-  const getChatting = () => {
-    try {
-      const q = query(
-        collectionGroup(db, 'post'),
-        where('currentPostId', '==', id),
-        orderBy('CreateAt', 'asc')
-      );
-      // const querySnapshot = await getDocs(q);
-      onSnapshot(q, (querySnapshot) => {
-        const newChatting = querySnapshot.docs.map((doc) => {
-          return doc.data({ serverTimestamps: 'estimate' });
-        });
-        setChattings(newChatting);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const getNew = async () => {
     const citiesRef = collection(db, 'posts');
     const q = query(citiesRef, where('postkey', '==', id));
@@ -114,7 +94,6 @@ function PostDetailPage() {
       party: newParty,
     });
   };
-
   const delPost = async () => {
     await deleteDoc(doc(db, 'posts', currentPost.postkey));
     navigate(-1);
@@ -140,7 +119,7 @@ function PostDetailPage() {
 
   useEffect(() => {
     getNew();
-    getChatting();
+    getChats('post', 'currentPostId', id);
   }, []);
   return (
     <>
@@ -198,7 +177,7 @@ function PostDetailPage() {
               </JoinUserNames>
             </PostDetailContainer>
             <ul>
-              {chattings.map((chatting, i) => (
+              {chats.map((chatting, i) => (
                 <OtherUserChatting {...chatting} />
               ))}
             </ul>

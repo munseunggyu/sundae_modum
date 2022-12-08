@@ -25,13 +25,15 @@ import {
 } from './style';
 import { useRef } from 'react';
 import useGetInfo from '../../../\bhooks/useGetInfo';
+import useCollectionGroup from '../../../\bhooks/useCollectionGroup';
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
   const [currentDMROOM, setCurrentDMRROOM] = useState([]);
   const [chat, setChat] = useState('');
   const { userName, userPhotoURL, getInfo } = useGetInfo();
-  const [chats, setChats] = useState([]);
+  const { chats, error, getChats } = useCollectionGroup();
+
   const scrollRef = useRef(null);
   // 메시지 보내기
   const submitChat = async (e) => {
@@ -59,20 +61,6 @@ function DMDetailPage() {
       console.log('완료');
     }
   };
-  // DM 메시지 가져오기
-  const getMessages = (id) => {
-    const q = query(
-      collectionGroup(db, 'DM'),
-      where('id', '==', id),
-      orderBy('CreateAt', 'asc')
-    );
-    onSnapshot(q, (querySnapshot) => {
-      const newarr = querySnapshot.docs.map((doc) => {
-        return doc.data({ serverTimestamps: 'estimate' });
-      });
-      setChats(newarr);
-    });
-  };
 
   // 현재 DM방 id 가져오기
   const getCurrentDMROOM = () => {
@@ -80,7 +68,7 @@ function DMDetailPage() {
     const currentDMSnap = onSnapshot(currentDMRef, (currentDMDoc) => {
       getInfo(currentDMDoc.data().otherUserId);
       setCurrentDMRROOM(currentDMDoc.data());
-      getMessages(currentDMDoc.data().roomId); // 현재 DM방 데이터 가져온걸 바로 넣어줘 메시지들도 가져온다.
+      getChats('DM', 'id', currentDMDoc.data().roomId);
     });
   };
 
