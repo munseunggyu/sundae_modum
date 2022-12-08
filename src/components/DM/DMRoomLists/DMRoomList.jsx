@@ -2,7 +2,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import useGetInfo from '../../../\bhooks/useGetInfo';
+import useGetInfo from '../../../hooks/useGetInfo';
 import userProfile from '../../../assets/user-profile.png';
 import { db } from '../../../firebase';
 import getDate from '../../../utils/getDate';

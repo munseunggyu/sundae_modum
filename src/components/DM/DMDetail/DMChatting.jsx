@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import userImg from '../../../assets/user-profile.png';
 import getDate from '../../../utils/getDate';
 import {

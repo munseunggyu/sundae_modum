@@ -6,27 +6,33 @@ import {
   where,
 } from 'firebase/firestore';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { db } from '../firebase';
 
-const useCollection = () => {
+const useCollection = (isPostDetail) => {
   const [documents, setDocuments] = useState([]);
-
+  const [isLoding, setIsLoding] = useState(true);
   const getDocuments = (collectionName, whereLeft, whereRight, condition) => {
     const docRef = collection(db, collectionName);
     const q = query(
       docRef,
-      where(whereLeft, condition, whereRight),
-      orderBy('CreateAt', 'desc')
+      where(whereLeft, condition, whereRight, orderBy('CreateAt', 'desc'))
     );
     onSnapshot(q, (snapshot) => {
       const newArr = snapshot.docs.map((doc) => {
-        console.log(doc.data());
         return doc.data();
       });
-      setDocuments(newArr);
+      isPostDetail ? setDocuments(...newArr) : setDocuments(newArr);
+      if (isPostDetail) {
+        if (newArr.length <= 0) {
+          Navigate('/');
+          return;
+        }
+      }
+      setIsLoding(false);
     });
   };
-  return { documents, getDocuments };
+  return { documents, getDocuments, isLoding };
 };
 
 export default useCollection;

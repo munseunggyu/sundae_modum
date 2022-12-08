@@ -14,7 +14,7 @@ import { db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import getDate from '../../../utils/getDate';
 import handleVertical from '../../../utils/handleVertical';
-import useWriter from '../../../hooks/useGetInfo';
+import useWriter from '../../../hooks/useGetInfo';
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();

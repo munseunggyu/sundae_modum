@@ -8,7 +8,7 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import useCollection from '../../\bhooks/useCollection';
+import useCollection from '../../hooks/useCollection';
 import Category from '../../common/Category';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';

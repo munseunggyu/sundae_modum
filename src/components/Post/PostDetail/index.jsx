@@ -37,9 +37,9 @@ import {
   UserProfileImg,
 } from './style';
 import handleVertical from '../../../utils/handleVertical';
-import useWriter from '../../../hooks/useGetInfo';
-import useCollectionGroup from '../../../\bhooks/useCollectionGroup';
-import useCollection from '../../../\bhooks/useCollection';
+import useWriter from '../../../hooks/useGetInfo';
+import useCollectionGroup from '../../../hooks/useCollectionGroup';
+import useCollection from '../../../hooks/useCollection';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -50,52 +50,38 @@ function PostDetailPage() {
   const [postLoding, setPostLoding] = useState(true);
   const { userName, userPhotoURL, getInfo } = useWriter();
   const { chats, error, getChats } = useCollectionGroup();
-  const getNew = () => {
-    const citiesRef = collection(db, 'posts');
-    const q = query(citiesRef, where('postkey', '==', id));
-    onSnapshot(q, (querySnapshot) => {
-      const postData = [];
-      querySnapshot.forEach((postDoc) => {
-        postData.push(postDoc.data({ serverTimestamps: 'estimate' }));
-      });
-      setCurrentPost(...postData);
-      if (postData.length <= 0) {
-        navigate('/');
-        return;
-      }
-      getInfo(postData[0].writerId);
-      setPostLoding(false);
-    });
-  };
+  const { documents, getDocuments, isLoding } = useCollection(true);
+
+  !isLoding && getInfo(documents.writerId);
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {
-    const isParty = currentPost.party.participants.find(
+    const isParty = documents.party.participants.find(
       (participant) => participant === userInfo.uid
     );
     let newParty;
     if (isParty) {
-      const cancel = currentPost.party.participants.filter(
+      const cancel = documents.party.participants.filter(
         (v) => v !== userInfo.uid
       );
       newParty = {
-        ...currentPost.party,
+        ...documents.party,
         participants: [...cancel],
-        participateCount: currentPost.party.participants.length - 1,
+        participateCount: documents.party.participants.length - 1,
       };
     } else {
       newParty = {
-        ...currentPost.party,
-        participants: [...currentPost.party.participants, userInfo.uid],
-        participateCount: currentPost.party.participants.length + 1,
+        ...documents.party,
+        participants: [...documents.party.participants, userInfo.uid],
+        participateCount: documents.party.participants.length + 1,
       };
     }
-    const postRef = doc(db, 'posts', currentPost.postkey);
+    const postRef = doc(db, 'posts', documents.postkey);
     await updateDoc(postRef, {
       party: newParty,
     });
   };
   const delPost = async () => {
-    await deleteDoc(doc(db, 'posts', currentPost.postkey));
+    await deleteDoc(doc(db, 'posts', documents.postkey));
     navigate(-1);
   };
   // DM의 같은 ID 값을 유지해주기 위해서
@@ -118,12 +104,12 @@ function PostDetailPage() {
   };
 
   useEffect(() => {
-    getNew();
+    getDocuments('posts', 'postkey', id, '==');
     getChats('post', 'currentPostId', id);
   }, []);
   return (
     <>
-      {postLoding ? (
+      {isLoding ? (
         <>...Loding</>
       ) : (
         <>
@@ -134,7 +120,7 @@ function PostDetailPage() {
             verticalSubmit={() =>
               handleVertical(
                 userInfo.uid,
-                currentPost.writerId,
+                documents.writerId,
                 '게시글을 삭제하시겠습니까?',
                 delPost,
                 '쪽지를 보내겠습니까?',
@@ -153,25 +139,25 @@ function PostDetailPage() {
                 <UserName>{userName} </UserName>
               </UserContainer>
               <DeadLine>
-                {currentPost.postDate} {currentPost.postTime} 까지 모집
+                {documents.postDate} {documents.postTime} 까지 모집
               </DeadLine>
-              <ContentsTitle>{currentPost.postTit}</ContentsTitle>
-              <ContentsTxt>{currentPost.postTxt}</ContentsTxt>
-              {currentPost.postImg && (
-                <ContentsImg src={currentPost.postImg} alt="" />
+              <ContentsTitle>{documents.postTit}</ContentsTitle>
+              <ContentsTxt>{documents.postTxt}</ContentsTxt>
+              {documents.postImg && (
+                <ContentsImg src={documents.postImg} alt="" />
               )}
               <JoinConatiner>
                 <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
                 <JoinUserIcon src={partyUser} alt="" />
-                <JoinSpan> {currentPost.party.participateCount}</JoinSpan>
+                <JoinSpan> {documents.party.participateCount}</JoinSpan>
               </JoinConatiner>
               <JoinUserNames>
-                {currentPost.party.participants.map((participant, index) => (
+                {documents.party.participants.map((participant, index) => (
                   <PartyName
                     key={participant}
                     userId={participant}
                     index={index}
-                    length={currentPost.party.participants.length}
+                    length={documents.party.participants.length}
                   />
                 ))}
               </JoinUserNames>

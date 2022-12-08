@@ -20,8 +20,8 @@ import {
   DMDetailContainer,
 } from './style';
 import { useRef } from 'react';
-import useGetInfo from '../../../\bhooks/useGetInfo';
-import useCollectionGroup from '../../../\bhooks/useCollectionGroup';
+import useGetInfo from '../../../hooks/useGetInfo';
+import useCollectionGroup from '../../../hooks/useCollectionGroup';
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);

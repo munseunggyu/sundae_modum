@@ -18,7 +18,7 @@ import {
   UserName,
   UserProfileImg,
 } from './style';
-import useWriter from '../../../hooks/useGetInfo';
+import useWriter from '../../../hooks/useGetInfo';
 
 function PostList({
   party,

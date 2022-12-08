@@ -1,4 +1,4 @@
-import useWriter from '../../../hooks/useGetInfo';
+import useWriter from '../../../hooks/useGetInfo';
 import { PartyNameContainer } from './style';
 
 function PartyName({ userId, length, index }) {
