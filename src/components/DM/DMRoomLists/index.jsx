@@ -14,11 +14,12 @@ import {
 import { db } from '../../../firebase';
 import { useEffect, useState } from 'react';
 import { DMRoomUl, NoDMRoom } from './style';
+import useCollection from '../../../\bhooks/useCollection';
 
 function DMRoomLists() {
   const [dmRooms, setDmRooms] = useState([]);
   const userInfo = useSelector((state) => state.user.currentUser);
-  const getDMROOMS = async () => {
+  const getDMROOMS = () => {
     //  [방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     const q = query(
       collection(db, 'DMROOMS'),
@@ -30,10 +31,9 @@ function DMRoomLists() {
       )
     );
     onSnapshot(q, (snapshot) => {
-      const newarr = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const newarr = snapshot.docs.map((doc) => {
+        return doc.data();
+      });
       setDmRooms(newarr);
     });
   };

@@ -39,6 +39,7 @@ import {
 import handleVertical from '../../../utils/handleVertical';
 import useWriter from '../../../hooks/useGetInfo';
 import useCollectionGroup from '../../../\bhooks/useCollectionGroup';
+import useCollection from '../../../\bhooks/useCollection';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -49,8 +50,7 @@ function PostDetailPage() {
   const [postLoding, setPostLoding] = useState(true);
   const { userName, userPhotoURL, getInfo } = useWriter();
   const { chats, error, getChats } = useCollectionGroup();
-
-  const getNew = async () => {
+  const getNew = () => {
     const citiesRef = collection(db, 'posts');
     const q = query(citiesRef, where('postkey', '==', id));
     onSnapshot(q, (querySnapshot) => {

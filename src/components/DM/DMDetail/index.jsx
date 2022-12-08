@@ -5,14 +5,10 @@ import React, { useEffect, useState } from 'react';
 import {
   addDoc,
   collection,
-  collectionGroup,
   doc,
   onSnapshot,
-  orderBy,
-  query,
   serverTimestamp,
   setDoc,
-  where,
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { useSelector } from 'react-redux';
