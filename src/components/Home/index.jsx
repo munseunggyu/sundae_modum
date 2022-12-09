@@ -6,8 +6,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import useCollection from '../../hooks/useCollection';
 import Category from '../../common/Category';
 import Header from '../../common/Header';
@@ -17,16 +16,11 @@ import { db } from '../../firebase';
 import Post from '../Post/PostList';
 import { HomeContainer, PostUl } from './style';
 
-const TopScrollBtn = styled.button`
-  position: absolute;
-  bottom: 0;
-`;
-
 function HomePage() {
   const [searchList, setSearchList] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   const [select, setSelect] = useState('치킨');
-  const { documents, getDocuments } = useCollection();
+  const { documents, getDocuments } = useCollection(false, true);
 
   // 검색 기능
   // 게시글의 제목 또는 게시글의 내용으로 검색

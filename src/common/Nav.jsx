@@ -43,6 +43,7 @@ function Nav() {
   const navigate = useNavigate();
   const homeMatch = useMatch('/');
   const dmMatch = useMatch('/dm');
+  console.log(dmMatch);
   const profileMatch = useMatch('/profile');
   const postUploadMatch = useMatch('/postupload');
   return (

@@ -7,15 +7,11 @@ import OtherUserChatting from './OtherUserChatting';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
-  collection,
   deleteDoc,
   doc,
-  onSnapshot,
-  query,
   serverTimestamp,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import Chatting from '../../../common/ChattingForm';
@@ -46,8 +42,6 @@ function PostDetailPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const userInfo = useSelector((state) => state.user.currentUser);
-  const [currentPost, setCurrentPost] = useState([]);
-  const [postLoding, setPostLoding] = useState(true);
   const { userName, userPhotoURL, getInfo } = useWriter();
   const { chats, error, getChats } = useCollectionGroup();
   const { documents, getDocuments, isLoding } = useCollection(true);
