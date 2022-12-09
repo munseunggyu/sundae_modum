@@ -3,7 +3,7 @@ import Header from '../../../common/Header';
 import { MainContainer } from '../../../common/MainContainer';
 import Nav from '../../../common/Nav';
 import DMRoom from './DMRoomList';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { DMRoomUl, NoDMRoom } from './style';
 import useCollection from '../../../hooks/useCollection';
 

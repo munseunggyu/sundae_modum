@@ -16,16 +16,16 @@ function HomePage() {
   // 검색 기능
   // 게시글의 제목 또는 게시글의 내용으로 검색
   const handleSearch = (e) => {
-    if (e.target.value.length > 0) {
-      setIsSearch(true);
-      const regex = new RegExp(e.target.value, 'gi');
-      const newPost = documents.filter(
-        (post) => regex.test(post.postTit) || regex.test(post.postTxt)
-      );
-      setSearchList(newPost);
-    } else {
-      setIsSearch(false);
-    }
+    // if (e.target.value.length > 0) {
+    //   setIsSearch(true);
+    //   const regex = new RegExp(e.target.value, 'gi');
+    //   const newPost = documents.filter(
+    //     (post) => regex.test(post.postTit) || regex.test(post.postTxt)
+    //   );
+    //   setSearchList(newPost);
+    // } else {
+    //   setIsSearch(false);
+    // }
   };
   useEffect(() => {
     getDocuments('posts', 'category', select, '==');

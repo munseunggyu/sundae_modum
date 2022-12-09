@@ -27,9 +27,7 @@ function EmailLoginPage() {
     try {
       setLoading(true);
       const userInfo = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userInfo.user.uid);
       setLoading(false);
-      console.log('로그인 완료');
       navigate('/');
     } catch (error) {
       setErrorMessage(error.code);

@@ -1,10 +1,5 @@
-import styled from 'styled-components';
 import userProfile from '../../../assets/user-profile.png';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
-import { db } from '../../../firebase';
 import partyUser from '../../../assets/icons/icon-user.png';
 import {
   PartyContainer,
