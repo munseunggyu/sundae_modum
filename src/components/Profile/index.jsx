@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import userImg from '../../assets/user-profile.png';
@@ -6,16 +5,9 @@ import PostList from '../Post/PostList';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../../common/Nav';
 import { signOut } from 'firebase/auth';
-import { auth, db } from '../../firebase';
+import { auth } from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+import { useEffect } from 'react';
 import { clearUser } from '../../redux/actions/user_action';
 import {
   MyPost,
@@ -26,32 +18,20 @@ import {
   UserProfileEditBtn,
   UserProfileImg,
 } from './style';
+import useCollection from '../../hooks/useCollection';
 
 function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.currentUser);
-  const [myPost, setMyPost] = useState([]);
-  const getMyPost = async () => {
-    const postsRef = collection(db, 'posts');
-    const q = query(
-      postsRef,
-      where('writerId', '==', userInfo.uid),
-      orderBy('CreateAt', 'desc')
-    );
-    const posts = onSnapshot(q, (snapshot) => {
-      const newArr = snapshot.docs.map((doc) => {
-        return doc.data();
-      });
-      setMyPost(newArr);
-    });
-  };
+  const { documents, getDocuments } = useCollection(false, true);
+
   const signOutUser = () => {
     signOut(auth);
     dispatch(clearUser());
   };
   useEffect(() => {
-    getMyPost();
+    getDocuments('posts', 'writerId', userInfo.uid, '==');
   }, []);
   return (
     <>
@@ -72,7 +52,7 @@ function ProfilePage() {
         </ProfileContainer>
         <MyPost>나의 게시물</MyPost>
         <MyPostUl>
-          {myPost.map((post) => (
+          {documents.map((post) => (
             <PostList key={post.postkey} {...post} />
           ))}
         </MyPostUl>

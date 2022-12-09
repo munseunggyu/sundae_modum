@@ -1,18 +1,9 @@
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import useCollection from '../../hooks/useCollection';
 import Category from '../../common/Category';
 import Header from '../../common/Header';
 import { MainContainer } from '../../common/MainContainer';
 import Nav from '../../common/Nav';
-import { db } from '../../firebase';
 import Post from '../Post/PostList';
 import { HomeContainer, PostUl } from './style';
 
