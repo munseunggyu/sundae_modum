@@ -1,12 +1,12 @@
-import { useRef, useState } from 'react';
-import Header from '../../../common/Header';
-import { MainContainer } from '../../../common/MainContainer';
-import Nav from '../../../common/Nav';
-import { useDispatch, useSelector } from 'react-redux';
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { db, storage } from '../../../firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from "react";
+import Header from "../../../components/Header";
+import { MainContainer } from "../../../components/MainContainer";
+import Nav from "../../../components/Nav";
+import { useDispatch, useSelector } from "react-redux";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db, storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 import {
   DeadlineContainer,
   FileBtn,
@@ -16,22 +16,22 @@ import {
   FileInput,
   TextArea,
   TitInput,
-} from './style';
-import DropDown from '../../../common/DropDown';
+} from "./style";
+import DropDown from "../../../components/DropDown";
 
 function PostUploadPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.currentUser);
   // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
-  const [postTxt, setPostTxt] = useState('');
-  const [postDate, setPostDate] = useState('');
-  const [postTime, setPostTime] = useState('');
-  const [postTit, setPostTit] = useState('');
-  const [prevFile, setPrevFile] = useState('');
+  const [postTxt, setPostTxt] = useState("");
+  const [postDate, setPostDate] = useState("");
+  const [postTime, setPostTime] = useState("");
+  const [postTit, setPostTit] = useState("");
+  const [prevFile, setPrevFile] = useState("");
   const [dbFile, setDbFile] = useState(null);
   const [metadata, setMetadata] = useState({});
-  const [chooseCategory, setChooseCategory] = useState('카테고리');
+  const [chooseCategory, setChooseCategory] = useState("카테고리");
   const fileRef = useRef();
   const textArearRef = useRef();
   const preview = (e) => {
@@ -45,16 +45,16 @@ function PostUploadPage() {
     setMetadata({ contentType: files[0].type });
   };
   const handleFileClose = () => {
-    setPrevFile('');
+    setPrevFile("");
     setDbFile(null);
   };
   const hadleFileRef = () => {
     fileRef.current.click();
   };
   const handleAutoHeight = () => {
-    textArearRef.current.style.height = '70px';
+    textArearRef.current.style.height = "70px";
     textArearRef.current.style.height =
-      textArearRef.current.scrollHeight + 'px';
+      textArearRef.current.scrollHeight + "px";
   };
   const errorAlert = (data, errorMessage) => {
     if (!data) {
@@ -69,20 +69,20 @@ function PostUploadPage() {
       !postTime ||
       !postTit ||
       !postTxt ||
-      chooseCategory === '카테고리'
+      chooseCategory === "카테고리"
     ) {
-      if (!postDate) errorAlert(postDate, '날짜를 선택해주세요.');
-      if (!postTime) errorAlert(postTime, '시간을 선택해주세요.');
-      else if (chooseCategory === '카테고리') alert('카테고리를 선택해주세요.');
-      else if (!postTit) errorAlert(postTit, '제목을 입력해주세요.');
-      else if (!postTxt) errorAlert(postTxt, '게시글 내용을 입력해주세요.');
+      if (!postDate) errorAlert(postDate, "날짜를 선택해주세요.");
+      if (!postTime) errorAlert(postTime, "시간을 선택해주세요.");
+      else if (chooseCategory === "카테고리") alert("카테고리를 선택해주세요.");
+      else if (!postTit) errorAlert(postTit, "제목을 입력해주세요.");
+      else if (!postTxt) errorAlert(postTxt, "게시글 내용을 입력해주세요.");
       return;
     }
     try {
-      const postRef = doc(collection(db, 'posts'));
+      const postRef = doc(collection(db, "posts"));
       let postData = {
         writerId: userInfo.uid,
-        postDate: postDate.slice(5).replace('-', '/'),
+        postDate: postDate.slice(5).replace("-", "/"),
         postTime,
         party: {
           participants: [],
@@ -107,7 +107,7 @@ function PostUploadPage() {
       } else {
         await setDoc(postRef, postData);
       }
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +133,7 @@ function PostUploadPage() {
               type="time"
               value={postTime}
               onChange={(e) => setPostTime(e.target.value)}
-            />{' '}
+            />{" "}
             : 까지 모집
           </DeadlineContainer>
           <DropDown

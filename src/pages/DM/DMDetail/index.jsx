@@ -1,21 +1,21 @@
-import Header from '../../../common/Header';
-import { MainContainer } from '../../../common/MainContainer';
-import DMChatting from './DMChatting';
-import React, { useEffect, useState } from 'react';
-import { doc, onSnapshot, serverTimestamp, setDoc } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import { useSelector } from 'react-redux';
+import Header from "../../../components/Header";
+import { MainContainer } from "../../../components/MainContainer";
+import DMChatting from "./DMChatting";
+import React, { useEffect, useState } from "react";
+import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { useSelector } from "react-redux";
 import {
   ChattingForm,
   ChattingFormContainer,
   ChattingInput,
   ChattingSubmitBtn,
   DMDetailContainer,
-} from './style';
-import { useRef } from 'react';
-import useGetInfo from '../../../hooks/useGetInfo';
-import useCollectionGroup from '../../../hooks/useCollectionGroup';
-import useSubmitChat from '../../../hooks/useSubmitChat';
+} from "./style";
+import { useRef } from "react";
+import useGetInfo from "../../../hooks/useGetInfo";
+import useCollectionGroup from "../../../hooks/useCollectionGroup";
+import useSubmitChat from "../../../hooks/useSubmitChat";
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
@@ -36,25 +36,25 @@ function DMDetailPage() {
       writerId: userInfo.uid,
     };
     if (chat) {
-      sendChat('DMMessage', currentDMROOM.roomId, 'DM', data, scrollRef);
-      setChat('');
+      sendChat("DMMessage", currentDMROOM.roomId, "DM", data, scrollRef);
+      setChat("");
 
-      await setDoc(doc(db, 'lastMessage', currentDMROOM.roomId), {
+      await setDoc(doc(db, "lastMessage", currentDMROOM.roomId), {
         CreateAt: serverTimestamp(),
         id: currentDMROOM.roomId,
         chat,
       });
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   // 현재 DM방 id 가져오기
   const getCurrentDMROOM = () => {
-    const currentDMRef = doc(db, 'current_dm', userInfo.uid);
+    const currentDMRef = doc(db, "current_dm", userInfo.uid);
     const currentDMSnap = onSnapshot(currentDMRef, (currentDMDoc) => {
       getInfo(currentDMDoc.data().otherUserId);
       setCurrentDMRROOM(currentDMDoc.data());
-      getChats('DM', 'id', currentDMDoc.data().roomId);
+      getChats("DM", "id", currentDMDoc.data().roomId);
     });
   };
 

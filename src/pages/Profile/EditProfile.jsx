@@ -1,13 +1,13 @@
-import Header from '../../common/Header';
-import { MainContainer } from '../../common/MainContainer';
-import userImg from '../../assets/user-profile.png';
-import { useRef, useState } from 'react';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { auth, db, storage } from '../../firebase';
-import { useSelector } from 'react-redux';
-import { updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import Header from "../../components/Header";
+import { MainContainer } from "../../components/MainContainer";
+import userImg from "../../assets/user-profile.png";
+import { useRef, useState } from "react";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "../../firebase";
+import { useSelector } from "react-redux";
+import { updateProfile } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import {
   EditFormConatiner,
   EditInput,
@@ -16,7 +16,7 @@ import {
   FileInput,
   UserProfileImg,
   UserProfilImgContainer,
-} from './style';
+} from "./style";
 
 function EditProfile({ isFrist }) {
   const userInfo = useSelector((state) => state.user.currentUser);
@@ -45,7 +45,7 @@ function EditProfile({ isFrist }) {
     e.preventDefault();
     try {
       if (nickName === null) {
-        alert('닉네임을 설정해주세요');
+        alert("닉네임을 설정해주세요");
         return;
       }
       let userData = {
@@ -53,7 +53,7 @@ function EditProfile({ isFrist }) {
         photoURL: null,
         uid: userInfo.uid,
         email: userInfo.email,
-        introduce: introduce || '',
+        introduce: introduce || "",
       };
       if (prevFile !== userInfo.photoURL) {
         // 만약 프로필 사진을 업데이트 하면 실행
@@ -65,19 +65,19 @@ function EditProfile({ isFrist }) {
             displayName: nickName,
             photoURL: downloadURL,
           });
-          setDoc(doc(db, 'users', userInfo.uid), userData);
+          setDoc(doc(db, "users", userInfo.uid), userData);
         });
       } else {
         userData = { ...userData, photoURL: userInfo.photoURL };
         updateProfile(auth.currentUser, {
           displayName: nickName,
         });
-        await setDoc(doc(db, 'users', userInfo.uid), userData);
+        await setDoc(doc(db, "users", userInfo.uid), userData);
       }
     } catch (error) {
       console.log(error);
     }
-    isFrist ? navigate('/') : navigate('/profile');
+    isFrist ? navigate("/") : navigate("/profile");
   };
 
   return (
@@ -98,7 +98,7 @@ function EditProfile({ isFrist }) {
           <EditInput
             type="text"
             id="user-nickname"
-            placeholder={userInfo.displayName || '닉네임을 설정해주세요.'}
+            placeholder={userInfo.displayName || "닉네임을 설정해주세요."}
             minLength={2}
             maxLength={10}
             value={nickName}
@@ -108,7 +108,7 @@ function EditProfile({ isFrist }) {
           <EditInput
             type="text"
             id="user-introduce"
-            placeholder={userInfo.introduce || '자신을 소개해주세요.'}
+            placeholder={userInfo.introduce || "자신을 소개해주세요."}
             value={introduce}
             onChange={(e) => setIntroduce(e.target.value)}
           />

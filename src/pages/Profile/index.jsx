@@ -1,14 +1,14 @@
-import Header from '../../common/Header';
-import { MainContainer } from '../../common/MainContainer';
-import userImg from '../../assets/user-profile.png';
-import PostList from '../Post/PostList';
-import { useNavigate } from 'react-router-dom';
-import Nav from '../../common/Nav';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { clearUser } from '../../redux/actions/user_action';
+import Header from "../../components/Header";
+import { MainContainer } from "../../components/MainContainer";
+import userImg from "../../assets/user-profile.png";
+import PostList from "../Post/PostList";
+import { useNavigate } from "react-router-dom";
+import Nav from "../../components/Nav";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { clearUser } from "../../redux/actions/user_action";
 import {
   MyPost,
   MyPostUl,
@@ -17,8 +17,8 @@ import {
   UserName,
   UserProfileEditBtn,
   UserProfileImg,
-} from './style';
-import useCollection from '../../hooks/useCollection';
+} from "./style";
+import useCollection from "../../hooks/useCollection";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function ProfilePage() {
     dispatch(clearUser());
   };
   useEffect(() => {
-    getDocuments('posts', 'writerId', userInfo.uid, '==');
+    getDocuments("posts", "writerId", userInfo.uid, "==");
   }, []);
   return (
     <>
@@ -45,7 +45,7 @@ function ProfilePage() {
           />
           <UserName>{userInfo.displayName}</UserName>
           <UserIntroduce>{userInfo.introduce} </UserIntroduce>
-          <UserProfileEditBtn onClick={() => navigate('editprofile')}>
+          <UserProfileEditBtn onClick={() => navigate("editprofile")}>
             프로필 수정하기
           </UserProfileEditBtn>
           <button onClick={signOutUser}>로그아웃</button>

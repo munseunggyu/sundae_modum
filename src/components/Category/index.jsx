@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import '../../irCss.css';
+import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "../../irCss.css";
 
 const CategoryCon = styled.article`
   max-width: 450px;
@@ -14,21 +13,21 @@ const CategoryCon = styled.article`
 `;
 const CategorySpan = styled.span`
   font-size: 14px;
-  color: ${(props) => (props.changeColor ? 'black' : '#dbdbdb')};
+  color: ${(props) => (props.changeColor ? "black" : "#dbdbdb")};
   cursor: pointer;
 `;
 function Category({ select, setSelect }) {
   // const [select, setSelect] = useState('치킨');
   const categoryList = [
-    '치킨',
-    '중식',
-    '패스트푸드',
-    '양식',
-    '돈까스',
-    '회',
-    '고기',
-    '분식',
-    '카페',
+    "치킨",
+    "중식",
+    "패스트푸드",
+    "양식",
+    "돈까스",
+    "회",
+    "고기",
+    "분식",
+    "카페",
   ];
   const selectCategory = (e) => {
     setSelect(e.target.textContent);

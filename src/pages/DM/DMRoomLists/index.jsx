@@ -1,18 +1,18 @@
-import { useSelector } from 'react-redux';
-import Header from '../../../common/Header';
-import { MainContainer } from '../../../common/MainContainer';
-import Nav from '../../../common/Nav';
-import DMRoom from './DMRoomList';
-import { useEffect } from 'react';
-import { DMRoomUl, NoDMRoom } from './style';
-import useCollection from '../../../hooks/useCollection';
+import { useSelector } from "react-redux";
+import Header from "../../../components/Header";
+import { MainContainer } from "../../../components/MainContainer";
+import Nav from "../../../components/Nav";
+import DMRoom from "./DMRoomList";
+import { useEffect } from "react";
+import { DMRoomUl, NoDMRoom } from "./style";
+import useCollection from "../../../hooks/useCollection";
 
 function DMRoomLists() {
   const userInfo = useSelector((state) => state.user.currentUser);
   const { documents, getDocuments } = useCollection();
 
   useEffect(() => {
-    getDocuments('DMROOMS', 'ids', [userInfo.uid], 'array-contains-any');
+    getDocuments("DMROOMS", "ids", [userInfo.uid], "array-contains-any");
   }, []);
   return (
     <>
