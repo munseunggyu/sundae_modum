@@ -1,13 +1,13 @@
-import styled from 'styled-components';
-import edit from '../assets/icons/icon-edit.png';
-import editFill from '../assets/icons/icon-edit-fill.png';
-import home from '../assets/icons/icon-home.png';
-import homeFill from '../assets/icons/icon-home-fill.png';
-import user from '../assets/icons/icon-user.png';
-import userFill from '../assets/icons/icon-user-fill.png';
-import message from '../assets/icons/icon-message-circle.png';
-import messageFill from '../assets/icons/icon-message-fill.png';
-import { Link, useMatch, useNavigate } from 'react-router-dom';
+import styled from "styled-components";
+import edit from "../assets/icons/icon-edit.png";
+import editFill from "../assets/icons/icon-edit-fill.png";
+import home from "../assets/icons/icon-home.png";
+import homeFill from "../assets/icons/icon-home-fill.png";
+import user from "../assets/icons/icon-user.png";
+import userFill from "../assets/icons/icon-user-fill.png";
+import message from "../assets/icons/icon-message-circle.png";
+import messageFill from "../assets/icons/icon-message-fill.png";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 const NavContainer = styled.nav`
   width: 100%;
   position: fixed;
@@ -41,28 +41,29 @@ const IconSpan = styled.span`
 `;
 function Nav() {
   const navigate = useNavigate();
-  const homeMatch = useMatch('/');
-  const dmMatch = useMatch('/dm');
-  const profileMatch = useMatch('/profile');
-  const postUploadMatch = useMatch('/postupload');
+
+  const homeMatch = useMatch("/");
+  const dmMatch = useMatch("/dm");
+  const profileMatch = useMatch("/profile");
+  const postUploadMatch = useMatch("/postupload");
   return (
     <NavContainer>
       {/* <h2 className='ir'></h2> */}
       <IconsUl>
-        <Iconsli onClick={() => navigate('/')}>
+        <Iconsli onClick={() => navigate("/")}>
           <IconImg icon={homeMatch ? homeFill : home} />
           <IconSpan>홈</IconSpan>
         </Iconsli>
-        <Iconsli onClick={() => navigate('/dm')}>
+        <Iconsli onClick={() => navigate("/dm")}>
           <IconImg icon={dmMatch ? messageFill : message} />
           <IconSpan>채팅</IconSpan>
         </Iconsli>
 
-        <Iconsli onClick={() => navigate('/postupload')}>
+        <Iconsli onClick={() => navigate("/postupload")}>
           <IconImg icon={postUploadMatch ? editFill : edit} />
           <IconSpan>게시물 작성</IconSpan>
         </Iconsli>
-        <Iconsli onClick={() => navigate('/profile')}>
+        <Iconsli onClick={() => navigate("/profile")}>
           <IconImg icon={profileMatch ? userFill : user} />
           <IconSpan>프로필</IconSpan>
         </Iconsli>

@@ -19,6 +19,7 @@ import {
   UserProfileImg,
 } from "./style";
 import useCollection from "../../hooks/useCollection";
+import PrevBtn from "../../components/Header/PrevBtn";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -35,7 +36,9 @@ function ProfilePage() {
   }, []);
   return (
     <>
-      <Header ir="프로필 페이지" prv={true} />
+      <Header ir="프로필 페이지">
+        <PrevBtn />
+      </Header>
       <MainContainer>
         <ProfileContainer>
           <h2 className="ir">프로필 정보 및 수정</h2>

@@ -18,6 +18,8 @@ import {
   TitInput,
 } from "./style";
 import DropDown from "../../../components/DropDown";
+import PrevBtn from "../../../components/Header/PrevBtn";
+import HeaderUploadBtn from "../../../components/Header/HeaderUploadBtn";
 
 function PostUploadPage() {
   const navigate = useNavigate();
@@ -114,12 +116,10 @@ function PostUploadPage() {
   };
   return (
     <>
-      <Header
-        ir="게시물 작성 페이지"
-        prv={true}
-        upload={true}
-        onSubmit={handlePostSubmit}
-      />
+      <Header ir="게시물 작성 페이지">
+        <PrevBtn />
+        <HeaderUploadBtn onSubmit={handlePostSubmit} />
+      </Header>
       <MainContainer>
         <h2 className="ir">게시물 작성</h2>
         <form onSubmit={handlePostSubmit}>

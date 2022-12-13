@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import verticalIcon from '../../../assets/icons/icon-more-vertical.png';
+import styled from "styled-components";
+import verticalIcon from "../../../assets/icons/icon-more-vertical.png";
 
 export const UserContainer = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ export const OtherUserChatContainer = styled.li`
   border-bottom: 0.5px solid #c4c4c4;
   border-top: 0.5px solid #c4c4c4;
   margin-bottom: 10px;
-  background-color: ${(props) => (props.bgc ? '#bdbdbd' : 'white')};
+  background-color: ${(props) => (props.bgc ? "#bdbdbd" : "white")};
   &:first-child {
     border-top: 0;
   }

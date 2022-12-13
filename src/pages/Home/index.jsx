@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import useCollection from "../../hooks/useCollection";
-import Category from "../../components/Category";
 import Header from "../../components/Header";
 import { MainContainer } from "../../components/MainContainer";
 import Nav from "../../components/Nav";
 import Post from "../Post/PostList";
 import { HomeContainer, PostUl } from "./style";
+import HeaderTitle from "../../components/Header/HeaderTitle";
+import SearchButton from "../../components/Header/SearchButton";
 
 function HomePage() {
   const [searchList, setSearchList] = useState([]);
@@ -32,14 +33,11 @@ function HomePage() {
   }, [select]);
   return (
     <HomeContainer>
-      <Header
-        h1="순대 모둠"
-        search={true}
-        handleSearch={handleSearch}
-        setIsSearch={setIsSearch}
-      >
-        <Category select={select} setSelect={setSelect} />
+      <Header category="1" select={select} setSelect={setSelect}>
+        <HeaderTitle>순대모둠</HeaderTitle>
+        <SearchButton handleSearch={handleSearch} setIsSearch={setIsSearch} />
       </Header>
+
       <MainContainer>
         <h2 className="ir">게시글</h2>
         <PostUl>

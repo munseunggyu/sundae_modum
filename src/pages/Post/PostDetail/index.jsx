@@ -36,6 +36,8 @@ import handleVertical from "../../../utils/handleVertical";
 import useWriter from "../../../hooks/useGetInfo";
 import useCollectionGroup from "../../../hooks/useCollectionGroup";
 import useCollection from "../../../hooks/useCollection";
+import PrevBtn from "../../../components/Header/PrevBtn";
+import VerticalBtn from "../../../components/Header/VerticalBtn";
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -106,21 +108,21 @@ function PostDetailPage() {
         <>...Loding</>
       ) : (
         <>
-          <Header
-            ir="게시물 상세페이지"
-            prv={true}
-            vertical={true}
-            verticalSubmit={() =>
-              handleVertical(
-                userInfo.uid,
-                documents.writerId,
-                "게시글을 삭제하시겠습니까?",
-                delPost,
-                "쪽지를 보내겠습니까?",
-                setDM
-              )
-            }
-          />
+          <Header ir="게시물 상세페이지">
+            <PrevBtn />
+            <VerticalBtn
+              verticalSubmit={() =>
+                handleVertical(
+                  userInfo.uid,
+                  documents.writerId,
+                  "게시글을 삭제하시겠습니까?",
+                  delPost,
+                  "쪽지를 보내겠습니까?",
+                  setDM
+                )
+              }
+            />
+          </Header>
           <MainContainer pr="0">
             <PostDetailContainer>
               <h2 className="ir">게시글 콘텐츠</h2>

@@ -16,6 +16,7 @@ import { useRef } from "react";
 import useGetInfo from "../../../hooks/useGetInfo";
 import useCollectionGroup from "../../../hooks/useCollectionGroup";
 import useSubmitChat from "../../../hooks/useSubmitChat";
+import PrevBtn from "../../../components/Header/PrevBtn";
 
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
@@ -63,11 +64,9 @@ function DMDetailPage() {
   }, []);
   return (
     <>
-      <Header
-        ir={`${userName}와(과)의 DM채팅방`}
-        prv={true}
-        userName={userName}
-      />
+      <Header ir={`${userName}와(과)의 DM채팅방`}>
+        <PrevBtn userName={userName} />
+      </Header>
       <MainContainer pr="0">
         <DMDetailContainer>
           {chats.map((chat) => {

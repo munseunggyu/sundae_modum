@@ -17,6 +17,8 @@ import {
   UserProfileImg,
   UserProfilImgContainer,
 } from "./style";
+import PrevBtn from "../../components/Header/PrevBtn";
+import HeaderUploadBtn from "../../components/Header/HeaderUploadBtn";
 
 function EditProfile({ isFrist }) {
   const userInfo = useSelector((state) => state.user.currentUser);
@@ -82,12 +84,10 @@ function EditProfile({ isFrist }) {
 
   return (
     <>
-      <Header
-        ir="프로필 편집 페이지"
-        prv={true}
-        upload={true}
-        onSubmit={onSubmit}
-      />
+      <Header ir="프로필 편집 페이지" onSubmit={onSubmit}>
+        <PrevBtn />
+        <HeaderUploadBtn onSubmit={onSubmit} />
+      </Header>
       <MainContainer>
         <EditFormConatiner onSubmit={onSubmit}>
           <UserProfilImgContainer onClick={hadleFileRef}>
