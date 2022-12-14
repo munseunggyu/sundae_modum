@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "../../irCss.css";
 
 const CategoryCon = styled.article`
   max-width: 450px;
@@ -17,7 +16,6 @@ const CategorySpan = styled.span`
   cursor: pointer;
 `;
 function Category({ select, setSelect }) {
-  // const [select, setSelect] = useState('치킨');
   const categoryList = [
     "치킨",
     "중식",
