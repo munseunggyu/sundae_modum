@@ -1,15 +1,15 @@
-import logo from '../../assets/logo.png';
-import kakaologo from '../../assets/kakaologo.png';
-import googlelogo from '../../assets/googlelogo.png';
-import facebooklogo from '../../assets/facebooklogo.png';
-import { Link } from 'react-router-dom';
+import logo from "../../assets/logo.png";
+import kakaologo from "../../assets/kakaologo.png";
+import googlelogo from "../../assets/googlelogo.png";
+import facebooklogo from "../../assets/facebooklogo.png";
+import { Link } from "react-router-dom";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithRedirect,
-} from 'firebase/auth';
-import { auth } from '../../firebase';
-import LodingPage from '../Splash';
+} from "firebase/auth";
+import { auth } from "../../firebase";
+import LodingPage from "../Splash";
 import {
   EmailRegisterContainer,
   LoginBtnContainer,
@@ -18,7 +18,7 @@ import {
   LogoImg,
   SNSBtn,
   SNSLoginContainer,
-} from './style';
+} from "./style";
 
 function SNSLoginPage() {
   const googleProvider = new GoogleAuthProvider();
@@ -28,9 +28,9 @@ function SNSLoginPage() {
       const {
         target: { name },
       } = e;
-      if (name === 'google') {
+      if (name === "google") {
         await signInWithRedirect(auth, googleProvider);
-      } else if (name === 'facebook') {
+      } else if (name === "facebook") {
         await signInWithRedirect(auth, facebookProvider);
       } else {
       }
