@@ -1,39 +1,15 @@
-import { serverTimestamp } from 'firebase/firestore';
-import { useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import arrow from '../assets/arrow-left.png';
-import useSubmitChat from '../hooks/useSubmitChat';
+import { serverTimestamp } from "firebase/firestore";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const ChattingFormContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-const ChattingForm = styled.form`
-  position: fixed;
-  bottom: 0;
-  max-width: 450px;
-  width: 100%;
-`;
-const ChattingInput = styled.input`
-  outline: none;
-  width: 100%;
-  font-size: 16px;
-  padding: 15px 30px 15px 15px;
-  border: 0;
-  border-top: 0.5px solid #dbdbdb;
-`;
-
-const ChattingSubmitBtn = styled.button`
-  position: absolute;
-  right: 10px;
-  background: url(${arrow});
-  transform: rotateY(180deg);
-  width: 22px;
-  height: 22px;
-  top: 15px;
-`;
+import useSubmitChat from "../../hooks/useSubmitChat";
+import {
+  ChattingForm,
+  ChattingFormContainer,
+  ChattingInput,
+  ChattingSubmitBtn,
+} from "./style";
 
 function Chatting() {
   const scrollRef = useRef(null);
@@ -50,12 +26,12 @@ function Chatting() {
       writerId: userInfo.uid,
     };
     if (chat) {
-      sendChat('post_chatting', id, 'post', data);
+      sendChat("post_chatting", id, "post", data);
       scrollRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
-      setChat('');
+      setChat("");
     }
   };
 
