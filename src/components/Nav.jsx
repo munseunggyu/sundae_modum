@@ -48,7 +48,7 @@ function Nav() {
   const postUploadMatch = useMatch("/postupload");
   return (
     <NavContainer>
-      {/* <h2 className='ir'></h2> */}
+      <h2 className="ir"> 탭 메뉴 </h2>
       <IconsUl>
         <Iconsli onClick={() => navigate("/")}>
           <IconImg icon={homeMatch ? homeFill : home} />
