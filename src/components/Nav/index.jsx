@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import edit from "../assets/icons/icon-edit.png";
-import editFill from "../assets/icons/icon-edit-fill.png";
-import home from "../assets/icons/icon-home.png";
-import homeFill from "../assets/icons/icon-home-fill.png";
-import user from "../assets/icons/icon-user.png";
-import userFill from "../assets/icons/icon-user-fill.png";
-import message from "../assets/icons/icon-message-circle.png";
-import messageFill from "../assets/icons/icon-message-fill.png";
+import edit from "../../assets/icons/icon-edit.png";
+import editFill from "../../assets/icons/icon-edit-fill.png";
+import home from "../../assets/icons/icon-home.png";
+import homeFill from "../../assets/icons/icon-home-fill.png";
+import user from "../../assets/icons/icon-user.png";
+import userFill from "../../assets/icons/icon-user-fill.png";
+import message from "../../assets/icons/icon-message-circle.png";
+import messageFill from "../../assets/icons/icon-message-fill.png";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 const NavContainer = styled.nav`
   width: 100%;
