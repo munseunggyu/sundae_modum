@@ -1,20 +1,8 @@
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import * as S from "./style";
 
-const CategoryCon = styled.article`
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 14px 18px;
-  font-weight: 600;
-  position: relative;
-  text-align: center;
-`;
-const CategorySpan = styled.span`
-  font-size: 14px;
-  color: ${(props) => (props.changeColor ? "black" : "#dbdbdb")};
-  cursor: pointer;
-`;
 function Category({ select, setSelect }) {
   const categoryList = [
     "치킨",
@@ -31,21 +19,21 @@ function Category({ select, setSelect }) {
     setSelect(e.target.textContent);
   };
   return (
-    <CategoryCon>
+    <S.CategoryCon>
       <h2 className="ir">카테고리</h2>
       <Swiper slidesPerView={6} spaceBetween={0}>
         {categoryList.map((category, i) => (
           <SwiperSlide key={i}>
-            <CategorySpan
+            <S.CategorySpan
               onClick={selectCategory}
               changeColor={select === category ? true : false}
             >
               {category}
-            </CategorySpan>
+            </S.CategorySpan>
           </SwiperSlide>
         ))}
       </Swiper>
-    </CategoryCon>
+    </S.CategoryCon>
   );
 }
 export default Category;
