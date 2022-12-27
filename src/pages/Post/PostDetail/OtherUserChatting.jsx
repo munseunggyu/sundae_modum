@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import getDate from "../../../utils/getDate";
 import handleVertical from "../../../utils/handleVertical";
 import useWriter from "../../../hooks/useGetInfo";
+import { CreateDMRoomId } from "../../../utils/CreateDMRoomId";
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
@@ -16,21 +17,14 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   getInfo(writerId);
 
   const delChatting = async () => {
-    // 채팅 삭제
     const postChatDoc = doc(db, "post_chatting", id);
     await deleteDoc(doc(postChatDoc, "post", chatId));
   };
-  // DM의 같은 ID 값을 유지해주기 위해서
-  const CreateDMRoomId = (selectUser) => {
-    return userInfo.uid > selectUser
-      ? `${selectUser}${userInfo.uid}`
-      : `${userInfo.uid}${selectUser}`;
-  };
+
   const setDM = () => {
-    const dmid = CreateDMRoomId(writerId); // DM방 생성
+    const dmid = CreateDMRoomId(writerId, userInfo.uid); // DM방 생성
     const dmRoom = doc(db, "DMROOMS", dmid);
 
-    //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
     setDoc(dmRoom, {
       id: dmid,
       CreateAt: serverTimestamp(),

@@ -4,7 +4,7 @@ import { MainContainer } from "../../../components/MainContainer";
 import userProfile from "../../../assets/user-profile.png";
 import partyUser from "../../../assets/icons/icon-user.png";
 import OtherUserChatting from "./OtherUserChatting";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
   deleteDoc,
@@ -24,10 +24,10 @@ import useCollectionGroup from "../../../hooks/useCollectionGroup";
 import useCollection from "../../../hooks/useCollection";
 import PrevBtn from "../../../components/Header/PrevBtn";
 import VerticalBtn from "../../../components/Header/VerticalBtn";
+import { CreateDMRoomId } from "../../../utils/CreateDMRoomId";
 
 function PostDetailPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { id } = useParams();
   const userInfo = useSelector((state) => state.user.currentUser);
   const { userName, userPhotoURL, getInfo } = useWriter();
@@ -66,15 +66,10 @@ function PostDetailPage() {
     await deleteDoc(doc(db, "posts", documents.postkey));
     navigate(-1);
   };
-  // DM의 같은 ID 값을 유지해주기 위해서
-  const CreateDMRoomId = (selectUser) => {
-    return userInfo.uid > selectUser
-      ? `${selectUser}${userInfo.uid}`
-      : `${userInfo.uid}${selectUser}`;
-  };
+
   // 게시글 작성자와 DMg하기 위해 방을 만든다.
   const setDM = (otherUser) => {
-    const dmid = CreateDMRoomId(otherUser); // DM방 생성
+    const dmid = CreateDMRoomId(otherUser, userInfo.uid); // DM방 생성
     const dmRoom = doc(db, "DMROOMS", dmid);
 
     //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
