@@ -1,4 +1,4 @@
-import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from "react-confirm-alert";
 
 const handleVertical = (
   userId,
@@ -13,13 +13,13 @@ const handleVertical = (
       title: title1,
       buttons: [
         {
-          label: '확인',
+          label: "확인",
           onClick: () => {
             title1Fc();
           },
         },
         {
-          label: '취소',
+          label: "취소",
         },
       ],
     });
@@ -28,13 +28,13 @@ const handleVertical = (
       title: title2,
       buttons: [
         {
-          label: '확인',
+          label: "확인",
           onClick: () => {
-            title2Fc(writerId);
+            title2Fc(writerId, userId);
           },
         },
         {
-          label: '취소',
+          label: "취소",
         },
       ],
     });

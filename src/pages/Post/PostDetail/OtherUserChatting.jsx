@@ -1,4 +1,4 @@
-import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import * as S from "./style";
 import userProfile from "../../../assets/user-profile.png";
@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import getDate from "../../../utils/getDate";
 import handleVertical from "../../../utils/handleVertical";
 import useWriter from "../../../hooks/useGetInfo";
-import { CreateDMRoomId } from "../../../utils/CreateDMRoomId";
+import { setDM } from "../../../utils/setDM";
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
@@ -21,16 +21,6 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
     await deleteDoc(doc(postChatDoc, "post", chatId));
   };
 
-  const setDM = () => {
-    const dmid = CreateDMRoomId(writerId, userInfo.uid); // DM방 생성
-    const dmRoom = doc(db, "DMROOMS", dmid);
-
-    setDoc(dmRoom, {
-      id: dmid,
-      CreateAt: serverTimestamp(),
-      ids: [writerId, userInfo.uid],
-    });
-  };
   return (
     <S.OtherUserChatContainer bgc={writerId === userInfo.uid}>
       <S.UserContainer>

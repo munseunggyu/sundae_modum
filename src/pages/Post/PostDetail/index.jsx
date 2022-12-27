@@ -6,13 +6,7 @@ import partyUser from "../../../assets/icons/icon-user.png";
 import OtherUserChatting from "./OtherUserChatting";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import {
-  deleteDoc,
-  doc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Chatting from "../../../components/ChattingForm";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -24,7 +18,7 @@ import useCollectionGroup from "../../../hooks/useCollectionGroup";
 import useCollection from "../../../hooks/useCollection";
 import PrevBtn from "../../../components/Header/PrevBtn";
 import VerticalBtn from "../../../components/Header/VerticalBtn";
-import { CreateDMRoomId } from "../../../utils/CreateDMRoomId";
+import { setDM } from "../../../utils/setDM";
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -67,18 +61,6 @@ function PostDetailPage() {
     navigate(-1);
   };
 
-  // 게시글 작성자와 DMg하기 위해 방을 만든다.
-  const setDM = (otherUser) => {
-    const dmid = CreateDMRoomId(otherUser, userInfo.uid); // DM방 생성
-    const dmRoom = doc(db, "DMROOMS", dmid);
-
-    //[방 생성자id,상대방id ]데이터 넣어준 후 DM방 데이터 가져올 시 [클릭한 유저]가 있는 list만 가져온다.
-    setDoc(dmRoom, {
-      id: dmid,
-      CreateAt: serverTimestamp(),
-      ids: [otherUser, userInfo.uid],
-    });
-  };
   useEffect(() => {
     getDocuments("posts", "postkey", id, "==");
     getChats("post", "currentPostId", id);
