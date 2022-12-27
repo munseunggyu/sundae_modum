@@ -11,27 +11,16 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./style";
 import PrevBtn from "../../components/Header/PrevBtn";
 import HeaderUploadBtn from "../../components/Header/HeaderUploadBtn";
+import { usePreview } from "../../hooks/usePreview";
 
 function EditProfile({ isFrist }) {
   const userInfo = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   const [nickName, setNickName] = useState(userInfo.displayName);
   const [introduce, setIntroduce] = useState(userInfo.introduce);
-  const [dbFile, setDbFile] = useState(userInfo.photoURL);
-  const [prevFile, setPrevFile] = useState(userInfo.photoURL);
-  const [metadata, setMetadata] = useState({});
+  const { dbFile, prevFile, metadata, setPrevFile, preview } = usePreview(true);
   const fileRef = useRef();
-  // 사진 프리뷰 함수 FileReader api 이용
-  const preview = (e) => {
-    const files = e.target.files;
-    const reader = new FileReader();
-    reader.onload = (finish) => {
-      setPrevFile(finish.target.result);
-    };
-    reader.readAsDataURL(files[0]);
-    setDbFile(files[0]);
-    setMetadata({ contentType: files[0].type });
-  };
+
   const hadleFileRef = () => {
     fileRef.current.click();
   };

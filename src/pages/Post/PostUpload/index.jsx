@@ -11,32 +11,23 @@ import * as S from "./style";
 import DropDown from "../../../components/DropDown";
 import PrevBtn from "../../../components/Header/PrevBtn";
 import HeaderUploadBtn from "../../../components/Header/HeaderUploadBtn";
+import { usePreview } from "../../../hooks/usePreview";
 
 function PostUploadPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.currentUser);
-  // 보낼 데이터: 게시글, 이미지, 작성자 정보, 마감 기한
   const [postTxt, setPostTxt] = useState("");
   const [postDate, setPostDate] = useState("");
   const [postTime, setPostTime] = useState("");
   const [postTit, setPostTit] = useState("");
-  const [prevFile, setPrevFile] = useState("");
-  const [dbFile, setDbFile] = useState(null);
-  const [metadata, setMetadata] = useState({});
   const [chooseCategory, setChooseCategory] = useState("카테고리");
+  const { dbFile, prevFile, metadata, setPrevFile, preview, setDbFile } =
+    usePreview();
+
   const fileRef = useRef();
   const textArearRef = useRef();
-  const preview = (e) => {
-    const files = e.target.files;
-    const reader = new FileReader(); // FileReader Api
-    reader.onload = (finish) => {
-      setPrevFile(finish.target.result);
-    };
-    reader.readAsDataURL(files[0]);
-    setDbFile(files[0]);
-    setMetadata({ contentType: files[0].type });
-  };
+
   const handleFileClose = () => {
     setPrevFile("");
     setDbFile(null);

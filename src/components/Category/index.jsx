@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import * as S from "./style";
