@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { DropBtn, DropDonContainer, DropDownLi, DropDownUl } from './style';
+import { useState } from "react";
+import * as S from "./style";
 
 function DropDown({ chooseCategory, setChooseCategory }) {
   const [open, setOpen] = useState(false);
@@ -8,15 +8,15 @@ function DropDown({ chooseCategory, setChooseCategory }) {
     setOpen((prev) => !prev);
   };
   const categoryList = [
-    '치킨',
-    '중식',
-    '패스트푸드',
-    '양식',
-    '돈까스',
-    '회',
-    '고기',
-    '분식',
-    '카페',
+    "치킨",
+    "중식",
+    "패스트푸드",
+    "양식",
+    "돈까스",
+    "회",
+    "고기",
+    "분식",
+    "카페",
   ];
   const showMenu = (e) => {
     setChooseCategory(e.target.textContent);
@@ -24,16 +24,16 @@ function DropDown({ chooseCategory, setChooseCategory }) {
   };
 
   return (
-    <DropDonContainer>
-      <DropBtn onClick={dropdownClick} type="button">
+    <S.DropDonContainer>
+      <S.DropBtn onClick={dropdownClick} type="button">
         <span>{chooseCategory}</span>
-      </DropBtn>
-      <DropDownUl open={open}>
+      </S.DropBtn>
+      <S.DropDownUl open={open}>
         {categoryList.map((category) => (
-          <DropDownLi onClick={showMenu}>{category}</DropDownLi>
+          <S.DropDownLi onClick={showMenu}>{category}</S.DropDownLi>
         ))}
-      </DropDownUl>
-    </DropDonContainer>
+      </S.DropDownUl>
+    </S.DropDonContainer>
   );
 }
 export default DropDown;

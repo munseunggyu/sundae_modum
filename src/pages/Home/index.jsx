@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import { MainContainer } from "../../components/MainContainer";
 import Nav from "../../components/Nav";
 import Post from "../Post/PostList";
-import { HomeContainer, PostUl } from "./style";
+import * as S from "./style";
 import HeaderTitle from "../../components/Header/HeaderTitle";
 import SearchButton from "../../components/Header/SearchButton";
 
@@ -32,7 +32,7 @@ function HomePage() {
     getDocuments("posts", "category", select, "==");
   }, [select]);
   return (
-    <HomeContainer>
+    <S.HomeContainer>
       <Header category="1" select={select} setSelect={setSelect}>
         <HeaderTitle>순대모둠</HeaderTitle>
         <SearchButton handleSearch={handleSearch} setIsSearch={setIsSearch} />
@@ -40,7 +40,7 @@ function HomePage() {
 
       <MainContainer>
         <h2 className="ir">게시글</h2>
-        <PostUl>
+        <S.PostUl>
           {isSearch
             ? searchList.map((post, index) => (
                 <Post index={index} {...post} key={post.postkey} />
@@ -48,11 +48,11 @@ function HomePage() {
             : documents.map((post, index) => (
                 <Post index={index} {...post} key={post.postkey} />
               ))}
-        </PostUl>
+        </S.PostUl>
       </MainContainer>
 
       <Nav />
-    </HomeContainer>
+    </S.HomeContainer>
   );
 }
 

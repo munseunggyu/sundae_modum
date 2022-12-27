@@ -7,7 +7,7 @@ import user from "../../assets/icons/icon-user.png";
 import userFill from "../../assets/icons/icon-user-fill.png";
 import message from "../../assets/icons/icon-message-circle.png";
 import messageFill from "../../assets/icons/icon-message-fill.png";
-import { Link, useMatch, useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import * as S from "./style";
 
 function Nav() {

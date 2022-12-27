@@ -9,15 +9,7 @@ import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { clearUser } from "../../redux/actions/user_action";
-import {
-  MyPost,
-  MyPostUl,
-  ProfileContainer,
-  UserIntroduce,
-  UserName,
-  UserProfileEditBtn,
-  UserProfileImg,
-} from "./style";
+import * as S from "./style";
 import useCollection from "../../hooks/useCollection";
 import PrevBtn from "../../components/Header/PrevBtn";
 
@@ -40,25 +32,25 @@ function ProfilePage() {
         <PrevBtn />
       </Header>
       <MainContainer>
-        <ProfileContainer>
+        <S.ProfileContainer>
           <h2 className="ir">프로필 정보 및 수정</h2>
-          <UserProfileImg
+          <S.UserProfileImg
             src={userInfo.photoURL || userImg}
             alt="유저 프로필 이미지"
           />
-          <UserName>{userInfo.displayName}</UserName>
-          <UserIntroduce>{userInfo.introduce} </UserIntroduce>
-          <UserProfileEditBtn onClick={() => navigate("editprofile")}>
+          <S.UserName>{userInfo.displayName}</S.UserName>
+          <S.UserIntroduce>{userInfo.introduce} </S.UserIntroduce>
+          <S.UserProfileEditBtn onClick={() => navigate("editprofile")}>
             프로필 수정하기
-          </UserProfileEditBtn>
+          </S.UserProfileEditBtn>
           <button onClick={signOutUser}>로그아웃</button>
-        </ProfileContainer>
-        <MyPost>나의 게시물</MyPost>
-        <MyPostUl>
+        </S.ProfileContainer>
+        <S.MyPost>나의 게시물</S.MyPost>
+        <S.MyPostUl>
           {documents.map((post) => (
             <PostList key={post.postkey} {...post} />
           ))}
-        </MyPostUl>
+        </S.MyPostUl>
       </MainContainer>
       <Nav />
     </>

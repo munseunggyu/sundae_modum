@@ -1,19 +1,8 @@
-import userProfile from '../../../assets/user-profile.png';
-import { useNavigate } from 'react-router-dom';
-import partyUser from '../../../assets/icons/icon-user.png';
-import {
-  PartyContainer,
-  PartyUser,
-  PostBtn,
-  PostContentContainer,
-  PostImg,
-  Postli,
-  PostTextBottomContainer,
-  PostTextContainer,
-  UserName,
-  UserProfileImg,
-} from './style';
-import useWriter from '../../../hooks/useGetInfo';
+import userProfile from "../../../assets/user-profile.png";
+import { useNavigate } from "react-router-dom";
+import partyUser from "../../../assets/icons/icon-user.png";
+import * as S from "./style";
+import useWriter from "../../../hooks/useGetInfo";
 
 function PostList({
   party,
@@ -33,32 +22,32 @@ function PostList({
     navigate(`/postdetail/${postkey}`);
   };
   return (
-    <Postli>
-      <PostBtn onClick={handleClick}>
+    <S.Postli>
+      <S.PostBtn onClick={handleClick}>
         <div>
-          <PostContentContainer>
-            <UserProfileImg
+          <S.PostContentContainer>
+            <S.UserProfileImg
               src={userPhotoURL || userProfile}
               alt="유저 프로필"
             />
-            <PostTextContainer>
-              <UserName>{userName}</UserName>
+            <S.PostTextContainer>
+              <S.UserName>{userName}</S.UserName>
               <strong>{postTit}</strong>
-              <PostTextBottomContainer>
+              <S.PostTextBottomContainer>
                 <span>
                   {postDate} {postTime}
                 </span>
-                <PartyContainer>
-                  <PartyUser src={partyUser} alt="" />
+                <S.PartyContainer>
+                  <S.PartyUser src={partyUser} alt="" />
                   <strong>{party.participateCount}</strong>
-                </PartyContainer>
-              </PostTextBottomContainer>
-            </PostTextContainer>
-          </PostContentContainer>
+                </S.PartyContainer>
+              </S.PostTextBottomContainer>
+            </S.PostTextContainer>
+          </S.PostContentContainer>
         </div>
-        {postImg && <PostImg src={postImg} alt="" />}
-      </PostBtn>
-    </Postli>
+        {postImg && <S.PostImg src={postImg} alt="" />}
+      </S.PostBtn>
+    </S.Postli>
   );
 }
 

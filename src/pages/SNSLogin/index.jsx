@@ -10,15 +10,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import LodingPage from "../Splash";
-import {
-  EmailRegisterContainer,
-  LoginBtnContainer,
-  LoginBtns,
-  LogoContainer,
-  LogoImg,
-  SNSBtn,
-  SNSLoginContainer,
-} from "./style";
+import * as S from "./style";
 
 function SNSLoginPage() {
   const googleProvider = new GoogleAuthProvider();
@@ -41,49 +33,49 @@ function SNSLoginPage() {
 
   return (
     <>
-      <SNSLoginContainer>
+      <S.SNSLoginContainer>
         <h1 className="ir">SNS 로그인 페이지</h1>
-        <LogoContainer>
-          <LogoImg src={logo} alt="순대 모둠 로고" />
-        </LogoContainer>
-        <LoginBtnContainer>
-          <LoginBtns>
+        <S.LogoContainer>
+          <S.LogoImg src={logo} alt="순대 모둠 로고" />
+        </S.LogoContainer>
+        <S.LoginBtnContainer>
+          <S.LoginBtns>
             <li>
-              <SNSBtn
+              <S.SNSBtn
                 btnColor="#F1C94B"
                 logoImg={kakaologo}
                 name="kakao"
                 onClick={onSocialLogin}
               >
                 카카오 계정으로 로그인
-              </SNSBtn>
+              </S.SNSBtn>
             </li>
             <li>
-              <SNSBtn
+              <S.SNSBtn
                 logoImg={googlelogo}
                 name="google"
                 onClick={onSocialLogin}
               >
                 구글 계정으로 로그인
-              </SNSBtn>
+              </S.SNSBtn>
             </li>
             <li>
-              <SNSBtn
+              <S.SNSBtn
                 btnColor="#2C9CDB"
                 logoImg={facebooklogo}
                 name="facebook"
                 onClick={onSocialLogin}
               >
                 페이스북 계정으로 로그인
-              </SNSBtn>
+              </S.SNSBtn>
             </li>
-          </LoginBtns>
-          <EmailRegisterContainer>
+          </S.LoginBtns>
+          <S.EmailRegisterContainer>
             <Link to="/emaillogin">이메일 로그인</Link>
             <Link to="/register">회원가입</Link>
-          </EmailRegisterContainer>
-        </LoginBtnContainer>
-      </SNSLoginContainer>
+          </S.EmailRegisterContainer>
+        </S.LoginBtnContainer>
+      </S.SNSLoginContainer>
       <LodingPage />
     </>
   );

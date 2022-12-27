@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import arrow from '../../../assets/arrow-left.png';
+import styled from "styled-components";
+import arrow from "../../../assets/arrow-left.png";
 
 export const DMDetailContainer = styled.ul`
   width: 100%;
@@ -43,7 +43,7 @@ export const ChattingSubmitBtn = styled.button`
 // DMChatting
 export const DMChattingLi = styled.li`
   display: flex;
-  justify-content: ${(props) => (props.other ? 'flex-start' : 'flex-end')};
+  justify-content: ${(props) => (props.other ? "flex-start" : "flex-end")};
   margin-top: 10px;
 `;
 export const UserProfile = styled.img`
@@ -55,7 +55,7 @@ export const UserProfile = styled.img`
 export const ChatContainer = styled.div`
   display: flex;
   gap: 5px;
-  flex-direction: ${(props) => (props.other ? 'row' : 'row-reverse')};
+  flex-direction: ${(props) => (props.other ? "row" : "row-reverse")};
   max-width: 70%;
 `;
 export const ChatP = styled.p`
@@ -63,7 +63,7 @@ export const ChatP = styled.p`
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   border-radius: ${(props) =>
-    props.other ? '0px 10px 10px' : '10px 0 10px 10px'};
+    props.other ? "0px 10px 10px" : "10px 0 10px 10px"};
   font-size: 14px;
   line-height: 20px;
   padding: 12px;

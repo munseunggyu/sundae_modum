@@ -7,16 +7,7 @@ import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db, storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
-import {
-  DeadlineContainer,
-  FileBtn,
-  FileCloseBtn,
-  FileContainer,
-  FileImg,
-  FileInput,
-  TextArea,
-  TitInput,
-} from "./style";
+import * as S from "./style";
 import DropDown from "../../../components/DropDown";
 import PrevBtn from "../../../components/Header/PrevBtn";
 import HeaderUploadBtn from "../../../components/Header/HeaderUploadBtn";
@@ -123,7 +114,7 @@ function PostUploadPage() {
       <MainContainer>
         <h2 className="ir">게시물 작성</h2>
         <form onSubmit={handlePostSubmit}>
-          <DeadlineContainer>
+          <S.DeadlineContainer>
             <input
               type="date"
               value={postDate}
@@ -135,12 +126,12 @@ function PostUploadPage() {
               onChange={(e) => setPostTime(e.target.value)}
             />{" "}
             : 까지 모집
-          </DeadlineContainer>
+          </S.DeadlineContainer>
           <DropDown
             chooseCategory={chooseCategory}
             setChooseCategory={setChooseCategory}
           />
-          <TitInput
+          <S.TitInput
             type="text"
             value={postTit}
             onChange={(e) => {
@@ -150,7 +141,7 @@ function PostUploadPage() {
             placeholder="제목을 입력해 주세요."
           />
 
-          <TextArea
+          <S.TextArea
             ref={textArearRef}
             onInput={handleAutoHeight}
             value={postTxt}
@@ -162,14 +153,14 @@ function PostUploadPage() {
           />
         </form>
         {prevFile && (
-          <FileContainer>
-            <FileCloseBtn onClick={handleFileClose}>x</FileCloseBtn>
-            <FileImg src={prevFile} alt="" />
-          </FileContainer>
+          <S.FileContainer>
+            <S.FileCloseBtn onClick={handleFileClose}>x</S.FileCloseBtn>
+            <S.FileImg src={prevFile} alt="" />
+          </S.FileContainer>
         )}
       </MainContainer>
-      <FileBtn onClick={hadleFileRef} />
-      <FileInput onChange={preview} ref={fileRef} type="file" />
+      <S.FileBtn onClick={hadleFileRef} />
+      <S.FileInput onChange={preview} ref={fileRef} type="file" />
       <Nav />
     </>
   );

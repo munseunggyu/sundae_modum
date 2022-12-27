@@ -4,7 +4,7 @@ import { MainContainer } from "../../../components/MainContainer";
 import Nav from "../../../components/Nav";
 import DMRoom from "./DMRoomList";
 import { useEffect } from "react";
-import { DMRoomUl, NoDMRoom } from "./style";
+import * as S from "./style";
 import useCollection from "../../../hooks/useCollection";
 import PrevBtn from "../../../components/Header/PrevBtn";
 
@@ -21,12 +21,12 @@ function DMRoomLists() {
         <PrevBtn />
       </Header>
       <MainContainer>
-        {documents.length === 0 && <NoDMRoom>채팅방이 없습니다.</NoDMRoom>}
-        <DMRoomUl>
+        {documents.length === 0 && <S.NoDMRoom>채팅방이 없습니다.</S.NoDMRoom>}
+        <S.DMRoomUl>
           {documents.map((dmRoom) => (
             <DMRoom {...dmRoom} key={dmRoom.id} />
           ))}
-        </DMRoomUl>
+        </S.DMRoomUl>
       </MainContainer>
       <Nav />
     </>

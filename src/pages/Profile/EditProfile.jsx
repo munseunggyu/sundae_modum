@@ -8,15 +8,7 @@ import { auth, db, storage } from "../../firebase";
 import { useSelector } from "react-redux";
 import { updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import {
-  EditFormConatiner,
-  EditInput,
-  EditLabel,
-  FileIcon,
-  FileInput,
-  UserProfileImg,
-  UserProfilImgContainer,
-} from "./style";
+import * as S from "./style";
 import PrevBtn from "../../components/Header/PrevBtn";
 import HeaderUploadBtn from "../../components/Header/HeaderUploadBtn";
 
@@ -89,13 +81,13 @@ function EditProfile({ isFrist }) {
         <HeaderUploadBtn onSubmit={onSubmit} />
       </Header>
       <MainContainer>
-        <EditFormConatiner onSubmit={onSubmit}>
-          <UserProfilImgContainer onClick={hadleFileRef}>
-            <UserProfileImg src={prevFile || userImg} alt="" />
-            <FileIcon />
-          </UserProfilImgContainer>
-          <EditLabel htmlFor="user-nickname">사용자 이름</EditLabel>
-          <EditInput
+        <S.EditFormConatiner onSubmit={onSubmit}>
+          <S.UserProfilImgContainer onClick={hadleFileRef}>
+            <S.UserProfileImg src={prevFile || userImg} alt="" />
+            <S.FileIcon />
+          </S.UserProfilImgContainer>
+          <S.EditLabel htmlFor="user-nickname">사용자 이름</S.EditLabel>
+          <S.EditInput
             type="text"
             id="user-nickname"
             placeholder={userInfo.displayName || "닉네임을 설정해주세요."}
@@ -104,16 +96,16 @@ function EditProfile({ isFrist }) {
             value={nickName}
             onChange={(e) => setNickName(e.target.value)}
           />
-          <EditLabel htmlFor="user-introduce">소개</EditLabel>
-          <EditInput
+          <S.EditLabel htmlFor="user-introduce">소개</S.EditLabel>
+          <S.EditInput
             type="text"
             id="user-introduce"
             placeholder={userInfo.introduce || "자신을 소개해주세요."}
             value={introduce}
             onChange={(e) => setIntroduce(e.target.value)}
           />
-          <FileInput onChange={preview} ref={fileRef} type="file" />
-        </EditFormConatiner>
+          <S.FileInput onChange={preview} ref={fileRef} type="file" />
+        </S.EditFormConatiner>
       </MainContainer>
     </>
   );

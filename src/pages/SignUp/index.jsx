@@ -1,16 +1,16 @@
-import { useNavigate } from 'react-router-dom';
-import SignUpForm from './SignUpForm';
-import { PrevPage, SignContainer, SignH1 } from './style';
+import { useNavigate } from "react-router-dom";
+import SignUpForm from "./SignUpForm";
+import * as S from "./style";
 
 function SignUpPage() {
   const navigate = useNavigate();
 
   return (
-    <SignContainer>
-      <SignH1>회원가입</SignH1>
-      <PrevPage onClick={() => navigate('/')}></PrevPage>
+    <S.SignContainer>
+      <S.SignH1>회원가입</S.SignH1>
+      <S.PrevPage onClick={() => navigate("/")}></S.PrevPage>
       <SignUpForm />
-    </SignContainer>
+    </S.SignContainer>
   );
 }
 

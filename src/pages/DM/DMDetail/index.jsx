@@ -5,13 +5,7 @@ import React, { useEffect, useState } from "react";
 import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useSelector } from "react-redux";
-import {
-  ChattingForm,
-  ChattingFormContainer,
-  ChattingInput,
-  ChattingSubmitBtn,
-  DMDetailContainer,
-} from "./style";
+import * as S from "./style";
 import { useRef } from "react";
 import useGetInfo from "../../../hooks/useGetInfo";
 import useCollectionGroup from "../../../hooks/useCollectionGroup";
@@ -21,7 +15,6 @@ import PrevBtn from "../../../components/Header/PrevBtn";
 function DMDetailPage() {
   const userInfo = useSelector((state) => state.user.currentUser);
   const [currentDMROOM, setCurrentDMRROOM] = useState([]);
-  // const [chat, setChat] = useState('');
   const { userName, userPhotoURL, getInfo } = useGetInfo();
   const { chats, error, getChats } = useCollectionGroup();
   const { chat, setChat, sendChat } = useSubmitChat();
@@ -68,15 +61,15 @@ function DMDetailPage() {
         <PrevBtn userName={userName} />
       </Header>
       <MainContainer pr="0">
-        <DMDetailContainer>
+        <S.DMDetailContainer>
           {chats.map((chat) => {
             return <DMChatting {...chat} otherUserPhotoURL={userPhotoURL} />;
           })}
-        </DMDetailContainer>
+        </S.DMDetailContainer>
         <div ref={scrollRef} />
-        <ChattingFormContainer>
-          <ChattingForm onSubmit={submitChat}>
-            <ChattingInput
+        <S.ChattingFormContainer>
+          <S.ChattingForm onSubmit={submitChat}>
+            <S.ChattingInput
               type="text"
               placeholder="메시지를 입력하세요."
               value={chat}
@@ -84,9 +77,9 @@ function DMDetailPage() {
                 setChat(e.target.value);
               }}
             />
-            <ChattingSubmitBtn onClick={submitChat} />
-          </ChattingForm>
-        </ChattingFormContainer>
+            <S.ChattingSubmitBtn onClick={submitChat} />
+          </S.ChattingForm>
+        </S.ChattingFormContainer>
       </MainContainer>
     </>
   );

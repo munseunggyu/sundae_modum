@@ -1,27 +1,19 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import useGetInfo from '../../../hooks/useGetInfo';
-import userProfile from '../../../assets/user-profile.png';
-import { db } from '../../../firebase';
-import getDate from '../../../utils/getDate';
-import {
-  DMBtn,
-  DMRoomli,
-  LastChatting,
-  Time,
-  TxtContainer,
-  UserImg,
-  UserName,
-} from './style';
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useGetInfo from "../../../hooks/useGetInfo";
+import userProfile from "../../../assets/user-profile.png";
+import { db } from "../../../firebase";
+import getDate from "../../../utils/getDate";
+import * as S from "./style";
 
 function DMRoomList({ ids, id }) {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user.currentUser);
   const otherUserId = ids.filter((id) => id !== userInfo.uid)[0];
   const [lastChat, setLastChat] = useState([]);
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
   const { userName, userPhotoURL, getInfo } = useGetInfo();
 
   getInfo(otherUserId);
@@ -31,11 +23,11 @@ function DMRoomList({ ids, id }) {
       otherUserId,
       roomId: id,
     };
-    await setDoc(doc(db, 'current_dm', userInfo.uid), currentDMData);
+    await setDoc(doc(db, "current_dm", userInfo.uid), currentDMData);
     navigate(`${userName}`);
   };
   const getLastChat = async () => {
-    const docRef = doc(db, 'lastMessage', id);
+    const docRef = doc(db, "lastMessage", id);
     const docSnap = await getDoc(docRef);
     setLastChat(docSnap.data());
     if (!docSnap.data()) {
@@ -48,22 +40,22 @@ function DMRoomList({ ids, id }) {
     getLastChat();
   }, []);
   return (
-    <DMRoomli>
-      <DMBtn onClick={currentDMROOM}>
-        <UserImg src={userPhotoURL || userProfile} alt="" />
-        <TxtContainer>
-          <UserName isLastChat={time}>{userName}</UserName>
+    <S.DMRoomli>
+      <S.DMBtn onClick={currentDMROOM}>
+        <S.UserImg src={userPhotoURL || userProfile} alt="" />
+        <S.TxtContainer>
+          <S.UserName isLastChat={time}>{userName}</S.UserName>
           {lastChat && (
-            <LastChatting>
+            <S.LastChatting>
               {String(lastChat.chat).length > 10
                 ? `${lastChat.chat.slice(0, 10)}...`
                 : lastChat.chat}
-            </LastChatting>
+            </S.LastChatting>
           )}
-        </TxtContainer>
-        <Time>{time && time}</Time>
-      </DMBtn>
-    </DMRoomli>
+        </S.TxtContainer>
+        <S.Time>{time && time}</S.Time>
+      </S.DMBtn>
+    </S.DMRoomli>
   );
 }
 

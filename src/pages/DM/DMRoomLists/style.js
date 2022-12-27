@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const DMRoomUl = styled.ul`
   padding-top: 12px;
@@ -38,7 +38,7 @@ export const UserName = styled.strong`
   font-weight: 500;
   font-size: 16px;
   position: relative;
-  top: ${(props) => (props.isLastChat ? '0' : '-17px')};
+  top: ${(props) => (props.isLastChat ? "0" : "-17px")};
 `;
 export const LastChatting = styled.p`
   font-size: 12px;

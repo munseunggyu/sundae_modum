@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import dropDownArrow from '../../assets/dropDown.svg';
+import styled from "styled-components";
+import dropDownArrow from "../../assets/dropDown.svg";
 
 export const DropDonContainer = styled.div`
   position: relative;
@@ -25,7 +25,7 @@ export const DropBtn = styled.button`
     margin-left: 5px;
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 20px;
     height: 20px;
@@ -37,7 +37,7 @@ export const DropBtn = styled.button`
 
 export const DropDownUl = styled.ul`
   position: absolute;
-  display: ${(props) => (props.open ? 'black' : 'none')};
+  display: ${(props) => (props.open ? "black" : "none")};
   font-weight: 400;
   background-color: #fcfcfc;
   width: 110px;

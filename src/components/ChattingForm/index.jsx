@@ -4,12 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import useSubmitChat from "../../hooks/useSubmitChat";
-import {
-  ChattingForm,
-  ChattingFormContainer,
-  ChattingInput,
-  ChattingSubmitBtn,
-} from "./style";
+import * as S from "./style";
 
 function Chatting() {
   const scrollRef = useRef(null);
@@ -37,17 +32,17 @@ function Chatting() {
 
   return (
     <>
-      <ChattingFormContainer>
-        <ChattingForm onSubmit={handleChattingSend}>
-          <ChattingInput
+      <S.ChattingFormContainer>
+        <S.ChattingForm onSubmit={handleChattingSend}>
+          <S.ChattingInput
             type="text"
             placeholder="메시지를 입력하세요."
             value={chat}
             onChange={(e) => setChat(e.target.value)}
           />
-          <ChattingSubmitBtn onClick={handleChattingSend} />
-        </ChattingForm>
-      </ChattingFormContainer>
+          <S.ChattingSubmitBtn onClick={handleChattingSend} />
+        </S.ChattingForm>
+      </S.ChattingFormContainer>
       <div ref={scrollRef} />
     </>
   );

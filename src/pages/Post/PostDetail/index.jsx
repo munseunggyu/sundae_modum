@@ -17,21 +17,7 @@ import { db } from "../../../firebase";
 import Chatting from "../../../components/ChattingForm";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import PartyName from "./PartyName";
-import {
-  ContentsImg,
-  ContentsTitle,
-  ContentsTxt,
-  DeadLine,
-  JoinBtn,
-  JoinConatiner,
-  JoinSpan,
-  JoinUserIcon,
-  JoinUserNames,
-  PostDetailContainer,
-  UserContainer,
-  UserName,
-  UserProfileImg,
-} from "./style";
+import * as S from "./style";
 import handleVertical from "../../../utils/handleVertical";
 import useWriter from "../../../hooks/useGetInfo";
 import useCollectionGroup from "../../../hooks/useCollectionGroup";
@@ -124,29 +110,29 @@ function PostDetailPage() {
             />
           </Header>
           <MainContainer pr="0">
-            <PostDetailContainer>
+            <S.PostDetailContainer>
               <h2 className="ir">게시글 콘텐츠</h2>
-              <UserContainer>
-                <UserProfileImg
+              <S.UserContainer>
+                <S.UserProfileImg
                   src={userPhotoURL || userProfile}
                   alt="유저 프로필"
                 />
-                <UserName>{userName} </UserName>
-              </UserContainer>
-              <DeadLine>
+                <S.UserName>{userName} </S.UserName>
+              </S.UserContainer>
+              <S.DeadLine>
                 {documents.postDate} {documents.postTime} 까지 모집
-              </DeadLine>
-              <ContentsTitle>{documents.postTit}</ContentsTitle>
-              <ContentsTxt>{documents.postTxt}</ContentsTxt>
+              </S.DeadLine>
+              <S.ContentsTitle>{documents.postTit}</S.ContentsTitle>
+              <S.ContentsTxt>{documents.postTxt}</S.ContentsTxt>
               {documents.postImg && (
-                <ContentsImg src={documents.postImg} alt="" />
+                <S.ContentsImg src={documents.postImg} alt="" />
               )}
-              <JoinConatiner>
-                <JoinBtn onClick={handlePartyBtn}>참여하기</JoinBtn>
-                <JoinUserIcon src={partyUser} alt="" />
-                <JoinSpan> {documents.party.participateCount}</JoinSpan>
-              </JoinConatiner>
-              <JoinUserNames>
+              <S.JoinConatiner>
+                <S.JoinBtn onClick={handlePartyBtn}>참여하기</S.JoinBtn>
+                <S.JoinUserIcon src={partyUser} alt="" />
+                <S.JoinSpan> {documents.party.participateCount}</S.JoinSpan>
+              </S.JoinConatiner>
+              <S.JoinUserNames>
                 {documents.party.participants.map((participant, index) => (
                   <PartyName
                     key={participant}
@@ -155,8 +141,8 @@ function PostDetailPage() {
                     length={documents.party.participants.length}
                   />
                 ))}
-              </JoinUserNames>
-            </PostDetailContainer>
+              </S.JoinUserNames>
+            </S.PostDetailContainer>
             <ul>
               {chats.map((chatting, i) => (
                 <OtherUserChatting {...chatting} />
