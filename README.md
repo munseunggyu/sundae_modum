@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207517508-16987c5f-bc9f-42fa-8481-8031f3bc664d.gif"
-                    alt=""></td>
+                width="300"    alt=""></td>
             <td>홈/스플래쉬<ul>
                     <li>시작하기 버튼을 통해 서비스에 접속할 수 있습니다.</li>
                     <li>로그인: 메인 게시판으로 이동</li>
@@ -64,7 +64,7 @@
         <tr></tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207518512-5769b6c5-b16b-4156-bed7-cb7e2554f5f3.gif"
-                    alt=""></td>
+                width="300"    alt=""></td>
             <td>로그인<ul>
                     <li>유효성 검사를 진행하고, 오류 메시지를 제공합니다. </li>
                     <li>이메일과 비밀번호가 유효한 경우 게시판 화면으로 이동합니다.</li>
@@ -74,7 +74,7 @@
         <tr></tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207519246-27fe3ca3-5701-492e-8e43-784708f943c2.gif"
-                    alt=""></td>
+                width="300"    alt=""></td>
             <td>회원가입<ul>
                     <li>사용자의 정보를 입력받아 회원가입을 진행합니다.</li>
                     <li>유효성 검사를 진행하고, 오류 메시지를 전달합니다.</li>
@@ -97,7 +97,7 @@
         </tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207519660-ce7ef565-c69d-459d-8ad8-6b5b2ab8f752.gif"
-                    alt=""></td>
+                width="300"    alt=""></td>
             <td>게시판<ul>
                     <li>카테고리별로 최신순으로 정렬되어 있습니다.</li>
                 </ul>
@@ -118,7 +118,7 @@
         </tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207521427-045d55aa-8378-44e8-99ab-f66f56260df0.gif"
-                    alt=""></td>
+                 width="300"   alt=""></td>
             <td>업로드<ul>
                     <li>게시글의 모집 마감 기한을 설정합니다.</li>
                     <li>드롭다운 메뉴를 통해 게시글의 카테고리를 설정합니다.</li>
@@ -129,7 +129,7 @@
         <tr></tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207524198-501df60d-ed0d-4c40-a495-a4085b49fca7.gif"
-                    alt=""></td>
+                 width="300"   alt=""></td>
             <td>게시글<ul>
                     <li>참여하기를 누르면 해당 게시글에 참여한다는 의사를 밝힐 수 있습니다. 참여하기를 한 번 더 누르면 취소가 됩니다.</li>
                     <li>댓글을 작성할 수 있고, 자신이 작성한 댓글에는 하이라이트가 있습니다</li>
@@ -153,7 +153,7 @@
         </tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207524848-e4725342-730f-4fad-8eb1-fc4e1a08bf2b.gif"
-                    alt=""></td>
+                 width="300"   alt=""></td>
             <td>프로필<ul>
                     <li>사용자의 프로필 정보를 제공합니다.</li>
                     <li>작성한 게시글의 목록을 확인할 수 있습니다.</li>
@@ -164,7 +164,7 @@
         <tr></tr>
         <tr>
             <td><img src="https://user-images.githubusercontent.com/84954439/207526031-b8792335-ad66-4f60-9a25-12c606466278.gif"
-                    alt=""></td>
+                 width="300"   alt=""></td>
             <td>프로필 편집<ul>
                     <li>프로필 이미지를 변경할 수 있습니다.</li>
                     <li>닉네임을 새로 설정 할 수 있습니다.</li>
@@ -208,3 +208,7 @@
     });
   }, []);
   ```
+
+## 6. 느낀점
+
+매번 클론 코딩이나 강의의 프로젝트를 하다가 처음 혼자하는 제대로 된 프로젝트인데 오류를 꽤 많이 만났다. 오류를 해결하는 과정에서 8시간 걸리는 것도 있었고 하루정도 걸리는 것도 있었다. 오류를 해결하는데 너무 오래걸리는건 안좋긴하지만 처음 하는 프로젝트인 만큼 혼자 해결하면서 계속 고민하며 많이 성장하게 된 것 같다 깨달은 점은 오류가 해결이 되지 않으면 아예 다른방향으로 생각하는 것도 오류의 해결 방법이라는 것을 알게되었다.

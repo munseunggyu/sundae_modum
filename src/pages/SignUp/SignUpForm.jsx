@@ -6,7 +6,6 @@ import { auth } from "../../firebase";
 import * as S from "./style";
 
 function SignUpForm() {
-  // 계정 생성 시 firebase에서 계정 생성될때 까지 submit버튼 비활성화
   const [loding, setLoding] = useState(false);
   const {
     register,

@@ -39,9 +39,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  /* width:100%;
-  max-width:450px;
-  margin:0 auto; */
 }
 ol, ul {
 	list-style: none;
@@ -87,20 +84,20 @@ const createStoreMiddleware = applyMiddleware(
 )(createStore);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  <Provider
-    store={createStoreMiddleware(
-      rootReducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )}
-  >
-    <BrowserRouter basename="/sundae_modum">
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </Provider>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <Provider
+      store={createStoreMiddleware(
+        rootReducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )}
+    >
+      <BrowserRouter basename="/sundae_modum">
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );

@@ -3,7 +3,7 @@ import { db } from "../firebase";
 import { CreateDMRoomId } from "./CreateDMRoomId";
 
 export const setDM = (otherUser, userId) => {
-  const dmid = CreateDMRoomId(otherUser, userId); // DM방 생성
+  const dmid = CreateDMRoomId(otherUser, userId);
   const dmRoom = doc(db, "DMROOMS", dmid);
 
   setDoc(dmRoom, {

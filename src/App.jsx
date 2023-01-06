@@ -7,7 +7,7 @@ import PostUploadPage from "./pages/Post/PostUpload";
 import DMDetailPage from "./pages/DM/DMDetail";
 import PostDetailPage from "./pages/Post/PostDetail";
 import EditProfile from "./pages/Profile/EditProfile";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,12 +21,9 @@ function App() {
   const userInfo = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
-    // 로그인,회원가입,소셜로그인 시 firestore에 해당 유저가 있는지 확인
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // dispatch(setUser(user))
         onSnapshot(doc(db, "users", user.uid), async (doc) => {
-          // 만약 없다면 첫 프로필 설정 화면으로 이동
           if (!doc.data()) {
             dispatch(firstSetUser(user));
             navigate("/firstedit");
@@ -34,7 +31,6 @@ function App() {
           }
           // 있다면 바로 홈으로 이동
           dispatch(setUser(doc.data()));
-          // navigate('/')
         });
       } else {
         navigate("/");
