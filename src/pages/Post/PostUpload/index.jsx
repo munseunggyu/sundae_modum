@@ -15,7 +15,6 @@ import { usePreview } from "../../../hooks/usePreview";
 
 function PostUploadPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.currentUser);
   const [postTxt, setPostTxt] = useState("");
   const [postDate, setPostDate] = useState("");
