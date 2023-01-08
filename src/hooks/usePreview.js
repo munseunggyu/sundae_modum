@@ -9,19 +9,17 @@ export const usePreview = (isProfile) => {
 
   const preview = async (e) => {
     const files = e.target.files;
-    console.log(files[0]);
-    const file = await imageCompression(files[0], {
+    const compressionImg = await imageCompression(files[0], {
       maxSizeMB: 0.1,
       maxWidthOrHeight: 340,
     });
-    console.log(file);
     const reader = new FileReader();
     reader.onload = (finish) => {
       setPrevFile(finish.target.result);
     };
-    reader.readAsDataURL(file);
-    setDbFile(file);
-    setMetadata({ contentType: file.type });
+    reader.readAsDataURL(compressionImg);
+    setDbFile(compressionImg);
+    setMetadata({ contentType: compressionImg.type });
   };
 
   return { dbFile, prevFile, metadata, setPrevFile, preview, setDbFile };
