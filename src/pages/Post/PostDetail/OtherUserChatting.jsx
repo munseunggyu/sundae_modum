@@ -8,19 +8,21 @@ import getDate from "../../../utils/getDate";
 import handleVertical from "../../../utils/handleVertical";
 import useWriter from "../../../hooks/useGetInfo";
 import { setDM } from "../../../utils/setDM";
+import { useEffect } from "react";
 
 function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }) {
   const { id } = useParams();
   const time = getDate(CreateAt);
   const userInfo = useSelector((state) => state.user.currentUser);
   const { userName, userPhotoURL, getInfo } = useWriter();
-  getInfo(writerId);
 
   const delChatting = async () => {
     const postChatDoc = doc(db, "post_chatting", id);
     await deleteDoc(doc(postChatDoc, "post", chatId));
   };
-
+  useEffect(() => {
+    getInfo(writerId);
+  }, []);
   return (
     <S.OtherUserChatContainer bgc={writerId === userInfo.uid}>
       <S.UserContainer>

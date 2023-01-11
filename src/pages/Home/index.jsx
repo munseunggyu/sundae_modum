@@ -12,15 +12,17 @@ function HomePage() {
   const [searchList, setSearchList] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
   const [select, setSelect] = useState("치킨");
-  const { documents, getDocuments } = useCollection(false, true);
-
+  const { documents: postsList, getDocuments: getPostsList } = useCollection(
+    false,
+    true
+  );
   // 검색 기능
   // 게시글의 제목 또는 게시글의 내용으로 검색
   const handleSearch = (e) => {
     if (e.target.value.length > 0) {
       setIsSearch(true);
       const regex = new RegExp(e.target.value, "gi");
-      const newPost = documents.filter(
+      const newPost = postsList.filter(
         (post) => regex.test(post.postTit) || regex.test(post.postTxt)
       );
       setSearchList(newPost);
@@ -29,7 +31,7 @@ function HomePage() {
     }
   };
   useEffect(() => {
-    getDocuments("posts", "category", select, "==");
+    getPostsList("posts", "category", select, "==");
   }, [select]);
   return (
     <S.HomeContainer>
@@ -45,7 +47,7 @@ function HomePage() {
             ? searchList.map((post, index) => (
                 <Post index={index} {...post} key={post.postkey} />
               ))
-            : documents.map((post, index) => (
+            : postsList.map((post, index) => (
                 <Post index={index} {...post} key={post.postkey} />
               ))}
         </S.PostUl>

@@ -18,7 +18,6 @@ function DMDetailPage() {
   const { userName, userPhotoURL, getInfo } = useGetInfo();
   const { chats, error, getChats } = useCollectionGroup();
   const { chat, setChat, sendChat } = useSubmitChat();
-
   const scrollRef = useRef(null);
 
   const submitChat = async (e) => {

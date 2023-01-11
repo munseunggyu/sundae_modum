@@ -10,23 +10,27 @@ function Chatting() {
   const scrollRef = useRef(null);
   const userInfo = useSelector((state) => state.user.currentUser);
   const { id } = useParams();
-  const { chat, setChat, sendChat } = useSubmitChat();
+  const {
+    chat: comment,
+    setChat: sentComment,
+    sendChat: sendComment,
+  } = useSubmitChat();
   // 게시글 댓글 작성 기능
   const handleChattingSend = async (e) => {
     e.preventDefault();
     const data = {
       currentPostId: id,
       CreateAt: serverTimestamp(),
-      chatTxt: chat,
+      chatTxt: comment,
       writerId: userInfo.uid,
     };
-    if (chat) {
-      sendChat("post_chatting", id, "post", data);
+    if (comment) {
+      sendComment("post_chatting", id, "post", data);
       scrollRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-      setChat("");
+      sentComment("");
     }
   };
 
@@ -37,8 +41,8 @@ function Chatting() {
           <S.ChattingInput
             type="text"
             placeholder="메시지를 입력하세요."
-            value={chat}
-            onChange={(e) => setChat(e.target.value)}
+            value={comment}
+            onChange={(e) => sentComment(e.target.value)}
           />
           <S.ChattingSubmitBtn onClick={handleChattingSend} />
         </S.ChattingForm>

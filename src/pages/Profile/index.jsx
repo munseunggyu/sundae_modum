@@ -17,14 +17,14 @@ function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.currentUser);
-  const { documents, getDocuments } = useCollection(false, true);
-
+  const { documents: myPostsData, getDocuments: getMyPostsData } =
+    useCollection(false, true);
   const signOutUser = () => {
     signOut(auth);
     dispatch(clearUser());
   };
   useEffect(() => {
-    getDocuments("posts", "writerId", userInfo.uid, "==");
+    getMyPostsData("posts", "writerId", userInfo.uid, "==");
   }, []);
   return (
     <>
@@ -47,7 +47,7 @@ function ProfilePage() {
         </S.ProfileContainer>
         <S.MyPost>나의 게시물</S.MyPost>
         <S.MyPostUl>
-          {documents.map((post) => (
+          {myPostsData.map((post) => (
             <PostList key={post.postkey} {...post} />
           ))}
         </S.MyPostUl>

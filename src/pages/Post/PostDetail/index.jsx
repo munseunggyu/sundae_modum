@@ -25,49 +25,53 @@ function PostDetailPage() {
   const { id } = useParams();
   const userInfo = useSelector((state) => state.user.currentUser);
   const { userName, userPhotoURL, getInfo } = useWriter();
-  const { chats, error, getChats } = useCollectionGroup();
-  const { documents, getDocuments, isLoding } = useCollection(true);
+  const { chats: commentList, getChats: getCommentList } = useCollectionGroup();
+  const {
+    documents: postData,
+    getDocuments: getPostData,
+    isLoding: postLoading,
+  } = useCollection(true);
 
-  !isLoding && getInfo(documents.writerId);
+  !postLoading && getInfo(postData.writerId);
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {
-    const isParty = documents.party.participants.find(
+    const isParty = postData.party.participants.find(
       (participant) => participant === userInfo.uid
     );
     let newParty;
     if (isParty) {
-      const cancel = documents.party.participants.filter(
+      const cancel = postData.party.participants.filter(
         (v) => v !== userInfo.uid
       );
       newParty = {
-        ...documents.party,
+        ...postData.party,
         participants: [...cancel],
-        participateCount: documents.party.participants.length - 1,
+        participateCount: postData.party.participants.length - 1,
       };
     } else {
       newParty = {
-        ...documents.party,
-        participants: [...documents.party.participants, userInfo.uid],
-        participateCount: documents.party.participants.length + 1,
+        ...postData.party,
+        participants: [...postData.party.participants, userInfo.uid],
+        participateCount: postData.party.participants.length + 1,
       };
     }
-    const postRef = doc(db, "posts", documents.postkey);
+    const postRef = doc(db, "posts", postData.postkey);
     await updateDoc(postRef, {
       party: newParty,
     });
   };
   const delPost = async () => {
-    await deleteDoc(doc(db, "posts", documents.postkey));
+    await deleteDoc(doc(db, "posts", postData.postkey));
     navigate(-1);
   };
 
   useEffect(() => {
-    getDocuments("posts", "postkey", id, "==");
-    getChats("post", "currentPostId", id);
+    getPostData("posts", "postkey", id, "==");
+    getCommentList("post", "currentPostId", id);
   }, []);
   return (
     <>
-      {isLoding ? (
+      {postLoading ? (
         <>...Loding</>
       ) : (
         <>
@@ -77,7 +81,7 @@ function PostDetailPage() {
               verticalSubmit={() =>
                 handleVertical(
                   userInfo.uid,
-                  documents.writerId,
+                  postData.writerId,
                   "게시글을 삭제하시겠습니까?",
                   delPost,
                   "쪽지를 보내겠습니까?",
@@ -97,31 +101,31 @@ function PostDetailPage() {
                 <S.UserName>{userName} </S.UserName>
               </S.UserContainer>
               <S.DeadLine>
-                {documents.postDate} {documents.postTime} 까지 모집
+                {postData.postDate} {postData.postTime} 까지 모집
               </S.DeadLine>
-              <S.ContentsTitle>{documents.postTit}</S.ContentsTitle>
-              <S.ContentsTxt>{documents.postTxt}</S.ContentsTxt>
-              {documents.postImg && (
-                <S.ContentsImg src={documents.postImg} alt="" />
+              <S.ContentsTitle>{postData.postTit}</S.ContentsTitle>
+              <S.ContentsTxt>{postData.postTxt}</S.ContentsTxt>
+              {postData.postImg && (
+                <S.ContentsImg src={postData.postImg} alt="" />
               )}
               <S.JoinConatiner>
                 <S.JoinBtn onClick={handlePartyBtn}>참여하기</S.JoinBtn>
                 <S.JoinUserIcon src={partyUser} alt="" />
-                <S.JoinSpan> {documents.party.participateCount}</S.JoinSpan>
+                <S.JoinSpan> {postData.party.participateCount}</S.JoinSpan>
               </S.JoinConatiner>
               <S.JoinUserNames>
-                {documents.party.participants.map((participant, index) => (
+                {postData.party.participants.map((participant, index) => (
                   <PartyName
                     key={participant}
                     userId={participant}
                     index={index}
-                    length={documents.party.participants.length}
+                    length={postData.party.participants.length}
                   />
                 ))}
               </S.JoinUserNames>
             </S.PostDetailContainer>
             <ul>
-              {chats.map((chatting, i) => (
+              {commentList.map((chatting, i) => (
                 <OtherUserChatting {...chatting} />
               ))}
             </ul>

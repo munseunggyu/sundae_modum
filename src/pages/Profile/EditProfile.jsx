@@ -18,7 +18,7 @@ function EditProfile({ isFrist }) {
   const navigate = useNavigate();
   const [nickName, setNickName] = useState(userInfo.displayName);
   const [introduce, setIntroduce] = useState(userInfo.introduce);
-  const { dbFile, prevFile, metadata, setPrevFile, preview } = usePreview(true);
+  const { dbFile, prevFile, metadata, preview } = usePreview(true);
   const fileRef = useRef();
 
   const hadleFileRef = () => {

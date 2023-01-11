@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import partyUser from "../../../assets/icons/icon-user.png";
 import * as S from "./style";
 import useWriter from "../../../hooks/useGetInfo";
+import { useEffect } from "react";
 
 function PostList({
   party,
@@ -16,11 +17,12 @@ function PostList({
   const navigate = useNavigate();
   const { userName, userPhotoURL, getInfo } = useWriter();
 
-  getInfo(writerId);
-
   const handleClick = async () => {
     navigate(`/postdetail/${postkey}`);
   };
+  useEffect(() => {
+    getInfo(writerId);
+  }, []);
   return (
     <S.Postli>
       <S.PostBtn onClick={handleClick}>

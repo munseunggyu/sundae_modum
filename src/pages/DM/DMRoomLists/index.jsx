@@ -10,10 +10,10 @@ import PrevBtn from "../../../components/Header/PrevBtn";
 
 function DMRoomLists() {
   const userInfo = useSelector((state) => state.user.currentUser);
-  const { documents, getDocuments } = useCollection();
-
+  const { documents: dmRoomList, getDocuments: getDmRoomList } =
+    useCollection();
   useEffect(() => {
-    getDocuments("DMROOMS", "ids", [userInfo.uid], "array-contains-any");
+    getDmRoomList("DMROOMS", "ids", [userInfo.uid], "array-contains-any");
   }, []);
   return (
     <>
@@ -21,9 +21,9 @@ function DMRoomLists() {
         <PrevBtn />
       </Header>
       <MainContainer>
-        {documents.length === 0 && <S.NoDMRoom>채팅방이 없습니다.</S.NoDMRoom>}
+        {dmRoomList.length === 0 && <S.NoDMRoom>채팅방이 없습니다.</S.NoDMRoom>}
         <S.DMRoomUl>
-          {documents.map((dmRoom) => (
+          {dmRoomList.map((dmRoom) => (
             <DMRoom {...dmRoom} key={dmRoom.id} />
           ))}
         </S.DMRoomUl>
