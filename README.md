@@ -52,7 +52,7 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207517508-16987c5f-bc9f-42fa-8481-8031f3bc664d.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212467563-05bb0f27-3368-49b3-830f-c62414ab41c7.gif"
                 width="300"    alt=""></td>
             <td>홈/스플래쉬<ul>
                     <li>시작하기 버튼을 통해 서비스에 접속할 수 있습니다.</li>
@@ -63,7 +63,7 @@
         </tr>
         <tr></tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207518512-5769b6c5-b16b-4156-bed7-cb7e2554f5f3.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212467701-f95fa533-5fff-4967-846c-050510dcb0cd.gif"
                 width="300"    alt=""></td>
             <td>로그인<ul>
                     <li>유효성 검사를 진행하고, 오류 메시지를 제공합니다. </li>
@@ -73,7 +73,7 @@
         </tr>
         <tr></tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207519246-27fe3ca3-5701-492e-8e43-784708f943c2.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212467860-67bfc5f3-e91e-41f8-93f7-e730de65f4de.gif"
                 width="300"    alt=""></td>
             <td>회원가입<ul>
                     <li>사용자의 정보를 입력받아 회원가입을 진행합니다.</li>
@@ -87,7 +87,9 @@
     
 <br>
     
-### 4-2. 게시판
+
+### 4-2. 게시글
+
 <table>
     <tbody>
         <tr></tr>
@@ -96,28 +98,21 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207519660-ce7ef565-c69d-459d-8ad8-6b5b2ab8f752.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212467931-4cd0c3ab-f622-4140-a091-d5a60e07eb96.gif"
                 width="300"    alt=""></td>
             <td>게시판<ul>
                     <li>카테고리별로 최신순으로 정렬되어 있습니다.</li>
+                    <li>게시글 작성자의 프로필과 게시글 제목 사진이 미리보입니다.</li>
                 </ul>
             </td>
         </tr>
-    </tbody>
-</table>
-<br>
-
-### 4-3. 게시글
-
-<table>
-    <tbody>
         <tr></tr>
         <tr>
             <th>시연</th>
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207521427-045d55aa-8378-44e8-99ab-f66f56260df0.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212468182-5d1351d9-889b-422c-908f-319afe41067d.gif"
                  width="300"   alt=""></td>
             <td>업로드<ul>
                     <li>게시글의 모집 마감 기한을 설정합니다.</li>
@@ -128,7 +123,7 @@
         </tr>
         <tr></tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207524198-501df60d-ed0d-4c40-a495-a4085b49fca7.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212468296-1dd9c617-8926-48f8-8a16-8af28d19ce3c.gif"
                  width="300"   alt=""></td>
             <td>게시글<ul>
                     <li>참여하기를 누르면 해당 게시글에 참여한다는 의사를 밝힐 수 있습니다. 참여하기를 한 번 더 누르면 취소가 됩니다.</li>
@@ -152,7 +147,7 @@
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207524848-e4725342-730f-4fad-8eb1-fc4e1a08bf2b.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212468398-782ec884-6f65-4406-a16a-20c11293b512.gif"
                  width="300"   alt=""></td>
             <td>프로필<ul>
                     <li>사용자의 프로필 정보를 제공합니다.</li>
@@ -163,7 +158,7 @@
         </tr>
         <tr></tr>
         <tr>
-            <td><img src="https://user-images.githubusercontent.com/84954439/207526031-b8792335-ad66-4f60-9a25-12c606466278.gif"
+            <td><img src="https://user-images.githubusercontent.com/84954439/212468446-7488f20a-9b10-49ff-be54-2f324f90dec1.gif"
                  width="300"   alt=""></td>
             <td>프로필 편집<ul>
                     <li>프로필 이미지를 변경할 수 있습니다.</li>
