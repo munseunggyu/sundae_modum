@@ -1,28 +1,28 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useGetInfo from "../../../hooks/useGetInfo";
 import userProfile from "../../../assets/user-profile.png";
 import { db } from "../../../firebase";
 import getDate from "../../../utils/getDate";
 import * as S from "./style";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 function DMRoomList({ ids, id }) {
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state.user.currentUser);
-  const otherUserId = ids.filter((id) => id !== userInfo.uid)[0];
+  const { state } = useAuthContext();
+  const otherUserId = ids.filter((id) => id !== state.currentUser?.uid)[0];
   const [lastChat, setLastChat] = useState([]);
   const [time, setTime] = useState("");
   const { userName, userPhotoURL, getInfo } = useGetInfo();
+
   getInfo(otherUserId);
-  // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {
     const currentDMData = {
       otherUserId,
       roomId: id,
     };
-    await setDoc(doc(db, "current_dm", userInfo.uid), currentDMData);
+    await setDoc(doc(db, "current_dm", state.currentUser?.uid), currentDMData);
     navigate(`${userName}`);
   };
   const getLastChat = async () => {
