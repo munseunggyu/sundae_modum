@@ -4,10 +4,10 @@ import {
   orderBy,
   query,
   where,
-} from 'firebase/firestore';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase';
+} from "firebase/firestore";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { db } from "../firebase";
 
 const useCollection = (isPostDetail, isHome) => {
   const [documents, setDocuments] = useState([]);
@@ -19,21 +19,23 @@ const useCollection = (isPostDetail, isHome) => {
       ? query(
           docRef,
           where(whereLeft, condition, whereRight),
-          orderBy('CreateAt', 'desc')
+          orderBy("CreateAt", "desc")
         )
       : query(
           docRef,
-          where(whereLeft, condition, whereRight, orderBy('CreateAt', 'desc'))
+          where(whereLeft, condition, whereRight, orderBy("CreateAt", "desc"))
         );
+    console.log(whereLeft, condition, whereRight);
+
+    console.log(isHome);
     onSnapshot(q, (snapshot) => {
       const newArr = snapshot.docs.map((doc) => {
         return doc.data();
       });
-      isPostDetail ? setDocuments(...newArr) : setDocuments(newArr);
+      setDocuments(newArr);
       if (isPostDetail) {
-        console.log();
         if (newArr.length <= 0) {
-          navigate('/');
+          navigate("/");
           return;
         }
       }

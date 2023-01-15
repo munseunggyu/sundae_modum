@@ -19,6 +19,7 @@ function HomePage() {
   // 검색 기능
   // 게시글의 제목 또는 게시글의 내용으로 검색
   const handleSearch = (e) => {
+    console.log(e.target.value.length);
     if (e.target.value.length > 0) {
       setIsSearch(true);
       const regex = new RegExp(e.target.value, "gi");
@@ -45,10 +46,10 @@ function HomePage() {
         <S.PostUl>
           {isSearch
             ? searchList.map((post, index) => (
-                <Post index={index} {...post} key={post.postkey} />
+                <Post {...post} key={post.postkey} />
               ))
             : postsList.map((post, index) => (
-                <Post index={index} {...post} key={post.postkey} />
+                <Post {...post} key={post.postkey} />
               ))}
         </S.PostUl>
       </MainContainer>

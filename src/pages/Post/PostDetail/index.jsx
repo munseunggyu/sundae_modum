@@ -27,11 +27,11 @@ function PostDetailPage() {
   const { userName, userPhotoURL, getInfo } = useWriter();
   const { chats: commentList, getChats: getCommentList } = useCollectionGroup();
   const {
-    documents: postData,
+    documents: postDataObj,
     getDocuments: getPostData,
     isLoding: postLoading,
   } = useCollection(true);
-
+  const postData = postDataObj[0];
   !postLoading && getInfo(postData.writerId);
   // 참여하기 버튼 기능
   const handlePartyBtn = async () => {

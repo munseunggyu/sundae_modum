@@ -15,7 +15,6 @@ function DMRoomList({ ids, id }) {
   const [lastChat, setLastChat] = useState([]);
   const [time, setTime] = useState("");
   const { userName, userPhotoURL, getInfo } = useGetInfo();
-
   getInfo(otherUserId);
   // 클릭시 current DROOM 생성
   const currentDMROOM = async () => {

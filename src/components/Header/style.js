@@ -44,7 +44,9 @@ export const HeaderH1 = styled.h1`
 export const UploadBtn = styled.button`
   background-color: ${(props) => props.theme.mainColor};
   width: 80px;
-  height: 22px;
+  position: absolute;
+  right: 12px;
+  height: 28px;
   color: white;
   border-radius: 32px;
   font-size: 14px;
