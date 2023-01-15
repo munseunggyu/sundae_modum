@@ -205,6 +205,7 @@
 
 ## 6. 리팩토링
 
+- 브랜치: [ts](https://github.com/munseunggyu/sundae_modum/tree/ts)
 - JavaScript => TypeScript
 - Redux => ContextAPI
 
