@@ -20,7 +20,7 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 
 function DMDetailPage() {
   const { state } = useAuthContext();
-  const [currentDMROOM, setCurrentDMRROOM] = useState<DocumentData>([]);
+  const [currentDMROOM, setCurrentDMRROOM] = useState<DocumentData>();
   const { userName, userPhotoURL, getInfo } = useGetInfo();
   const { chats, getChats } = useCollectionGroup();
   const { chat, setChat, sendChat } = useSubmitChat();
@@ -29,6 +29,7 @@ function DMDetailPage() {
   const submitChat = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!scrollRef.current) return;
+    if (!currentDMROOM) return;
     const data = {
       chat,
       id: currentDMROOM.roomId,
@@ -57,15 +58,18 @@ function DMDetailPage() {
   const getCurrentDMROOM = () => {
     if (!state.currentUser) return;
     const currentDMRef = doc(db, "current_dm", state.currentUser.uid);
-    const currentDMSnap = onSnapshot(currentDMRef, (currentDMDoc: any) => {
-      getInfo(currentDMDoc.data().otherUserId);
-      setCurrentDMRROOM(currentDMDoc.data());
-      getChats({
-        collectionName: "DM",
-        whereLeft: "id",
-        whereRight: currentDMDoc.data().roomId,
-      });
-    });
+    const currentDMSnap = onSnapshot(
+      currentDMRef,
+      (currentDMDoc: DocumentData) => {
+        getInfo(currentDMDoc.data().otherUserId);
+        setCurrentDMRROOM(currentDMDoc.data());
+        getChats({
+          collectionName: "DM",
+          whereLeft: "id",
+          whereRight: currentDMDoc.data().roomId,
+        });
+      }
+    );
   };
 
   useEffect(() => {
@@ -79,7 +83,14 @@ function DMDetailPage() {
       <MainContainer pr="0">
         <S.DMDetailContainer>
           {chats.map((chat) => {
-            return <DMChatting {...chat} otherUserPhotoURL={userPhotoURL} />;
+            return (
+              <DMChatting
+                otherUserPhotoURL={userPhotoURL}
+                chat={chat.chat}
+                CreateAt={chat.CreateAt}
+                writerId={chat.writerId}
+              />
+            );
           })}
         </S.DMDetailContainer>
         <div ref={scrollRef} />

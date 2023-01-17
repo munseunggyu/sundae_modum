@@ -34,15 +34,15 @@ function PostDetailPage() {
   } = useCollection();
   const postData = postDataObj[0];
   !postLoading && getInfo(postData.writerId);
-  // 참여하기 버튼 기능
+
   const handlePartyBtn = async () => {
     const isParty = postData.party?.participants.find(
-      (participant: any) => participant === userInfo?.uid
+      (participant: string) => participant === userInfo?.uid
     );
     let newParty;
     if (isParty) {
       const cancel = postData.party.participants.filter(
-        (participant: any) => participant !== userInfo?.uid
+        (participant: string) => participant !== userInfo?.uid
       );
       newParty = {
         ...postData.party,
@@ -126,21 +126,30 @@ function PostDetailPage() {
               </S.JoinConatiner>
               <S.JoinUserNames>
                 {postData?.party.participants.map(
-                  (participant: any, index: number) => (
-                    <PartyName
-                      key={participant}
-                      userId={participant}
-                      index={index}
-                      length={postData.party.participants?.length}
-                    />
-                  )
+                  (participant: string, index: number) => {
+                    return (
+                      <PartyName
+                        key={participant}
+                        userId={participant}
+                        index={index}
+                        length={postData.party.participants?.length}
+                      />
+                    );
+                  }
                 )}
               </S.JoinUserNames>
             </S.PostDetailContainer>
             <ul>
-              {commentList.map((chatting, i) => (
-                <OtherUserChatting {...chatting} />
-              ))}
+              {commentList.map((chatting, i) => {
+                return (
+                  <OtherUserChatting
+                    CreateAt={chatting.CreateAt}
+                    writerId={chatting.writerId}
+                    chatTxt={chatting.chatTxt}
+                    chatId={chatting.chatId}
+                  />
+                );
+              })}
             </ul>
             <Chatting />
           </MainContainer>

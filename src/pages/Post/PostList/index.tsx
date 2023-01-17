@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import partyUser from "../../../assets/icons/icon-user.png";
 import * as S from "./style";
 import useGetInfo from "../../../hooks/useGetInfo";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { IPost } from "../../../types/post";
 
-const PostList: FC<IPost> = ({
+function PostList({
   party,
   postkey,
   postImg,
@@ -14,7 +14,7 @@ const PostList: FC<IPost> = ({
   postTime,
   postTit,
   writerId,
-}) => {
+}: IPost) {
   const navigate = useNavigate();
   const { userName, userPhotoURL, getInfo } = useGetInfo();
 
@@ -53,6 +53,6 @@ const PostList: FC<IPost> = ({
       </S.PostBtn>
     </S.Postli>
   );
-};
+}
 
 export default PostList;

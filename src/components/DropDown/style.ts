@@ -35,7 +35,7 @@ export const DropBtn = styled.button`
   }
 `;
 
-export const DropDownUl = styled.ul`
+export const DropDownUl = styled.ul<{ open: boolean }>`
   position: absolute;
   display: ${(props) => (props.open ? "black" : "none")};
   font-weight: 400;

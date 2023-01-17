@@ -1,11 +1,12 @@
 import { onAuthStateChanged } from "@firebase/auth";
-import {
-  doc,
-  DocumentData,
-  DocumentSnapshot,
-  onSnapshot,
-} from "@firebase/firestore";
-import React, { createContext, ReactNode, useEffect, useReducer } from "react";
+import { doc, DocumentData, onSnapshot } from "@firebase/firestore";
+import React, {
+  createContext,
+  PropsWithChildren,
+  ReactNode,
+  useEffect,
+  useReducer,
+} from "react";
 import { useNavigate } from "react-router";
 import { auth, db } from "../firebase";
 import {
@@ -15,9 +16,6 @@ import {
   SET_USER,
 } from "./context.type";
 
-interface IChildren {
-  children: ReactNode;
-}
 interface ICurrentUser {
   email: string | null;
   displayName: string | null;
@@ -69,14 +67,14 @@ const authReducer = (state: IState, action: IAuthAction) => {
   }
 };
 
-const AuthContextProvider = ({ children }: IChildren) => {
+const AuthContextProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, initialUserState);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        onSnapshot(doc(db, "users", user.uid), async (doc: any) => {
+        onSnapshot(doc(db, "users", user.uid), async (doc: DocumentData) => {
           if (!doc.data()) {
             dispatch({ type: FIRST_SET_USER, payload: user });
             navigate("/firstedit");

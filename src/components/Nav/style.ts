@@ -21,7 +21,7 @@ export const Iconsli = styled.li`
   flex-direction: column;
   align-items: center;
 `;
-export const IconImg = styled.button`
+export const IconImg = styled.button<{ icon: string }>`
   width: 24px;
   height: 24px;
   margin-bottom: 3px;

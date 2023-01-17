@@ -25,8 +25,7 @@ const formSchema = yup.object({
 });
 
 function SignUpForm() {
-  const [loding, setLoding] = useState(false);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     formState: { errors },
@@ -34,20 +33,19 @@ function SignUpForm() {
   } = useForm<ISign>({
     resolver: yupResolver(formSchema),
   });
-  console.log(errors);
 
   const handleSignUp = async ({ email, password }: ISign) => {
     try {
-      setLoding(true);
+      setLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
-      setLoding(false);
+      setLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         if (error.code === "auth/email-already-in-use") {
           alert("이미 가입된 이메일 입니다.");
         }
       }
-      setLoding(false);
+      setLoading(false);
     }
   };
   return (
@@ -82,7 +80,7 @@ function SignUpForm() {
       {errors.passwordConfirm && (
         <S.ErrorMessageP>{errors.passwordConfirm?.message}</S.ErrorMessageP>
       )}
-      <S.SignSubmitBtn type="submit" value="회원가입" disabled={loding} />
+      <S.SignSubmitBtn type="submit" value="회원가입" disabled={loading} />
       <Link to="/emaillogin">이미 아이디가 있다면...</Link>
     </S.SignFormContainer>
   );

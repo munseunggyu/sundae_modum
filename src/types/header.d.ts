@@ -5,17 +5,20 @@ export interface IHeader {
   children?: ReactNode;
   category?: string;
   select?: string;
-  setSelect?: string;
+  setSelect?: Dispatch<SetStateAction<string>>;
 }
 
 export interface IPrev {
   userName?: string;
 }
 
-export interface IChildren {
-  children?: ReactNode;
+export interface IOnSubmit {
+  onSubmit: (e: React.FormEvent) => Promise<void>;
 }
-
-export interface ISubmit {
-  onSubmit: () => void;
+export interface ISeactButton {
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setIsSearch: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export interface IVerticalSubmit {
+  verticalSubmit: () => void;
 }

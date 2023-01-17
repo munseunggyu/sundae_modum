@@ -1,7 +1,6 @@
-import React from "react";
-import { IChildren } from "../../types/header";
+import React, { PropsWithChildren } from "react";
 import * as S from "./style";
 
-export default function HeaderTitle({ children }: IChildren) {
+export default function HeaderTitle({ children }: PropsWithChildren) {
   return <S.HeaderH1>{children}</S.HeaderH1>;
 }

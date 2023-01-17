@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import useGetInfo from "../../../hooks/useGetInfo";
 import * as S from "./style";
-
-function PartyName({ userId, length, index }: any) {
+interface IPartyName {
+  userId: string;
+  length: number;
+  index: number;
+}
+function PartyName({ userId, length, index }: IPartyName) {
   const { userName, getInfo } = useGetInfo();
 
   useEffect(() => {

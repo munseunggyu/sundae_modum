@@ -26,6 +26,7 @@ function Chatting() {
     };
     if (comment) {
       if (!scrollRef?.current) return;
+      if (!id) return;
       sendComment({
         collectionName1: "post_chatting",
         id: id,

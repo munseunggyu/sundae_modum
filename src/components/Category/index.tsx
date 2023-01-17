@@ -2,8 +2,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import * as S from "./style";
 import React from "react";
+import { ICategory } from "../../types/category";
 
-function Category({ select, setSelect }: any) {
+function Category({ select, setSelect }: ICategory) {
   const categoryList = [
     "치킨",
     "중식",
@@ -15,11 +16,10 @@ function Category({ select, setSelect }: any) {
     "분식",
     "카페",
   ];
-  const selectCategory = (e: React.MouseEvent<HTMLElement>) => {
-    if (!(e.target instanceof HTMLSpanElement)) {
-      return;
-    }
-    setSelect(e.target.textContent);
+  const selectCategory = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const categoryName = (e.target as HTMLSpanElement).textContent;
+    if (!categoryName) return;
+    setSelect(categoryName);
   };
   return (
     <S.CategoryCon>

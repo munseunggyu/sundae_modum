@@ -52,8 +52,18 @@ function ProfilePage() {
         <S.MyPost>나의 게시물</S.MyPost>
         <S.MyPostUl>
           {myPostsData.map((post) => {
-            console.log(post);
-            return <PostList key={post.postkey} {...post} />;
+            return (
+              <PostList
+                key={post.postkey}
+                party={post.party}
+                postkey={post.postkey}
+                postImg={post.postImg}
+                postDate={post.postDate}
+                postTime={post.postTime}
+                postTit={post.postTit}
+                writerId={post.writerId}
+              />
+            );
           })}
         </S.MyPostUl>
       </MainContainer>

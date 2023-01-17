@@ -41,7 +41,7 @@ function PostUploadPage() {
     textArearRef.current.style.height =
       textArearRef.current.scrollHeight + "px";
   };
-  const errorAlert = (data: any, errorMessage: any) => {
+  const errorAlert = (data: string, errorMessage: string) => {
     if (!data) {
       alert(errorMessage);
       return;

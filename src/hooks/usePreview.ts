@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import imageCompression from "browser-image-compression";
 import { useAuthContext } from "./useAuthContext";
+
 export const usePreview = (isProfile: any) => {
-  // const userInfo = useSelector((state) => state.user.currentUser);
   const { state } = useAuthContext();
   const [dbFile, setDbFile] = useState(
     isProfile && state.currentUser?.photoURL
@@ -21,8 +21,6 @@ export const usePreview = (isProfile: any) => {
     });
     const reader = new FileReader();
     reader.onload = (finish: any) => {
-      console.log(finish);
-
       setPrevFile(finish.target.result);
     };
     reader.readAsDataURL(compressionImg);

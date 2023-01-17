@@ -1,9 +1,13 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import searchIcon from "../../assets/icons/icon-search.png";
+import { ISeactButton } from "../../types/header";
 import * as S from "./style";
 
-export default function SearchButton({ handleSearch, setIsSearch }: any) {
+export default function SearchButton({
+  handleSearch,
+  setIsSearch,
+}: ISeactButton) {
   const [searchOpen, setSearchOpen] = useState(false);
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);

@@ -1,6 +1,7 @@
-import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../firebase";
+import { ISubmitChat } from "../types/hooks";
 
 const useSubmitChat = () => {
   const [chat, setChat] = useState("");
@@ -9,7 +10,7 @@ const useSubmitChat = () => {
     id,
     collectionName2,
     data,
-  }: any) => {
+  }: ISubmitChat) => {
     const docRef = collection(db, collectionName1);
     const newId = doc(collection(docRef, id, collectionName2));
     await Promise.all([setDoc(newId, { ...data, chatId: newId.id })]);

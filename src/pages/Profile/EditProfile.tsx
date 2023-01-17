@@ -34,7 +34,7 @@ function EditProfile({ isFirst }: IEditPage) {
     if (!fileRef.current) return;
     fileRef.current.click();
   };
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (nickName === null) {
@@ -51,8 +51,6 @@ function EditProfile({ isFirst }: IEditPage) {
         email: state.currentUser?.email,
         introduce: introduce || "",
       };
-      console.log(userData);
-
       if (prevFile !== state.currentUser?.photoURL) {
         // 만약 프로필 사진을 업데이트 하면 실행
         const storageRef = ref(storage, `user_image/${state.currentUser?.uid}`);

@@ -1,7 +1,7 @@
 import Header from "../../../components/Header";
 import { MainContainer } from "../../../components/MainContainer";
 import Nav from "../../../components/Nav";
-import DMRoom from "./DMRoomList";
+import DMRoomList from "./DMRoomList";
 import { useEffect } from "react";
 import * as S from "./style";
 import useCollection from "../../../hooks/useCollection";
@@ -30,9 +30,10 @@ function DMRoomLists() {
       <MainContainer>
         {dmRoomList.length === 0 && <S.NoDMRoom>채팅방이 없습니다.</S.NoDMRoom>}
         <S.DMRoomUl>
-          {dmRoomList.map((dmRoom: any) => {
-            console.log(dmRoom);
-            return <DMRoom {...dmRoom} key={dmRoom.id} />;
+          {dmRoomList.map((dmRoom) => {
+            return (
+              <DMRoomList key={dmRoom.id} id={dmRoom.id} ids={dmRoom.ids} />
+            );
           })}
         </S.DMRoomUl>
       </MainContainer>

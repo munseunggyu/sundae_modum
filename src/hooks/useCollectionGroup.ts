@@ -9,10 +9,11 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../firebase";
+import { ICollection } from "../types/hooks";
 
 const useCollectionGroup = () => {
   const [chats, setChats] = useState<DocumentData[]>([]);
-  const getChats = ({ collectionName, whereLeft, whereRight }: any) => {
+  const getChats = ({ collectionName, whereLeft, whereRight }: ICollection) => {
     try {
       const q = query(
         collectionGroup(db, collectionName),

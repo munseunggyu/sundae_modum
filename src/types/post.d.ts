@@ -1,14 +1,14 @@
 export interface IPost {
-  CreateAt?: { seconds: number; nanoseconds: number };
+  CreateAt?: FieldValue;
   category?: string;
-  party?: { participants: IParty; participateCount: number };
-  postDate?: string;
-  postImg?: string | null;
-  postTime?: string;
-  postTit?: string;
+  party: { participants: IParty; participateCount: number };
+  postDate: string;
+  postImg: string | null;
+  postTime: string;
+  postTit: string;
   postTxt?: string;
-  postkey?: string;
-  writerId?: string;
+  postkey: string;
+  writerId: string;
 }
 
 interface IParty {

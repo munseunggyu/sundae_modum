@@ -3,14 +3,14 @@ import useCollection from "../../hooks/useCollection";
 import Header from "../../components/Header";
 import { MainContainer } from "../../components/MainContainer";
 import Nav from "../../components/Nav";
-import Post from "../Post/PostList";
+import PostList from "../Post/PostList";
 import * as S from "./style";
 import HeaderTitle from "../../components/Header/HeaderTitle";
 import SearchButton from "../../components/Header/SearchButton";
-import { IPost } from "../../types/post";
+import { DocumentData } from "firebase/firestore";
 
 function HomePage() {
-  const [searchList, setSearchList] = useState<IPost[]>([]);
+  const [searchList, setSearchList] = useState<DocumentData[]>([]);
   const [isSearch, setIsSearch] = useState(false);
   const [select, setSelect] = useState("치킨");
   const { documents: postsList, getDocuments: getPostsList } = useCollection();
@@ -19,6 +19,7 @@ function HomePage() {
     if (e.target.value.length > 0) {
       setIsSearch(true);
       const regex = new RegExp(e.target.value, "gi");
+      if (!postsList) return;
       const newPost = postsList.filter(
         (post) => regex.test(post.postTit) || regex.test(post.postTxt)
       );
@@ -47,8 +48,36 @@ function HomePage() {
         <h2 className="ir">게시글</h2>
         <S.PostUl>
           {isSearch
-            ? searchList.map((post) => <Post {...post} key={post.postkey} />)
-            : postsList.map((post) => <Post {...post} key={post.postkey} />)}
+            ? searchList.map((post) => (
+                <PostList
+                  key={post.postkey}
+                  party={post.party}
+                  postkey={post.postkey}
+                  postImg={post.postImg}
+                  postDate={post.postDate}
+                  postTime={post.postTime}
+                  postTit={post.postTit}
+                  writerId={post.writerId}
+                  CreateAt={post.CreateAt}
+                  category={post.category}
+                />
+              ))
+            : postsList.map((post) => {
+                return (
+                  <PostList
+                    key={post.postkey}
+                    party={post.party}
+                    postkey={post.postkey}
+                    postImg={post.postImg}
+                    postDate={post.postDate}
+                    postTime={post.postTime}
+                    postTit={post.postTit}
+                    writerId={post.writerId}
+                    CreateAt={post.CreateAt}
+                    category={post.category}
+                  />
+                );
+              })}
         </S.PostUl>
       </MainContainer>
 

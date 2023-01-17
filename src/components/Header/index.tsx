@@ -2,7 +2,7 @@ import { IHeader } from "../../types/header";
 import Category from "../Category";
 import * as S from "./style";
 
-function Header({ ir, children, category, select, setSelect }: any) {
+function Header({ ir, children, category, select, setSelect }: IHeader) {
   return (
     <>
       <S.HeaderContainer>

@@ -1,7 +1,6 @@
 import {
   collection,
   DocumentData,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -10,12 +9,8 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
-interface ICon {
-  collectionName: string;
-  whereLeft: string;
-  whereRight?: string | string[];
-  condition: any;
-}
+import { ICollection } from "../types/hooks";
+
 const useCollection = () => {
   const [documents, setDocuments] = useState<DocumentData[]>([]);
   const [isLoding, setIsLoding] = useState(true);
@@ -25,7 +20,7 @@ const useCollection = () => {
     whereLeft,
     whereRight,
     condition,
-  }: ICon) => {
+  }: ICollection) => {
     const docRef = collection(db, collectionName);
     const q = query(
       docRef,

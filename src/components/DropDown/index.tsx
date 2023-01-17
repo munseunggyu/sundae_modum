@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { IDropDown } from "../../types/category";
 import * as S from "./style";
 
-function DropDown({ chooseCategory, setChooseCategory }) {
+function DropDown({ chooseCategory, setChooseCategory }: IDropDown) {
   const [open, setOpen] = useState(false);
-
   const dropdownClick = () => {
     setOpen((prev) => !prev);
   };
@@ -18,8 +18,10 @@ function DropDown({ chooseCategory, setChooseCategory }) {
     "분식",
     "카페",
   ];
-  const showMenu = (e) => {
-    setChooseCategory(e.target.textContent);
+  const showMenu = (e: React.MouseEvent<HTMLLIElement>) => {
+    const categoryName = (e.target as HTMLLIElement).textContent;
+    if (!categoryName) return;
+    setChooseCategory(categoryName);
     dropdownClick();
   };
 

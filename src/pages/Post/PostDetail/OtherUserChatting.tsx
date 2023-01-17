@@ -9,8 +9,21 @@ import useWriter from "../../../hooks/useGetInfo";
 import { setDM } from "../../../utils/setDM";
 import { useEffect } from "react";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-
-function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }: any) {
+interface IOtherUserChatting {
+  CreateAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  writerId: string;
+  chatTxt: string;
+  chatId: string;
+}
+function OtherUserChatting({
+  CreateAt,
+  writerId,
+  chatTxt,
+  chatId,
+}: IOtherUserChatting) {
   const { id } = useParams();
   const time = getDate(CreateAt);
   const { state } = useAuthContext();
@@ -18,6 +31,7 @@ function OtherUserChatting({ CreateAt, writerId, chatTxt, chatId }: any) {
 
   const delChatting = async () => {
     if (!id) return;
+    if (!chatId) return;
     const postChatDoc = doc(db, "post_chatting", id);
     await deleteDoc(doc(postChatDoc, "post", chatId));
   };
