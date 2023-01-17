@@ -46,14 +46,15 @@ function OtherUserChatting({
         <S.VerticalBtn
           type="button"
           onClick={() => {
-            handleVertical(
-              state.currentUser?.uid,
-              writerId,
-              "댓글을 삭제하시겠습니까?",
-              delChatting,
-              "쪽지를 보내겠습니까?",
-              setDM
-            );
+            if (!state.currentUser?.uid) return;
+            handleVertical({
+              userId: state.currentUser?.uid,
+              writerId: writerId,
+              title1: "댓글을 삭제하시겠습니까?",
+              deleteFc: delChatting,
+              title2: "쪽지를 보내겠습니까?",
+              setDM: setDM,
+            });
           }}
         />
       </S.UserContainer>

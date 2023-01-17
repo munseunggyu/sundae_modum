@@ -1,13 +1,14 @@
 import { confirmAlert } from "react-confirm-alert";
+import { IHandleVertical } from "../types/utils";
 
-const handleVertical = (
-  userId: any,
-  writerId: any,
-  title1: any,
-  title1Fc: any,
-  title2: any,
-  title2Fc: any
-) => {
+const handleVertical = ({
+  userId,
+  writerId,
+  title1,
+  deleteFc,
+  title2,
+  setDM,
+}: IHandleVertical) => {
   if (userId === writerId) {
     confirmAlert({
       title: title1,
@@ -15,7 +16,7 @@ const handleVertical = (
         {
           label: "확인",
           onClick: () => {
-            title1Fc();
+            deleteFc();
           },
         },
         {
@@ -30,7 +31,8 @@ const handleVertical = (
         {
           label: "확인",
           onClick: () => {
-            title2Fc({ otherUser: writerId, userId: userId });
+            if (writerId && userId)
+              setDM({ otherUser: writerId, userId: userId });
           },
         },
         {

@@ -89,16 +89,17 @@ function PostDetailPage() {
           <Header ir="게시물 상세페이지">
             <PrevBtn />
             <VerticalBtn
-              verticalSubmit={() =>
-                handleVertical(
-                  state.currentUser?.uid,
-                  postData.writerId,
-                  "게시글을 삭제하시겠습니까?",
-                  delPost,
-                  "쪽지를 보내겠습니까?",
-                  setDM
-                )
-              }
+              verticalSubmit={() => {
+                if (!state.currentUser?.uid) return;
+                handleVertical({
+                  userId: state.currentUser?.uid,
+                  writerId: postData.writerId,
+                  title1: "게시글을 삭제하시겠습니까?",
+                  deleteFc: delPost,
+                  title2: "쪽지를 보내겠습니까?",
+                  setDM: setDM,
+                });
+              }}
             />
           </Header>
           <MainContainer pr="0">

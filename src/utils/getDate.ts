@@ -1,11 +1,5 @@
-interface ITime {
-  nanoseconds: number;
-  seconds: number;
-}
-
 const getDate = (time: any) => {
   const date = time.toDate();
-  console.log(date);
   const month = date.getMonth() + 1;
   const day = date.getDate();
   let hour = date.getHours();

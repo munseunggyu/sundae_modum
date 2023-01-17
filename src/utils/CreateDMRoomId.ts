@@ -1,5 +1,5 @@
-export const CreateDMRoomId = (selectUser: string, userId: string) => {
-  return userId > selectUser
-    ? `${selectUser}${userId}`
-    : `${userId}${selectUser}`;
+import { IDMRoom } from "../types/utils";
+
+export const CreateDMRoomId = ({ otherUser, userId }: IDMRoom) => {
+  return userId > otherUser ? `${otherUser}${userId}` : `${userId}${otherUser}`;
 };
